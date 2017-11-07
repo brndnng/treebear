@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import MapKit
+class ViewController: UIViewController,MKMapViewDelegate {
 
-class ViewController: UIViewController {
-
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        mapView.isHidden = false
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.alpha = 1
+        view.addSubview(mapView)
     }
 
     override func didReceiveMemoryWarning() {

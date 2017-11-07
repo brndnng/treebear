@@ -1,0 +1,6 @@
+framework module Pods_treebear {
+  umbrella header "Pods-treebear-umbrella.h"
+
+  export *
+  module * { export * }
+}
