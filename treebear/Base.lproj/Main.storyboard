@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad10_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,16 +14,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GXD-Rc-7uJ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="611"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GXD-Rc-7uJ">
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1056"/>
                             </mapView>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GJY-S8-pJH">
-                                <rect key="frame" x="0.0" y="611" width="375" height="56"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GJY-S8-pJH">
+                                <rect key="frame" x="0.0" y="1056" width="834" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="CHP-X7-fsj"/>
@@ -31,6 +29,15 @@
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="GJY-S8-pJH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="E2f-sI-NjZ"/>
+                            <constraint firstItem="GXD-Rc-7uJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EYh-oI-LMH"/>
+                            <constraint firstItem="GJY-S8-pJH" firstAttribute="top" secondItem="GXD-Rc-7uJ" secondAttribute="bottom" id="UkY-3w-gki"/>
+                            <constraint firstItem="GXD-Rc-7uJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="VP8-Mh-4wM"/>
+                            <constraint firstItem="GJY-S8-pJH" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XSq-Go-Hgz"/>
+                            <constraint firstItem="GXD-Rc-7uJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ukF-AJ-fqs"/>
+                            <constraint firstItem="GXD-Rc-7uJ" firstAttribute="leading" secondItem="GJY-S8-pJH" secondAttribute="leading" id="yci-gu-aal"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
@@ -50,7 +57,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
+            <point key="canvasLocation" x="136.71875" y="132.421875"/>
         </scene>
     </scenes>
 </document>
