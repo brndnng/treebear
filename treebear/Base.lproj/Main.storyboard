@@ -62,7 +62,7 @@
         <!--View Controller-->
         <scene sceneID="z6U-cW-F5B">
             <objects>
-                <viewController id="idh-el-agI" sceneMemberID="viewController">
+                <viewController id="idh-el-agI" customClass="ARViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nwo-4e-6GX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
