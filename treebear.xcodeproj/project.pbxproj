@@ -10,6 +10,7 @@
 		3384CBB8038FD21A2FBAF549 /* Pods_treebearTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DD325679559162E275725E /* Pods_treebearTests.framework */; };
 		4815B4345FC1329C0BB71F78 /* Pods_treebearUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA2CAAF4CC26106DED818C94 /* Pods_treebearUITests.framework */; };
 		BB8A4E1AB5928CC5145C6471 /* Pods_treebear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BCD03FCE52A198C0FC81A5 /* Pods_treebear.framework */; };
+		CA1920241FCD4A7C00A7B057 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1920231FCD4A7C00A7B057 /* ARViewController.swift */; };
 		CA3E62F61FB1B0D000ADC7D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E62F51FB1B0D000ADC7D3 /* AppDelegate.swift */; };
 		CA3E62F81FB1B0D000ADC7D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E62F71FB1B0D000ADC7D3 /* ViewController.swift */; };
 		CA3E62FB1FB1B0D000ADC7D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA3E62F91FB1B0D000ADC7D3 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		82574D06ABAA3C54CC8737F1 /* Pods-treebearUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests.release.xcconfig"; sourceTree = "<group>"; };
 		87BCD03FCE52A198C0FC81A5 /* Pods_treebear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A966590D5C886B8150DD7A37 /* Pods-treebear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebear.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebear/Pods-treebear.debug.xcconfig"; sourceTree = "<group>"; };
+		CA1920231FCD4A7C00A7B057 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		CA3E62F21FB1B0CF00ADC7D3 /* treebear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = treebear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3E62F51FB1B0D000ADC7D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA3E62F71FB1B0D000ADC7D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				CA3E62FC1FB1B0D000ADC7D3 /* Assets.xcassets */,
 				CA3E62FE1FB1B0D000ADC7D3 /* LaunchScreen.storyboard */,
 				CA3E63011FB1B0D000ADC7D3 /* Info.plist */,
+				CA1920231FCD4A7C00A7B057 /* ARViewController.swift */,
 			);
 			path = treebear;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1920241FCD4A7C00A7B057 /* ARViewController.swift in Sources */,
 				CA3E62F81FB1B0D000ADC7D3 /* ViewController.swift in Sources */,
 				CA3E62F61FB1B0D000ADC7D3 /* AppDelegate.swift in Sources */,
 			);
