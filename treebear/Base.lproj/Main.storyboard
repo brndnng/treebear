@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="ipad12_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -9,19 +9,19 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="mapViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GXD-Rc-7uJ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="611"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1310"/>
                             </mapView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GJY-S8-pJH">
-                                <rect key="frame" x="0.0" y="611" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="1310" width="1024" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="CHP-X7-fsj"/>
@@ -29,7 +29,6 @@
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="GJY-S8-pJH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="E2f-sI-NjZ"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EYh-oI-LMH"/>
@@ -45,7 +44,6 @@
                         <outlet property="mapView" destination="GXD-Rc-7uJ" id="Vpd-44-RkI"/>
                         <outlet property="searchBar" destination="GJY-S8-pJH" id="Aox-XP-BHb"/>
                         <outlet property="searchDisplayController" destination="Fsu-EF-IkP" id="Q0d-Jr-IAA"/>
-                        <segue destination="idh-el-agI" kind="presentation" id="kXY-R4-LNc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -58,25 +56,19 @@
                         <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="3gF-12-lmF"/>
                     </connections>
                 </searchDisplayController>
-                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="UAc-eg-PeX">
-                    <rectEdge key="edges" left="YES"/>
-                    <connections>
-                        <outlet property="delegate" destination="BYZ-38-t0r" id="Pey-49-Rgo"/>
-                    </connections>
-                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.71875" y="132.421875"/>
         </scene>
-        <!--Ar View Controller-->
+        <!--View Controller-->
         <scene sceneID="z6U-cW-F5B">
             <objects>
-                <viewController id="idh-el-agI" customClass="arViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="idh-el-agI" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nwo-4e-6GX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Pg-rq-3RH">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                             </arscnView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -91,7 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ds6-ws-W2L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-642" y="132"/>
+            <point key="canvasLocation" x="-676" y="132"/>
         </scene>
     </scenes>
 </document>
