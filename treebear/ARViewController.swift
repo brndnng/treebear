@@ -43,10 +43,12 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate{
             Hero.shared.defaultAnimation = .pull(direction: .left)
             hero_dismissViewController()
         case .changed:
+            // not working well
             Hero.shared.update(progress)
 //            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
 //            Hero.shared.apply(modifiers: [.position(currentPos)], to: sceneLocationView)
         default:
+            //keep causing problem
             if progress + pan2Main.velocity(in: nil).x / sceneLocationView.bounds.width > 0.3 {
                 Hero.shared.finish()
             } else {
