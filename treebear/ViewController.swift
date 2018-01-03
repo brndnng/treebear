@@ -43,18 +43,18 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
 
     @IBAction func swipeLeft(_ sender: UIScreenEdgePanGestureRecognizer) {
         let translation = pan2AR.translation(in: nil)
-        let progress = CGFloat(translation.x / view.bounds.width)
+        let progress = CGFloat(translation.x / 2 / view.bounds.width)
         switch pan2AR.state {
         case .began:
             // begin the transition as normal
 //            let story = UIStoryboard(name: "Main", bundle: nil)
 //            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
 //            arVC.loadViewIfNeeded()
-            Hero.shared.defaultAnimation = .pull(direction: .right)
+            Hero.shared.defaultAnimation = .slide(direction: .right)
             performSegue(withIdentifier: "main2AR", sender: self)
             //testText.text = "test passed"
         case .ended:
-            if progress / 2 + pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
+            if progress+ pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
