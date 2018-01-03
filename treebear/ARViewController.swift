@@ -12,19 +12,19 @@ import Hero
 
 class ARViewController: UIViewController, UIGestureRecognizerDelegate{
 
+    
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     var sceneLocationView = SceneLocationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
         sceneLocationView.run()
         view.addSubview(sceneLocationView)
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         sceneLocationView.frame = view.bounds
     }
 
@@ -36,29 +36,25 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate{
 
     @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
         let translation = pan2Main.translation(in: nil)
-        let progress = CGFloat(translation.x / sceneLocationView.bounds.width)
+        let progress = CGFloat(-1 * translation.x / sceneLocationView.bounds.width)
         switch pan2Main.state {
         case .began:
-            sceneLocationView.pause()
             Hero.shared.defaultAnimation = .pull(direction: .left)
+            //dismiss(animated: true, completion: nil)
             hero_dismissViewController()
-        case .changed:
-            // not working well
-            Hero.shared.update(progress)
-//            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
-//            Hero.shared.apply(modifiers: [.position(currentPos)], to: sceneLocationView)
-        default:
+        case .ended:
             //keep causing problem
-            if progress + pan2Main.velocity(in: nil).x / sceneLocationView.bounds.width > 0.3 {
+            if progress / 2 + -1 * pan2Main.velocity(in: nil).x / sceneLocationView.bounds.width > 0.15 {
+                sceneLocationView.pause()
                 Hero.shared.finish()
             } else {
-                sceneLocationView.run()
                 Hero.shared.cancel()
             }
+        case .changed:
+           Hero.shared.update(progress)
+        default:
+            _ = 1
         }
-        sceneLocationView.pause()
-        Hero.shared.defaultAnimation = .pull(direction: .left)
-        hero_dismissViewController()
     }
     
     /*

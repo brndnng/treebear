@@ -14,7 +14,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
 
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var testText: UITextView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var view4EdgePan: UIView!
     override func viewDidLoad() {
@@ -35,24 +34,27 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
 
     @IBAction func swipeLeft(_ sender: UIScreenEdgePanGestureRecognizer) {
+        let translation = pan2AR.translation(in: nil)
+        let progress = CGFloat(translation.x / view.bounds.width)
         switch pan2AR.state {
         case .began:
             // begin the transition as normal
-            Hero.shared.defaultAnimation = .pull(direction: .left)
+            //the following line not working, animation not shown
+            Hero.shared.defaultAnimation = .pull(direction: .right)
             performSegue(withIdentifier: "main2AR", sender: self)
             //testText.text = "test passed"
-//        case .possible:
-//            <#code#>
-//        case .changed:
-//            <#code#>
-//        case .ended:
-//            <#code#>
-//        case .cancelled:
-//            <#code#>
-//        case .failed:
-//            <#code#>
+        case .ended:
+            //keep causing problem
+            if progress / 2 + pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        case .changed:
+            // not working well
+            Hero.shared.update(progress)
         default:
-            break
+            _ = 1
         }
     }
     

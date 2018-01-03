@@ -39,14 +39,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="CHP-X7-fsj"/>
                                 </connections>
                             </searchBar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Testing EdgePan" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9Hp-OE-xLw">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -76,9 +68,8 @@
                         <outlet property="pan2AR" destination="CFo-Yc-Br1" id="vGY-pX-jx5"/>
                         <outlet property="searchBar" destination="GJY-S8-pJH" id="Aox-XP-BHb"/>
                         <outlet property="searchDisplayController" destination="Fsu-EF-IkP" id="Q0d-Jr-IAA"/>
-                        <outlet property="testText" destination="9Hp-OE-xLw" id="JJc-sb-7ys"/>
                         <outlet property="view4EdgePan" destination="yS6-rL-TG8" id="aDF-dK-cjm"/>
-                        <segue destination="idh-el-agI" kind="presentation" identifier="main2AR" animates="NO" id="EwR-83-23O"/>
+                        <segue destination="idh-el-agI" kind="presentation" identifier="main2AR" id="EwR-83-23O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
