@@ -12,6 +12,7 @@ import Hero
 
 class ARViewController: UIViewController, UIGestureRecognizerDelegate{
 
+    @IBOutlet weak var loadingGIF: UIActivityIndicatorView!
     
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     var sceneLocationView = SceneLocationView()
@@ -40,10 +41,8 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate{
         switch pan2Main.state {
         case .began:
             Hero.shared.defaultAnimation = .pull(direction: .left)
-            //dismiss(animated: true, completion: nil)
             hero_dismissViewController()
         case .ended:
-            //keep causing problem
             if progress / 2 + -1 * pan2Main.velocity(in: nil).x / sceneLocationView.bounds.width > 0.15 {
                 sceneLocationView.pause()
                 Hero.shared.finish()

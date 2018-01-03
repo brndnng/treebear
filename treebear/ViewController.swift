@@ -23,6 +23,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.alpha = 1
+        mapView.showsPointsOfInterest = false
+//        //getting user location
+//        let userLocation: CLLocationCoordinate2D?
+//        //centering the map
+//        let viewRegion = MKCoordinateRegionMakeWithDistance(userLocation!, 100, 100);
+//        let adjustedRegion = mapView.regionThatFits(viewRegion)
+//        mapView.setRegion(adjustedRegion, animated: true)
+        self.mapView.showsUserLocation = true;
         view.addSubview(mapView)
         //view.addSubview(testText)
         view.addSubview(view4EdgePan)
@@ -39,19 +47,19 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         switch pan2AR.state {
         case .began:
             // begin the transition as normal
-            //the following line not working, animation not shown
+//            let story = UIStoryboard(name: "Main", bundle: nil)
+//            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
+//            arVC.loadViewIfNeeded()
             Hero.shared.defaultAnimation = .pull(direction: .right)
             performSegue(withIdentifier: "main2AR", sender: self)
             //testText.text = "test passed"
         case .ended:
-            //keep causing problem
             if progress / 2 + pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
             }
         case .changed:
-            // not working well
             Hero.shared.update(progress)
         default:
             _ = 1

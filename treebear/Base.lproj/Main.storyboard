@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -94,12 +95,25 @@
         <!--View Controller-->
         <scene sceneID="z6U-cW-F5B">
             <objects>
-                <viewController id="idh-el-agI" customClass="ARViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ARVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="idh-el-agI" customClass="ARViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nwo-4e-6GX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ghl-oq-7DW">
+                                <rect key="frame" x="177" y="333.5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="VpA-Dm-LEI"/>
+                                    <constraint firstAttribute="width" secondItem="ghl-oq-7DW" secondAttribute="height" multiplier="1:1" id="Yz5-En-1lI"/>
+                                </constraints>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="ghl-oq-7DW" firstAttribute="centerY" secondItem="YDX-pq-Dgg" secondAttribute="centerY" id="Y15-9s-nrd"/>
+                            <constraint firstItem="ghl-oq-7DW" firstAttribute="centerX" secondItem="YDX-pq-Dgg" secondAttribute="centerX" id="ssj-dj-Dob"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YDX-pq-Dgg"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
@@ -113,6 +127,7 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="loadingGIF" destination="ghl-oq-7DW" id="OpK-GR-HdV"/>
                         <outlet property="pan2Main" destination="r0d-Uh-1zs" id="xeb-Gk-1dG"/>
                     </connections>
                 </viewController>
