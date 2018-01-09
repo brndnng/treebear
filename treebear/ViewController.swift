@@ -25,7 +25,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.alpha = 1
         mapView.showsPointsOfInterest = false
 //        //getting user location
-//        let userLocation: CLLocationCoordinate2D?
+//        let userLocation: CLLocationCoordinate2D? = 
 //        //centering the map
 //        let viewRegion = MKCoordinateRegionMakeWithDistance(userLocation!, 100, 100);
 //        let adjustedRegion = mapView.regionThatFits(viewRegion)
@@ -54,7 +54,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             performSegue(withIdentifier: "main2AR", sender: self)
             //testText.text = "test passed"
         case .ended:
-            if progress+ pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
+            if progress + pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
