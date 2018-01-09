@@ -16,10 +16,12 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate{
     
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     var sceneLocationView = SceneLocationView()
+    var destination : LocationAnnotationNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destination!)
         sceneLocationView.run()
         view.addSubview(sceneLocationView)
     }

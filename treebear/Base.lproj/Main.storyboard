@@ -30,30 +30,30 @@
                                 </connections>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GXD-Rc-7uJ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="611"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <gestureRecognizers/>
                             </mapView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GJY-S8-pJH">
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="iae-m9-UAk">
                                 <rect key="frame" x="0.0" y="611" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="CHP-X7-fsj"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="9pO-4r-La5"/>
                                 </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="GJY-S8-pJH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="E2f-sI-NjZ"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EYh-oI-LMH"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="F4w-hS-mjQ"/>
-                            <constraint firstItem="GJY-S8-pJH" firstAttribute="top" secondItem="GXD-Rc-7uJ" secondAttribute="bottom" id="UkY-3w-gki"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iae-m9-UAk" secondAttribute="bottom" id="QGe-l4-QzF"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="VP8-Mh-4wM"/>
-                            <constraint firstItem="GJY-S8-pJH" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XSq-Go-Hgz"/>
+                            <constraint firstItem="iae-m9-UAk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wy6-Vg-hhl"/>
+                            <constraint firstItem="iae-m9-UAk" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="fcG-RX-5RN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GXD-Rc-7uJ" secondAttribute="bottom" id="gz4-Zx-dti"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jCC-8F-HqG"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="olY-vn-BJp"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ukF-AJ-fqs"/>
-                            <constraint firstItem="GXD-Rc-7uJ" firstAttribute="leading" secondItem="GJY-S8-pJH" secondAttribute="leading" id="yci-gu-aal"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <userDefinedRuntimeAttributes>
@@ -67,28 +67,28 @@
                     <connections>
                         <outlet property="mapView" destination="GXD-Rc-7uJ" id="Vpd-44-RkI"/>
                         <outlet property="pan2AR" destination="CFo-Yc-Br1" id="vGY-pX-jx5"/>
-                        <outlet property="searchBar" destination="GJY-S8-pJH" id="Aox-XP-BHb"/>
-                        <outlet property="searchDisplayController" destination="Fsu-EF-IkP" id="Q0d-Jr-IAA"/>
+                        <outlet property="searchBar" destination="iae-m9-UAk" id="sgJ-ui-Uqu"/>
+                        <outlet property="searchDisplayController" destination="RiX-e3-rBd" id="P0T-C8-LrX"/>
                         <outlet property="view4EdgePan" destination="yS6-rL-TG8" id="aDF-dK-cjm"/>
                         <segue destination="idh-el-agI" kind="presentation" identifier="main2AR" id="EwR-83-23O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="Fsu-EF-IkP">
-                    <connections>
-                        <outlet property="delegate" destination="BYZ-38-t0r" id="Pt8-hC-RHe"/>
-                        <outlet property="searchBar" destination="GJY-S8-pJH" id="zLQ-kf-fcF"/>
-                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="FUs-uU-VtP"/>
-                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="pCe-es-fGi"/>
-                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="3gF-12-lmF"/>
-                    </connections>
-                </searchDisplayController>
                 <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="CFo-Yc-Br1">
                     <rectEdge key="edges" left="YES"/>
                     <connections>
                         <action selector="swipeLeft:" destination="BYZ-38-t0r" id="T4W-lw-5cj"/>
                     </connections>
                 </screenEdgePanGestureRecognizer>
+                <searchDisplayController id="RiX-e3-rBd">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="iBP-KZ-Su1"/>
+                        <outlet property="searchBar" destination="iae-m9-UAk" id="SB1-sS-3Qs"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="Yjf-OB-CbE"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="0cQ-3d-Wtz"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="wYs-CB-AUP"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="136.5" y="131.5"/>
         </scene>
