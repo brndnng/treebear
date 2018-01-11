@@ -14,9 +14,12 @@ import Hero
 class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate,CLLocationManagerDelegate {
     
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
+    @IBOutlet weak var pan2Menu: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var view4EdgePan: UIView!
+    @IBOutlet weak var view4EdgePan2Menu: UIView!
+    
     var centerMapOnUserLocation: Bool = true
     var destination : LocationAnnotationNode?
     override func viewDidLoad() {
@@ -89,6 +92,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         searchBar.searchBarStyle = .minimal
         view.addSubview(searchBar)
         view.addSubview(view4EdgePan)
+        view.addSubview(view4EdgePan2Menu)
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last!
@@ -126,6 +130,35 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             _ = 1
         }
     }
+    
+    
+    @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
+        let translation = pan2Menu.translation(in: nil)
+        let progress = CGFloat( -1 * translation.x / 2 / view.bounds.width)
+        switch pan2Menu.state {
+        case .began:
+            // begin the transition as normal
+            //            let story = UIStoryboard(name: "Main", bundle: nil)
+            //            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
+            //            arVC.loadViewIfNeeded()
+            Hero.shared.defaultAnimation = .slide(direction: .left)
+            performSegue(withIdentifier: "main2Menu", sender: self)
+        //testText.text = "test passed"
+        case .ended:
+            if progress + -1 * pan2Menu.velocity(in: nil).x / view.bounds.width > 0.15 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        case .changed:
+            Hero.shared.update(progress)
+        default:
+            _ = 1
+        }
+
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "main2AR" && self.destination != nil {
             if let nextViewController = segue.destination as? ARViewController{
