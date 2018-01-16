@@ -11,6 +11,16 @@ import SceneKit
 import MapKit
 import Hero
 
+class MKPointAnnotationWithID:MKPointAnnotation{
+    let id: Int
+    var markerTintColor: UIColor?
+    
+    init(id: Int, color: UIColor){
+        self.id = id
+        self.markerTintColor = color
+    }
+}
+
 class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate,CLLocationManagerDelegate {
     
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
@@ -22,6 +32,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     
     var centerMapOnUserLocation: Bool = true
     var destination : LocationAnnotationNode?
+    var locationManager:CLLocationManager!
+    var centerMapBaseOnUserLocation: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,74 +44,30 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.showsUserLocation = true
         mapView.alpha = 1
         mapView.showsPointsOfInterest = false
-        //mapView.userTrackingMode = .follow
         
-        let locationManager = CLLocationManager()
+        determineCurrentLocation()
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
-//        let pinImage = UIImage(named: "pin")!
-//        let pinLocationNode = LocationAnnotationNode(location: pinLocation, image: pinImage)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = pinCoordinate
-        annotation.title = "TKO"
-        mapView.addAnnotation(annotation)
+        
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = pinCoordinate
+//        annotation.title = "TKO"
+//        mapView.addAnnotation(annotation)
+//        destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
+        
+        let annotationWithID = MKPointAnnotationWithID(id: 15, color: .blue)
+        annotationWithID.coordinate = pinCoordinate
+        annotationWithID.title = "TKO"
+        mapView.addAnnotation(annotationWithID)
         destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
-        //        //centering the map
-
-//        //getting user location
-        locationManager.delegate = self
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        
-
-//        var heading: CLLocationDirection?
-//        var headingAccuracy: CLLocationDegrees?
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-//        locationManager.distanceFilter = kCLDistanceFilterNone
-//        locationManager.headingFilter = kCLHeadingFilterNone
-//        locationManager.pausesLocationUpdatesAutomatically = false
-//        locationManager.startUpdatingHeading()
-//        locationManager.startUpdatingLocation()
-//        locationManager.requestWhenInUseAuthorization()
-        var userLocation = locationManager.location
-        print(userLocation?.coordinate ?? -1)
-       //let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-//        mapView.addGestureRecognizer(longPress)
-        
-//        func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-//            let location = locations.last as! CLLocation
-//
-//            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//            //let region = MKCoordinateRegionMakeWithDistance(center, 300, 300)
-//
-//            mapView.setCenter(center, animated: false)
-//            print("changed location")
-//        }
-
-        
-//        let adjustedRegion = mapView.regionThatFits(viewRegion)
-//        mapView.setRegion(adjustedRegion, animated: true)
-        
-        //self.mapView.showsUserLocation = true;
         
         view.addSubview(mapView)
         
-        //mapView.setRegion(viewRegion, animated: true)
-        //view.addSubview(testText)
         searchBar.searchBarStyle = .minimal
         view.addSubview(searchBar)
         view.addSubview(view4EdgePan)
         view.addSubview(view4EdgePan2Menu)
-    }
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations.last!
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 300, 300)
-        mapView.setRegion(coordinateRegion, animated: true)
-        //locationManager.stopUpdatingLocation()
     }
     
     override func didReceiveMemoryWarning() {
@@ -112,12 +81,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         switch pan2AR.state {
         case .began:
             // begin the transition as normal
-//            let story = UIStoryboard(name: "Main", bundle: nil)
-//            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
-//            arVC.loadViewIfNeeded()
             Hero.shared.defaultAnimation = .slide(direction: .right)
             performSegue(withIdentifier: "main2AR", sender: self)
-            //testText.text = "test passed"
         case .ended:
             if progress + pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
                 Hero.shared.finish()
@@ -158,7 +123,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
 
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "main2AR" && self.destination != nil {
             if let nextViewController = segue.destination as? ARViewController{
@@ -166,10 +130,77 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             }
         }
     }
-//    func mapView(_ mapView: MKMapView, didUpdate
-//        userLocation: MKUserLocation) {
-//        mapView.centerCoordinate = userLocation.location!.coordinate
-//    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
+    {
+        //when a annotation on click
+        centerMapOnUserLocation = false
+        centerMapWithLocationAndRange(Center: (view.annotation?.coordinate)!, Meters: 300)
+        if ((view.tag) != 0)
+        {
+            print("User tapped on annotation: \(view.tag)")
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if(annotation.isKind(of: MKUserLocation.self)) {
+            return nil;
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "myAnnotation") as? MKMarkerAnnotationView
+        
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "myAnnotation")
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        if let annotation = annotation as? MKPointAnnotationWithID {
+            annotationView?.markerTintColor = annotation.markerTintColor
+            annotationView?.tag = annotation.id
+        }
+        
+        annotationView?.animatesWhenAdded = true
+        annotationView?.titleVisibility = .visible
+        return annotationView
+    }
+    
+    func centerMapWithLocationAndRange(Center: CLLocationCoordinate2D, Meters: Double){
+        let region = MKCoordinateRegionMakeWithDistance(Center, Meters, Meters)
+        
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func determineCurrentLocation()
+    {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingHeading()
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        
+        // Call stopUpdatingLocation() to stop listening for location updates,
+        // other wise this function will be called every time when user location changes.
+        //manager.stopUpdatingLocation()
+        
+        if(centerMapOnUserLocation){
+            centerMapWithLocationAndRange(Center:center, Meters:300)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
+    }
 
 }
 
