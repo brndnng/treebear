@@ -53,18 +53,13 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
         
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = pinCoordinate
-//        annotation.title = "TKO"
-//        mapView.addAnnotation(annotation)
-//        destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
         
-        let annotationWithID = MKPointAnnotationWithID(id: 15, color: .blue)
-        annotationWithID.coordinate = pinCoordinate
-        annotationWithID.title = "TKO"
-        mapView.addAnnotation(annotationWithID)
+//        let annotationWithID = MKPointAnnotationWithID(id: 15, color: .blue)
+//        annotationWithID.coordinate = pinCoordinate
+//        annotationWithID.title = "TKO"
+//        mapView.addAnnotation(annotationWithID)
         destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
-        
+        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate)
         view.addSubview(mapView)
         
         // Long press to add POI
@@ -165,8 +160,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             mapView.removeOverlays(mapView.overlays)
             self.polylines.removeAll()
             self.getDirections(start: (locationManager.location?.coordinate)!,end: (view.annotation?.coordinate)!){(route) in
-                mapView.add(route.polyline)
-                self.polylines.append(route.polyline)
+                self.addPolyline(polyline: route.polyline)
+                print("Distance: ",route.distance)
+                print("Estimated travel time: ",route.expectedTravelTime)
 //                var boundingbox = route.polyline.boundingMapRect
 //                boundingbox.size.height += Double(mapView.bounds.height)
 //                boundingbox.size.width += Double(mapView.bounds.width)
@@ -278,20 +274,21 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             return
         }
         else if (coordinatesInPress.count < 10){
-            print("add point")
-            let annotation = MKPointAnnotationWithID(id:locationNodes.count + 1, color: .green)
-            let coordinate = coordinatesInPress.first!
-            annotation.coordinate = coordinate
-            annotation.title = "Dropped Location"
-            let location = CLLocation(coordinate: coordinate, altitude: 100)
-            locationNodes.append(LocationAnnotationNode(location: location, image: UIImage(named: "pin")!))
-            //print(locationNodes)
-            mapView.addAnnotation(annotation)
+            addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
+//            print("add point")
+//            let annotation = MKPointAnnotationWithID(id:locationNodes.count + 1, color: .green)
+//            let coordinate = coordinatesInPress.first!
+//            annotation.coordinate = coordinate
+//            annotation.title = "Dropped Location"
+//            let location = CLLocation(coordinate: coordinate, altitude: 100)
+//            locationNodes.append(LocationAnnotationNode(location: location, image: UIImage(named: "pin")!))
+//            //print(locationNodes)
+//            mapView.addAnnotation(annotation)
+            //addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
         }
         else{
             let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
-            mapView.add(polyline)
-            polylines.append(polyline)
+            addPolyline(polyline: polyline)
         }
 
         
@@ -310,6 +307,19 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             completion(unwrappedResponse.routes[0])
         }
     
+    }
+    func addPOI(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+        print("add point ",id)
+        let annotation = MKPointAnnotationWithID(id: id, color: color)
+        annotation.coordinate = coordinate
+        annotation.title = title
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        locationNodes.append(LocationAnnotationNode(location: location, image: image))
+        mapView.addAnnotation(annotation)
+    }
+    func addPolyline(polyline: MKPolyline){
+        mapView.add(polyline)
+        polylines.append(polyline)
     }
 }
 
