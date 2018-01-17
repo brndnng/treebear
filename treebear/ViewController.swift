@@ -34,6 +34,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var destination : LocationAnnotationNode?
     var locationManager:CLLocationManager!
     var centerMapBaseOnUserLocation: Bool = true
+    var locationNodes = [LocationAnnotationNode]()
+    fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +65,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
         
         view.addSubview(mapView)
+        
+        // Long press to add POI
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        mapView.addGestureRecognizer(longPress)
         
         searchBar.searchBarStyle = .minimal
         view.addSubview(searchBar)
@@ -127,6 +133,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if segue.identifier == "main2AR" && self.destination != nil {
             if let nextViewController = segue.destination as? ARViewController{
                 nextViewController.destination = self.destination
+                nextViewController.locationNodes = self.locationNodes
             }
         }
     }
@@ -201,6 +208,64 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     {
         print("Error \(error)")
     }
-
+    
+    @objc func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
+        let point = recognizer.location(in: mapView)
+        let coordinate: CLLocationCoordinate2D = mapView.convert(point, toCoordinateFrom: mapView)
+        //print("Long Press")
+        
+        switch recognizer.state {
+        case .possible: break
+        case .began:    coordinatesInPress = [coordinate]
+                        //print(coordinatesInPress)
+        case .changed:  coordinatesInPress.append(coordinate)
+                        //print(coordinatesInPress)
+        case .ended:    flushCoordinates()
+        case .cancelled, .failed: coordinatesInPress = []
+        }
+    }
+    private func flushCoordinates() {
+        print (coordinatesInPress.count)
+        print("ended long press")
+        if(coordinatesInPress.count == 0){
+            print("nothing")
+            return
+        }
+        else if (coordinatesInPress.count < 10){
+            print("add point")
+            let annotation = MKPointAnnotation()
+            let coordinate = coordinatesInPress.first!
+            annotation.coordinate = coordinate
+            annotation.title = "Dropped Location"
+            let location = CLLocation(coordinate: coordinate, altitude: 100)
+            locationNodes.append(LocationAnnotationNode(location: location, image: UIImage(named: "pin")!))
+            //print(locationNodes)
+            mapView.addAnnotation(annotation)
+        }
+        else{
+            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
+            mapView.add(polyline)
+        }
+//        switch coordinatesInPress.count {
+//        case 0:
+//            print("nothing")
+//            return
+//        case 10:
+//            print("add point")
+//            let annotation = MKPointAnnotation()
+//            let coordinate = coordinatesInPress.first!
+//            annotation.coordinate = coordinate
+//            annotation.title = "Dropped Location"
+//            mapView.addAnnotation(annotation)
+//            // Need to prepare segue
+//            //sceneLocationView.addAnnotation(annotation)
+//        default:
+//            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
+//            mapView.add(polyline)
+//            //Need to prepare segue
+//            //sceneLocationView.addPolyline(polyline)
+//        }
+        
+    }
 }
 
