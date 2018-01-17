@@ -156,12 +156,32 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         //when a annotation on click
         centerMapOnUserLocation = false
         centerMapWithLocationAndRange(Center: (view.annotation?.coordinate)!, Meters: 300)
+        if(view.annotation?.isKind(of: MKUserLocation.self))!{
+            centerMapOnUserLocation = true
+        }
         if ((view.tag) != 0)
         {
             print("User tapped on annotation: \(view.tag)")
+            mapView.removeOverlays(mapView.overlays)
+            self.polylines.removeAll()
+            self.getDirections(start: (locationManager.location?.coordinate)!,end: (view.annotation?.coordinate)!){(route) in
+                mapView.add(route.polyline)
+                self.polylines.append(route.polyline)
+//                var boundingbox = route.polyline.boundingMapRect
+//                boundingbox.size.height += Double(mapView.bounds.height)
+//                boundingbox.size.width += Double(mapView.bounds.width)
+//                self.mapView.setVisibleMapRect(boundingbox, animated: true)
+            }
         }
     }
     
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        for view in views{
+            if(view.annotation?.isKind(of: MKUserLocation.self))!{
+                view.canShowCallout = false
+            }
+        }
+    }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if(annotation.isKind(of: MKUserLocation.self)) {
             return nil;
@@ -259,7 +279,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
         else if (coordinatesInPress.count < 10){
             print("add point")
-            let annotation = MKPointAnnotation()
+            let annotation = MKPointAnnotationWithID(id:locationNodes.count + 1, color: .green)
             let coordinate = coordinatesInPress.first!
             annotation.coordinate = coordinate
             annotation.title = "Dropped Location"
@@ -275,6 +295,21 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
 
         
+    }
+    func getDirections(start: CLLocationCoordinate2D, end: CLLocationCoordinate2D, completion:@escaping (MKRoute) -> Void){
+        let request = MKDirectionsRequest()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: start, addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: end, addressDictionary: nil))
+        //request.requestsAlternateRoutes = true
+        request.transportType = .walking
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { [unowned self] response, error in
+            guard let unwrappedResponse = response else { return }
+            completion(unwrappedResponse.routes[0])
+        }
+    
     }
 }
 
