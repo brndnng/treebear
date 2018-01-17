@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -160,22 +160,22 @@
 		432F1AFB4C698D0929623DBBDB62AA94 /* Hero-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Hero-prefix.pch"; sourceTree = "<group>"; };
 		45F06CF2A2A7F764B3DC0AADB9364D9D /* Hero-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Hero-dummy.m"; sourceTree = "<group>"; };
 		479E095E67697D8EAB622986728AD407 /* ARCL-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ARCL-dummy.m"; sourceTree = "<group>"; };
-		4BA00E91868B73DE9AE2C99790DB7C23 /* Hero.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Hero.modulemap; sourceTree = "<group>"; };
+		4BA00E91868B73DE9AE2C99790DB7C23 /* Hero.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Hero.modulemap; sourceTree = "<group>"; };
 		4CD3597D861531648256167574F12E16 /* ConditionalPreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConditionalPreprocessor.swift; path = Sources/Preprocessors/ConditionalPreprocessor.swift; sourceTree = "<group>"; };
 		4DBF4F3DCBAA1E399A3B0A081BEF25E7 /* Pods-treebearUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-treebearUITests-frameworks.sh"; sourceTree = "<group>"; };
-		4F3861C9ED806C885C899A59966B91F7 /* Pods-treebearTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-treebearTests.modulemap"; sourceTree = "<group>"; };
-		5457EBDE3B16AD71CD9AEB7D24E98DB8 /* Pods_treebear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_treebear.framework; path = "Pods-treebear.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F3861C9ED806C885C899A59966B91F7 /* Pods-treebearTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-treebearTests.modulemap"; sourceTree = "<group>"; };
+		5457EBDE3B16AD71CD9AEB7D24E98DB8 /* Pods_treebear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CD5D79E65C8B82A739B0EC5DAD6F1E /* Hero.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Hero.xcconfig; sourceTree = "<group>"; };
 		5854E610246B3947B3A5CD3B9E81CC87 /* Pods-treebearUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-treebearUITests-resources.sh"; sourceTree = "<group>"; };
 		5F460B718D51FA56B8A79D39FD8E8048 /* HeroTransition+UINavigationControllerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "HeroTransition+UINavigationControllerDelegate.swift"; path = "Sources/Transition/HeroTransition+UINavigationControllerDelegate.swift"; sourceTree = "<group>"; };
-		603F312AD33205EE0E7F03F6DC712E21 /* ARCL.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = ARCL.modulemap; sourceTree = "<group>"; };
+		603F312AD33205EE0E7F03F6DC712E21 /* ARCL.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = ARCL.modulemap; sourceTree = "<group>"; };
 		60AE88228CE2CC0A6349545BA470EB4F /* HeroTransition+UITabBarControllerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "HeroTransition+UITabBarControllerDelegate.swift"; path = "Sources/Transition/HeroTransition+UITabBarControllerDelegate.swift"; sourceTree = "<group>"; };
 		6168C59FCE93A09350280A7CBBE6B665 /* Pods-treebearTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-treebearTests-resources.sh"; sourceTree = "<group>"; };
 		62151748636ADA097BC6CCC6A68E9877 /* Pods-treebear-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-treebear-umbrella.h"; sourceTree = "<group>"; };
 		630218053599752BFA554A3780DCC81E /* ARCL-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARCL-prefix.pch"; sourceTree = "<group>"; };
 		64DBCC09EC12EC9681FD9023D49A9E1F /* ARCL-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARCL-umbrella.h"; sourceTree = "<group>"; };
 		64ED2A4AA295EE3E192D3E3C9246D1B7 /* Pods-treebear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-treebear.debug.xcconfig"; sourceTree = "<group>"; };
-		67150A42322AD6EB2F76FD7FC951E8B7 /* Pods-treebear.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-treebear.modulemap"; sourceTree = "<group>"; };
+		67150A42322AD6EB2F76FD7FC951E8B7 /* Pods-treebear.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-treebear.modulemap"; sourceTree = "<group>"; };
 		67463D067CE7AD42D32C8339DAA068BD /* Pods-treebearUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-treebearUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6890A8128103FDECDD20115B801EEF67 /* HeroTransition+Animate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "HeroTransition+Animate.swift"; path = "Sources/Transition/HeroTransition+Animate.swift"; sourceTree = "<group>"; };
 		6AA04CF0C7245CC1B37F3963B162ECA9 /* FloatingPoint+Radians.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FloatingPoint+Radians.swift"; path = "ARKit+CoreLocation/Source/FloatingPoint+Radians.swift"; sourceTree = "<group>"; };
@@ -188,11 +188,11 @@
 		79673D96BCDFF236A244E406A373381E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		808583133B8350FCC78793A4772A5BA1 /* CAMediaTimingFunction+Hero.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CAMediaTimingFunction+Hero.swift"; path = "Sources/Extensions/CAMediaTimingFunction+Hero.swift"; sourceTree = "<group>"; };
 		846C2E9F8B26081981439DFDC09B44A2 /* SceneLocationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SceneLocationView.swift; path = "ARKit+CoreLocation/Source/SceneLocationView.swift"; sourceTree = "<group>"; };
-		863F8A94EE245609EA601B50F7BBF5BF /* Pods_treebearUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_treebearUITests.framework; path = "Pods-treebearUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		863F8A94EE245609EA601B50F7BBF5BF /* Pods_treebearUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebearUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E475FA7C420B05288FE9F5C124B9160 /* SourcePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SourcePreprocessor.swift; path = Sources/Preprocessors/SourcePreprocessor.swift; sourceTree = "<group>"; };
 		8EF9B2592481E531A8E0F4C8E0BE7470 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SCNVector3+Extensions.swift"; path = "ARKit+CoreLocation/Source/SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		8F2D68E0D8E136E5CE5FF8D8C435E7A7 /* Regex.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Regex.swift; path = Sources/Parser/Regex.swift; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		964EBA9D7355DA1C5721B935ACDC59AF /* HeroContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HeroContext.swift; path = Sources/HeroContext.swift; sourceTree = "<group>"; };
 		973F5394A4A25704E5E7A8F04BCB1FB5 /* HeroViewPropertyViewContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HeroViewPropertyViewContext.swift; path = Sources/Animator/HeroViewPropertyViewContext.swift; sourceTree = "<group>"; };
 		97507EDDC5E46B65CCCA794CA09AAF46 /* Pods-treebearTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-treebearTests-frameworks.sh"; sourceTree = "<group>"; };
@@ -213,7 +213,7 @@
 		C71B7413409F2FB038F0A08BE0C714FB /* HeroProgressRunner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HeroProgressRunner.swift; path = Sources/Transition/HeroProgressRunner.swift; sourceTree = "<group>"; };
 		C73ACD0475C8832051DD2BBF2BF95D39 /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SceneLocationEstimate+Extensions.swift"; path = "ARKit+CoreLocation/Source/SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
 		C944BB18EF69D3420204111827CA3361 /* Pods-treebearTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-treebearTests-umbrella.h"; sourceTree = "<group>"; };
-		CC5391BDB6964488C93F6B31848EB79A /* Pods-treebearUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-treebearUITests.modulemap"; sourceTree = "<group>"; };
+		CC5391BDB6964488C93F6B31848EB79A /* Pods-treebearUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-treebearUITests.modulemap"; sourceTree = "<group>"; };
 		CCCDA1A31C4F6D6CA70980B792F32E94 /* Hero-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Hero-umbrella.h"; sourceTree = "<group>"; };
 		D0BD54C7C8D1F7C7F0CF8F1D3FBCA383 /* HeroTransition+Complete.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "HeroTransition+Complete.swift"; path = "Sources/Transition/HeroTransition+Complete.swift"; sourceTree = "<group>"; };
 		D2425712198D5476E01B4E268E08D1EC /* Pods-treebear-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-treebear-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -230,10 +230,10 @@
 		ECCA8A875C096FCFC5E00874ADE3E7AF /* DefaultAnimationPreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultAnimationPreprocessor.swift; path = Sources/Preprocessors/DefaultAnimationPreprocessor.swift; sourceTree = "<group>"; };
 		F1A8510D8096C56C28B0B96EAF6CDE0E /* HeroTargetState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HeroTargetState.swift; path = Sources/HeroTargetState.swift; sourceTree = "<group>"; };
 		F1E3E879A2B9BF776521B4E39496D8CB /* Pods-treebear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-treebear.release.xcconfig"; sourceTree = "<group>"; };
-		F321DC8A00999A9D063A4B01EA0B7572 /* ARCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ARCL.framework; path = ARCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F321DC8A00999A9D063A4B01EA0B7572 /* ARCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ARCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F60DEA3981FD9B8BC515403498737855 /* Array+HeroModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+HeroModifier.swift"; path = "Sources/Extensions/Array+HeroModifier.swift"; sourceTree = "<group>"; };
-		F69B23A5B27A14A60962CA91C3DB6814 /* Pods_treebearTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_treebearTests.framework; path = "Pods-treebearTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7488372FBA87AF105D6725AF72D2CC8 /* Hero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Hero.framework; path = Hero.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F69B23A5B27A14A60962CA91C3DB6814 /* Pods_treebearTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebearTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7488372FBA87AF105D6725AF72D2CC8 /* Hero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hero.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93055ABF863D3DE68B932210B910A75 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDEFC74122B602BD54F3DFAEEC5CB158 /* Pods-treebear-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-treebear-acknowledgements.markdown"; sourceTree = "<group>"; };
 		FEED17193BB0BB26FC262F05D57F252D /* Pods-treebearTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-treebearTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -409,7 +409,6 @@
 				8EF9B2592481E531A8E0F4C8E0BE7470 /* SCNVector3+Extensions.swift */,
 				3DD73053E0ABF8943893B7F59527F60E /* Support Files */,
 			);
-			name = ARCL;
 			path = ARCL;
 			sourceTree = "<group>";
 		};
@@ -490,7 +489,6 @@
 				2C1AE6ECEEB9AB771C643EC7C05BA279 /* UIViewController+Hero.swift */,
 				36363FFCB0F15E200912E819AC6D4BE4 /* Support Files */,
 			);
-			name = Hero;
 			path = Hero;
 			sourceTree = "<group>";
 		};

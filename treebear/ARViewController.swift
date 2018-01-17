@@ -9,8 +9,11 @@
 import UIKit
 import ARCL
 import Hero
+import MapKit
+import SceneKit
 
-class ARViewController: UIViewController, UIGestureRecognizerDelegate{
+class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLocationViewDelegate{
+    
 
     @IBOutlet weak var loadingGIF: UIActivityIndicatorView!
     
@@ -18,15 +21,21 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate{
     var sceneLocationView = SceneLocationView()
     var destination : LocationAnnotationNode?
     var locationNodes : [LocationAnnotationNode] = []
+    var polylines : [MKPolyline] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        sceneLocationView.locationDelegate = self
+        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
     sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destination!)
+        view.addSubview(sceneLocationView)
         for location in locationNodes{
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: location)
         }
+        print(polylines)
+        sceneLocationView.addPolylines(polylines)
         sceneLocationView.run()
-        view.addSubview(sceneLocationView)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,5 +79,27 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate{
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    //MARK: SceneLocationViewDelegate
+    
+    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
+        print("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+    }
+    
+    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
+        print("remove scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+    }
+    
+    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {
+    }
+    
+    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) {
+        
+    }
+    
+    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {
+        
+    }
 
 }

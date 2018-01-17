@@ -35,6 +35,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var locationManager:CLLocationManager!
     var centerMapBaseOnUserLocation: Bool = true
     var locationNodes = [LocationAnnotationNode]()
+    var polylines = [MKPolyline]()
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
     
     override func viewDidLoad() {
@@ -74,6 +75,17 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         view.addSubview(searchBar)
         view.addSubview(view4EdgePan)
         view.addSubview(view4EdgePan2Menu)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.locationManager.stopUpdatingLocation()
+        self.locationManager.stopUpdatingHeading()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        determineCurrentLocation()
     }
     
     override func didReceiveMemoryWarning() {
@@ -128,12 +140,13 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
 
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "main2AR" && self.destination != nil {
             if let nextViewController = segue.destination as? ARViewController{
                 nextViewController.destination = self.destination
                 nextViewController.locationNodes = self.locationNodes
+                nextViewController.polylines = self.polylines
             }
         }
     }
@@ -170,6 +183,19 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         annotationView?.animatesWhenAdded = true
         annotationView?.titleVisibility = .visible
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? MKPolyline {
+            let renderer = MKPolylineRenderer(polyline: polyline)
+            renderer.lineWidth = 5
+            renderer.strokeColor = .blue
+            renderer.fillColor = .blue
+            return renderer
+            
+        } else {
+            return MKOverlayRenderer(overlay: overlay)
+        }
     }
     
     func centerMapWithLocationAndRange(Center: CLLocationCoordinate2D, Meters: Double){
@@ -245,26 +271,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         else{
             let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
             mapView.add(polyline)
+            polylines.append(polyline)
         }
-//        switch coordinatesInPress.count {
-//        case 0:
-//            print("nothing")
-//            return
-//        case 10:
-//            print("add point")
-//            let annotation = MKPointAnnotation()
-//            let coordinate = coordinatesInPress.first!
-//            annotation.coordinate = coordinate
-//            annotation.title = "Dropped Location"
-//            mapView.addAnnotation(annotation)
-//            // Need to prepare segue
-//            //sceneLocationView.addAnnotation(annotation)
-//        default:
-//            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
-//            mapView.add(polyline)
-//            //Need to prepare segue
-//            //sceneLocationView.addPolyline(polyline)
-//        }
+
         
     }
 }

@@ -482,6 +482,27 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             print("camera did change tracking state: not available")
         }
     }
+    // Extensions
+//    func addAnnotation(_ annotation: MKAnnotation) {
+//        guard let altitude = currentLocation()?.altitude else { return }
+//
+//        let node = LocationAnnotationNode(annotation: annotation, altitude: altitude)
+//        addLocationNodeWithConfirmedLocation(locationNode: node)
+//    }
+//
+//    func addAnnotations(_ annotations: [MKAnnotation]) {
+//        annotations.forEach(addAnnotation)
+//    }
+    
+    public func addPolyline(_ polyline: MKPolyline) {
+        guard let altitude = currentLocation()?.altitude else { print("no altitude found"); return }
+        print("altitude: ",altitude)
+        LocationNode.create(polyline: polyline, altitude: altitude - 5).forEach(addLocationNodeWithConfirmedLocation)
+    }
+    
+    public func addPolylines(_ polylines: [MKPolyline]) {
+        polylines.forEach(addPolyline)
+    }
 }
 
 //MARK: LocationManager
