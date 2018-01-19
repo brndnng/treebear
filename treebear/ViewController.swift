@@ -29,19 +29,24 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var view4EdgePan: UIView!
     @IBOutlet weak var view4EdgePan2Menu: UIView!
+    @IBOutlet weak var POIView: UIView!
     
     var centerMapOnUserLocation: Bool = true
     var destination : LocationAnnotationNode?
     var locationManager:CLLocationManager!
     var centerMapBaseOnUserLocation: Bool = true
     var locationNodes = [LocationAnnotationNode]()
+    var addedPOI = [MKAnnotation]()
     var polylines = [MKPolyline]()
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
+    
+    var pressedAnnotation: MKPointAnnotationWithID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        view.sendSubview(toBack: POIView)
         mapView.isHidden = false
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -54,12 +59,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
         
         
-//        let annotationWithID = MKPointAnnotationWithID(id: 15, color: .blue)
-//        annotationWithID.coordinate = pinCoordinate
-//        annotationWithID.title = "TKO"
-//        mapView.addAnnotation(annotationWithID)
+        //JSON first load
         destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
-        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate)
+        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate, title: "TKO")
         view.addSubview(mapView)
         
         // Long press to add POI
@@ -70,6 +72,15 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         view.addSubview(searchBar)
         view.addSubview(view4EdgePan)
         view.addSubview(view4EdgePan2Menu)
+        
+        // add pan gesture to detect when the map moves
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
+        
+        // make your class the delegate of the pan gesture
+        panGesture.delegate = self
+        
+        // add the gesture to the mapView
+        mapView.addGestureRecognizer(panGesture)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -135,6 +146,17 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
 
     }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    @objc func didDragMap(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .ended {
+            // do something here
+            centerMapOnUserLocation = false
+        }
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "main2AR" && self.destination != nil {
@@ -142,6 +164,13 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 nextViewController.destination = self.destination
                 nextViewController.locationNodes = self.locationNodes
                 nextViewController.polylines = self.polylines
+            }
+        }else if segue.identifier == "annotationPressed" && self.pressedAnnotation != nil{
+            if let nextViewController = segue.destination as? POIViewController{
+                nextViewController.bgColor = (self.pressedAnnotation?.markerTintColor)!
+                nextViewController.thisPOITitle = self.pressedAnnotation?.title
+                nextViewController.thisPOIExcerpt = self.pressedAnnotation?.title
+                nextViewController.thisPOIId = self.pressedAnnotation?.id
             }
         }
     }
@@ -168,7 +197,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
 //                boundingbox.size.width += Double(mapView.bounds.width)
 //                self.mapView.setVisibleMapRect(boundingbox, animated: true)
             }
+            pressedAnnotation = view.annotation as? MKPointAnnotationWithID
+            showViewALittleBit()
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        POIView.alpha = 0
+        print("did deselect")
     }
     
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
@@ -183,17 +219,21 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             return nil;
         }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "myAnnotation") as? MKMarkerAnnotationView
-        
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "myAnnotation")
-        } else {
-            annotationView?.annotation = annotation
-        }
+        var annotationView: MKMarkerAnnotationView?
         
         if let annotation = annotation as? MKPointAnnotationWithID {
+        
+            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: String(annotation.id)) as? MKMarkerAnnotationView
+            
+            if annotationView == nil {
+                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.id))
+            } else {
+                annotationView?.annotation = annotation
+            }
             annotationView?.markerTintColor = annotation.markerTintColor
             annotationView?.tag = annotation.id
+        }else{
+            return nil
         }
         
         annotationView?.animatesWhenAdded = true
@@ -212,6 +252,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         } else {
             return MKOverlayRenderer(overlay: overlay)
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        // load JSON
     }
     
     func centerMapWithLocationAndRange(Center: CLLocationCoordinate2D, Meters: Double){
@@ -266,6 +310,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         case .cancelled, .failed: coordinatesInPress = []
         }
     }
+    
     private func flushCoordinates() {
         print (coordinatesInPress.count)
         print("ended long press")
@@ -275,16 +320,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
         else if (coordinatesInPress.count < 10){
             addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
-//            print("add point")
-//            let annotation = MKPointAnnotationWithID(id:locationNodes.count + 1, color: .green)
-//            let coordinate = coordinatesInPress.first!
-//            annotation.coordinate = coordinate
-//            annotation.title = "Dropped Location"
-//            let location = CLLocation(coordinate: coordinate, altitude: 100)
-//            locationNodes.append(LocationAnnotationNode(location: location, image: UIImage(named: "pin")!))
-//            //print(locationNodes)
-//            mapView.addAnnotation(annotation)
-            //addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
         }
         else{
             let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
@@ -315,11 +350,29 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         annotation.title = title
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         locationNodes.append(LocationAnnotationNode(location: location, image: image))
+        addedPOI.append(annotation)
         mapView.addAnnotation(annotation)
     }
     func addPolyline(polyline: MKPolyline){
         mapView.add(polyline)
         polylines.append(polyline)
+    }
+    
+    func showViewALittleBit(){
+        for vc in self.childViewControllers{
+            if vc.isKind(of: POIViewController.self){
+                let next = vc as? POIViewController
+                next?.bgColor = (self.pressedAnnotation?.markerTintColor)!
+                next?.thisPOITitle = self.pressedAnnotation?.title
+                next?.thisPOIExcerpt = self.pressedAnnotation?.title
+                next?.thisPOIId = self.pressedAnnotation?.id
+                next?.updateContent()
+                break
+            }
+        }
+        POIView.alpha = 1
+        view.insertSubview(POIView, aboveSubview: searchBar)
+        print("should be brought")
     }
 }
 

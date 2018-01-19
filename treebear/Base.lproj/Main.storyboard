@@ -52,10 +52,24 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="9pO-4r-La5"/>
                                 </connections>
                             </searchBar>
+                            <containerView opaque="NO" contentMode="top" translatesAutoresizingMaskIntoConstraints="NO" id="UNZ-bA-mFA">
+                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="gyQ-iR-HgS"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabledForSubviews" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="eii-dm-tYO" kind="embed" identifier="annotationPressed" id="a5S-1s-Twm"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UNZ-bA-mFA" secondAttribute="bottom" id="7sA-qv-jfe"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EYh-oI-LMH"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="F4w-hS-mjQ"/>
                             <constraint firstAttribute="top" secondItem="uI4-Vq-MjM" secondAttribute="top" id="FG8-Oz-QXY"/>
@@ -64,6 +78,8 @@
                             <constraint firstItem="uI4-Vq-MjM" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="SQw-of-FhW"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="VP8-Mh-4wM"/>
                             <constraint firstItem="iae-m9-UAk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wy6-Vg-hhl"/>
+                            <constraint firstItem="UNZ-bA-mFA" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="dWJ-9s-Myz"/>
+                            <constraint firstItem="UNZ-bA-mFA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fMC-4C-iFH"/>
                             <constraint firstItem="iae-m9-UAk" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="fcG-RX-5RN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GXD-Rc-7uJ" secondAttribute="bottom" id="gz4-Zx-dti"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jCC-8F-HqG"/>
@@ -80,6 +96,7 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="POIView" destination="UNZ-bA-mFA" id="tTJ-ze-yHo"/>
                         <outlet property="mapView" destination="GXD-Rc-7uJ" id="Vpd-44-RkI"/>
                         <outlet property="pan2AR" destination="CFo-Yc-Br1" id="vGY-pX-jx5"/>
                         <outlet property="pan2Menu" destination="jUl-hp-a6C" id="KM6-8c-4QH"/>
@@ -114,7 +131,7 @@
                     </connections>
                 </screenEdgePanGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="136.5" y="131.5"/>
+            <point key="canvasLocation" x="135.19999999999999" y="130.88455772113943"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="3dp-GF-7tD">
@@ -223,7 +240,7 @@
         <!--View Controller-->
         <scene sceneID="hNh-zX-Juh">
             <objects>
-                <viewController id="eii-dm-tYO" sceneMemberID="viewController">
+                <viewController id="eii-dm-tYO" customClass="POIViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M4E-Fb-a0J">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -231,20 +248,48 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oY0-Fw-DYt">
                                 <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xqh-L2-Mrl">
+                                <rect key="frame" x="17" y="73" width="343" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KUk-Av-cHe">
+                                <rect key="frame" x="16" y="25" width="343" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="KUk-Av-cHe" firstAttribute="top" secondItem="W0O-xG-1vH" secondAttribute="top" constant="5" id="22I-af-E23"/>
+                            <constraint firstItem="W0O-xG-1vH" firstAttribute="trailing" secondItem="KUk-Av-cHe" secondAttribute="trailing" constant="16" id="CLl-8X-8Fi"/>
                             <constraint firstItem="oY0-Fw-DYt" firstAttribute="width" secondItem="M4E-Fb-a0J" secondAttribute="width" id="DVr-7Z-Kq7"/>
                             <constraint firstItem="oY0-Fw-DYt" firstAttribute="top" secondItem="W0O-xG-1vH" secondAttribute="top" constant="90" id="Exh-g9-WAY"/>
                             <constraint firstItem="W0O-xG-1vH" firstAttribute="bottom" secondItem="oY0-Fw-DYt" secondAttribute="bottom" id="Tue-Sc-TEQ"/>
+                            <constraint firstItem="Xqh-L2-Mrl" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" constant="17" id="U1D-Nh-1XL"/>
                             <constraint firstItem="oY0-Fw-DYt" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" id="WlQ-Yd-MT2"/>
+                            <constraint firstItem="oY0-Fw-DYt" firstAttribute="top" secondItem="Xqh-L2-Mrl" secondAttribute="bottom" constant="17" id="XRe-7Y-GXO"/>
+                            <constraint firstItem="Xqh-L2-Mrl" firstAttribute="top" secondItem="KUk-Av-cHe" secondAttribute="bottom" constant="18" id="egE-sb-Lqk"/>
+                            <constraint firstItem="KUk-Av-cHe" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" constant="16" id="kEH-vz-eR8"/>
+                            <constraint firstItem="Xqh-L2-Mrl" firstAttribute="width" secondItem="KUk-Av-cHe" secondAttribute="width" id="xPI-xz-u0Q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="W0O-xG-1vH"/>
                     </view>
+                    <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="POIExcerpt" destination="Xqh-L2-Mrl" id="9tX-ej-YLB"/>
+                        <outlet property="POIName" destination="KUk-Av-cHe" id="A2F-1v-8ZQ"/>
+                        <outlet property="ScrollingDetails" destination="oY0-Fw-DYt" id="Owl-he-f4t"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fU3-S0-ft0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-359" y="960"/>
+            <point key="canvasLocation" x="-377" y="900"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="YFs-Vw-MRj">
@@ -288,7 +333,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="467"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="U3q-SB-sN7">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="U3q-SB-sN7">
                             <rect key="frame" x="0.0" y="376" width="375" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

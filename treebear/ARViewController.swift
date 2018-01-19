@@ -48,6 +48,14 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        sceneLocationView.run()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        sceneLocationView.pause()
+    }
+    
 
     @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
         let translation = pan2Main.translation(in: nil)
