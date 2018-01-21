@@ -180,6 +180,12 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if sender.state == .began {
             // do something here
             centerMapOnUserLocation = false
+            for annotation in mapView.annotations{
+                if(annotation.isKind(of: MKUserLocation.self)){
+                    mapView.deselectAnnotation(annotation, animated: true)
+                    break
+                }
+            }
         }
     }
 
