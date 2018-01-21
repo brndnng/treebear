@@ -177,7 +177,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
     
     @objc func didDragMap(_ sender: UIPanGestureRecognizer) {
-        if sender.state == .ended {
+        if sender.state == .began {
             // do something here
             centerMapOnUserLocation = false
         }
