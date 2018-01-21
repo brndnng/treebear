@@ -37,7 +37,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
             hero_dismissViewController()
         //testText.text = "test passed"
         case .ended:
-            if progress + pan2Main.velocity(in: nil).x / view.bounds.width > 0.15 {
+            if progress + pan2Main.velocity(in: nil).x / view.bounds.width > 0.3 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()

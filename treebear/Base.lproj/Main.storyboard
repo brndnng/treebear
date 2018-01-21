@@ -52,24 +52,47 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="9pO-4r-La5"/>
                                 </connections>
                             </searchBar>
-                            <containerView opaque="NO" contentMode="top" translatesAutoresizingMaskIntoConstraints="NO" id="UNZ-bA-mFA">
-                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Acu-z7-sf4">
+                                <rect key="frame" x="0.0" y="517" width="375" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phF-Oo-bXm">
+                                        <rect key="frame" x="16" y="32" width="343" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAp-x0-j9A">
+                                        <rect key="frame" x="16" y="78" width="343" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="gyQ-iR-HgS"/>
+                                    <constraint firstItem="phF-Oo-bXm" firstAttribute="top" secondItem="Acu-z7-sf4" secondAttribute="top" constant="32" id="8Ty-b0-fid"/>
+                                    <constraint firstAttribute="height" constant="150" id="H5b-OE-Yrw"/>
+                                    <constraint firstItem="phF-Oo-bXm" firstAttribute="leading" secondItem="Acu-z7-sf4" secondAttribute="leading" constant="16" id="RFT-ew-gML"/>
+                                    <constraint firstItem="GAp-x0-j9A" firstAttribute="leading" secondItem="Acu-z7-sf4" secondAttribute="leading" constant="16" id="S7B-uR-eg7"/>
+                                    <constraint firstAttribute="trailing" secondItem="GAp-x0-j9A" secondAttribute="trailing" constant="16" id="V7D-Gb-AS3"/>
+                                    <constraint firstAttribute="bottom" secondItem="GAp-x0-j9A" secondAttribute="bottom" constant="32" id="VKJ-Mg-C1j"/>
+                                    <constraint firstAttribute="trailing" secondItem="phF-Oo-bXm" secondAttribute="trailing" constant="16" id="ad9-jq-x0c"/>
+                                    <constraint firstItem="GAp-x0-j9A" firstAttribute="top" secondItem="phF-Oo-bXm" secondAttribute="bottom" constant="16" id="fJG-BK-x5t"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabledForSubviews" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="POIOverview"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="eii-dm-tYO" kind="embed" identifier="annotationPressed" id="a5S-1s-Twm"/>
+                                    <outletCollection property="gestureRecognizers" destination="Lmq-5r-HIC" appends="YES" id="KDW-Bx-fcS"/>
                                 </connections>
-                            </containerView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UNZ-bA-mFA" secondAttribute="bottom" id="7sA-qv-jfe"/>
+                            <constraint firstItem="Acu-z7-sf4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="372-tr-QvG"/>
+                            <constraint firstAttribute="bottom" secondItem="Acu-z7-sf4" secondAttribute="bottom" id="BDf-3b-LBo"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EYh-oI-LMH"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="F4w-hS-mjQ"/>
                             <constraint firstAttribute="top" secondItem="uI4-Vq-MjM" secondAttribute="top" id="FG8-Oz-QXY"/>
@@ -78,10 +101,9 @@
                             <constraint firstItem="uI4-Vq-MjM" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="SQw-of-FhW"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="VP8-Mh-4wM"/>
                             <constraint firstItem="iae-m9-UAk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wy6-Vg-hhl"/>
-                            <constraint firstItem="UNZ-bA-mFA" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="dWJ-9s-Myz"/>
-                            <constraint firstItem="UNZ-bA-mFA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fMC-4C-iFH"/>
                             <constraint firstItem="iae-m9-UAk" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="fcG-RX-5RN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GXD-Rc-7uJ" secondAttribute="bottom" id="gz4-Zx-dti"/>
+                            <constraint firstItem="Acu-z7-sf4" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="hSQ-ji-WTw"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jCC-8F-HqG"/>
                             <constraint firstItem="yS6-rL-TG8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="olY-vn-BJp"/>
                             <constraint firstItem="GXD-Rc-7uJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ukF-AJ-fqs"/>
@@ -96,16 +118,20 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <outlet property="POIView" destination="UNZ-bA-mFA" id="tTJ-ze-yHo"/>
+                        <outlet property="POIExcerpt" destination="GAp-x0-j9A" id="qNL-J4-UvR"/>
+                        <outlet property="POINameLabel" destination="phF-Oo-bXm" id="L65-RL-wx9"/>
+                        <outlet property="POIView" destination="Acu-z7-sf4" id="KIi-yr-mKt"/>
                         <outlet property="mapView" destination="GXD-Rc-7uJ" id="Vpd-44-RkI"/>
                         <outlet property="pan2AR" destination="CFo-Yc-Br1" id="vGY-pX-jx5"/>
                         <outlet property="pan2Menu" destination="jUl-hp-a6C" id="KM6-8c-4QH"/>
+                        <outlet property="panUpPOI" destination="Lmq-5r-HIC" id="NUv-OO-ium"/>
                         <outlet property="searchBar" destination="iae-m9-UAk" id="sgJ-ui-Uqu"/>
                         <outlet property="searchDisplayController" destination="RiX-e3-rBd" id="P0T-C8-LrX"/>
                         <outlet property="view4EdgePan" destination="yS6-rL-TG8" id="aDF-dK-cjm"/>
                         <outlet property="view4EdgePan2Menu" destination="uI4-Vq-MjM" id="uBm-rU-nrt"/>
                         <segue destination="idh-el-agI" kind="presentation" identifier="main2AR" id="EwR-83-23O"/>
                         <segue destination="93U-gj-Gdh" kind="presentation" identifier="main2Menu" id="6n4-6b-unJ"/>
+                        <segue destination="eii-dm-tYO" kind="presentation" identifier="annotationPressed" id="7q8-Q2-dG7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -130,6 +156,11 @@
                         <action selector="swipeRight:" destination="BYZ-38-t0r" id="wia-v3-FAe"/>
                     </connections>
                 </screenEdgePanGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Lmq-5r-HIC">
+                    <connections>
+                        <action selector="POIPanUP:" destination="BYZ-38-t0r" id="bXA-LE-jEE"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="135.19999999999999" y="130.88455772113943"/>
         </scene>
@@ -245,35 +276,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSo-R8-QAa">
+                                <rect key="frame" x="0.0" y="20" width="375" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEA-4x-CUg">
+                                        <rect key="frame" x="16" y="32" width="343" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0B-Zj-tDz">
+                                        <rect key="frame" x="16" y="78" width="343" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="y0B-Zj-tDz" secondAttribute="trailing" constant="16" id="01U-aB-Hrg"/>
+                                    <constraint firstItem="y0B-Zj-tDz" firstAttribute="top" secondItem="fEA-4x-CUg" secondAttribute="bottom" constant="16" id="LPR-7S-IUJ"/>
+                                    <constraint firstItem="fEA-4x-CUg" firstAttribute="leading" secondItem="MSo-R8-QAa" secondAttribute="leading" constant="16" id="Oju-sO-AGd"/>
+                                    <constraint firstItem="y0B-Zj-tDz" firstAttribute="leading" secondItem="MSo-R8-QAa" secondAttribute="leading" constant="16" id="WpK-CR-UMR"/>
+                                    <constraint firstAttribute="height" constant="150" id="aKW-ys-Pdp"/>
+                                    <constraint firstAttribute="trailing" secondItem="fEA-4x-CUg" secondAttribute="trailing" constant="16" id="leB-Lq-2OM"/>
+                                    <constraint firstAttribute="bottom" secondItem="y0B-Zj-tDz" secondAttribute="bottom" constant="32" id="y1e-lW-zBg"/>
+                                    <constraint firstItem="fEA-4x-CUg" firstAttribute="top" secondItem="MSo-R8-QAa" secondAttribute="top" constant="32" id="ypE-Fm-CqQ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="POIOverview"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="z18-ur-Kvh" appends="YES" id="o3q-zb-rrK"/>
+                                </connections>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oY0-Fw-DYt">
-                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
+                                <rect key="frame" x="0.0" y="170" width="375" height="497"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xqh-L2-Mrl">
-                                <rect key="frame" x="17" y="73" width="343" height="20"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KUk-Av-cHe">
-                                <rect key="frame" x="16" y="25" width="343" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="KUk-Av-cHe" firstAttribute="top" secondItem="W0O-xG-1vH" secondAttribute="top" constant="5" id="22I-af-E23"/>
-                            <constraint firstItem="W0O-xG-1vH" firstAttribute="trailing" secondItem="KUk-Av-cHe" secondAttribute="trailing" constant="16" id="CLl-8X-8Fi"/>
+                            <constraint firstItem="W0O-xG-1vH" firstAttribute="top" secondItem="MSo-R8-QAa" secondAttribute="top" id="54K-wT-VDq"/>
                             <constraint firstItem="oY0-Fw-DYt" firstAttribute="width" secondItem="M4E-Fb-a0J" secondAttribute="width" id="DVr-7Z-Kq7"/>
-                            <constraint firstItem="oY0-Fw-DYt" firstAttribute="top" secondItem="W0O-xG-1vH" secondAttribute="top" constant="90" id="Exh-g9-WAY"/>
                             <constraint firstItem="W0O-xG-1vH" firstAttribute="bottom" secondItem="oY0-Fw-DYt" secondAttribute="bottom" id="Tue-Sc-TEQ"/>
-                            <constraint firstItem="Xqh-L2-Mrl" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" constant="17" id="U1D-Nh-1XL"/>
                             <constraint firstItem="oY0-Fw-DYt" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" id="WlQ-Yd-MT2"/>
-                            <constraint firstItem="oY0-Fw-DYt" firstAttribute="top" secondItem="Xqh-L2-Mrl" secondAttribute="bottom" constant="17" id="XRe-7Y-GXO"/>
-                            <constraint firstItem="Xqh-L2-Mrl" firstAttribute="top" secondItem="KUk-Av-cHe" secondAttribute="bottom" constant="18" id="egE-sb-Lqk"/>
-                            <constraint firstItem="KUk-Av-cHe" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" constant="16" id="kEH-vz-eR8"/>
-                            <constraint firstItem="Xqh-L2-Mrl" firstAttribute="width" secondItem="KUk-Av-cHe" secondAttribute="width" id="xPI-xz-u0Q"/>
+                            <constraint firstItem="oY0-Fw-DYt" firstAttribute="top" secondItem="MSo-R8-QAa" secondAttribute="bottom" id="Y5b-0O-oGQ"/>
+                            <constraint firstItem="MSo-R8-QAa" firstAttribute="width" secondItem="M4E-Fb-a0J" secondAttribute="width" id="iNX-WW-lvK"/>
+                            <constraint firstItem="MSo-R8-QAa" firstAttribute="leading" secondItem="W0O-xG-1vH" secondAttribute="leading" id="zNs-kB-trm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="W0O-xG-1vH"/>
                     </view>
@@ -282,12 +332,19 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <outlet property="POIExcerpt" destination="Xqh-L2-Mrl" id="9tX-ej-YLB"/>
-                        <outlet property="POIName" destination="KUk-Av-cHe" id="A2F-1v-8ZQ"/>
+                        <outlet property="POIExcerpt" destination="y0B-Zj-tDz" id="YrZ-r5-l9l"/>
+                        <outlet property="POIName" destination="fEA-4x-CUg" id="OKO-hW-7yg"/>
+                        <outlet property="POIOverView" destination="MSo-R8-QAa" id="x3b-yk-yZc"/>
+                        <outlet property="PanDownMap" destination="z18-ur-Kvh" id="8H8-1q-4Ws"/>
                         <outlet property="ScrollingDetails" destination="oY0-Fw-DYt" id="Owl-he-f4t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fU3-S0-ft0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="z18-ur-Kvh">
+                    <connections>
+                        <action selector="panDownMap:" destination="eii-dm-tYO" id="hId-U0-pRE"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-377" y="900"/>
         </scene>

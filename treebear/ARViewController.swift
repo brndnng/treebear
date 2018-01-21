@@ -65,7 +65,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
             Hero.shared.defaultAnimation = .slide(direction: .left)
             hero_dismissViewController()
         case .ended:
-            if progress / 2 + -1 * pan2Main.velocity(in: nil).x / sceneLocationView.bounds.width > 0.15 {
+            if progress / 2 + -1 * pan2Main.velocity(in: nil).x / sceneLocationView.bounds.width > 0.3 {
                 sceneLocationView.pause()
                 Hero.shared.finish()
             } else {

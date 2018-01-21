@@ -25,11 +25,15 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var pan2Menu: UIScreenEdgePanGestureRecognizer!
+    @IBOutlet weak var panUpPOI: UIPanGestureRecognizer!
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var view4EdgePan: UIView!
     @IBOutlet weak var view4EdgePan2Menu: UIView!
     @IBOutlet weak var POIView: UIView!
+    @IBOutlet weak var POINameLabel: UILabel!
+    @IBOutlet weak var POIExcerpt: UILabel!
     
     var centerMapOnUserLocation: Bool = true
     var destination : LocationAnnotationNode?
@@ -108,7 +112,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             Hero.shared.defaultAnimation = .slide(direction: .right)
             performSegue(withIdentifier: "main2AR", sender: self)
         case .ended:
-            if progress + pan2AR.velocity(in: nil).x / view.bounds.width > 0.15 {
+            if progress + pan2AR.velocity(in: nil).x / view.bounds.width > 0.3 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
@@ -134,7 +138,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             performSegue(withIdentifier: "main2Menu", sender: self)
         //testText.text = "test passed"
         case .ended:
-            if progress + -1 * pan2Menu.velocity(in: nil).x / view.bounds.width > 0.15 {
+            if progress + -1 * pan2Menu.velocity(in: nil).x / view.bounds.width > 0.3 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
@@ -145,6 +149,27 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             _ = 1
         }
 
+    }
+    
+    @IBAction func POIPanUP(_ sender: UIPanGestureRecognizer) {
+        let translation = panUpPOI.translation(in: nil)
+        let progress = CGFloat( -1 * translation.y / 2 / view.bounds.height)
+
+        switch panUpPOI.state {
+        case .began:
+            // begin the transition as normal
+            Hero.shared.defaultAnimation = .push(direction: .up)
+            performSegue(withIdentifier: "annotationPressed", sender: self)
+        //testText.text = "test passed"
+        case .ended:
+            if progress + -1 * panUpPOI.velocity(in: nil).y / view.bounds.height > 0.3 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        default:
+            Hero.shared.update(progress)
+        }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -186,7 +211,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if ((view.tag) != 0)
         {
             print("User tapped on annotation: \(view.tag)")
-            mapView.removeOverlays(mapView.overlays)
+            //mapView.removeOverlays(mapView.overlays)
             self.polylines.removeAll()
             self.getDirections(start: (locationManager.location?.coordinate)!,end: (view.annotation?.coordinate)!){(route) in
                 self.addPolyline(polyline: route.polyline)
@@ -204,6 +229,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         POIView.alpha = 0
+        mapView.removeOverlays(mapView.overlays)
         print("did deselect")
     }
     
@@ -359,17 +385,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
     
     func showViewALittleBit(){
-        for vc in self.childViewControllers{
-            if vc.isKind(of: POIViewController.self){
-                let next = vc as? POIViewController
-                next?.bgColor = (self.pressedAnnotation?.markerTintColor)!
-                next?.thisPOITitle = self.pressedAnnotation?.title
-                next?.thisPOIExcerpt = self.pressedAnnotation?.title
-                next?.thisPOIId = self.pressedAnnotation?.id
-                next?.updateContent()
-                break
-            }
-        }
+        POIView.backgroundColor = pressedAnnotation?.markerTintColor
+        POINameLabel.text = pressedAnnotation?.title
+        POIExcerpt.text = pressedAnnotation?.title
         POIView.alpha = 1
         view.insertSubview(POIView, aboveSubview: searchBar)
         print("should be brought")
