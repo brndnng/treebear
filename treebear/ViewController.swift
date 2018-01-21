@@ -237,6 +237,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         for view in views{
             if(view.annotation?.isKind(of: MKUserLocation.self))!{
                 view.canShowCallout = false
+            }else{
+                view.canShowCallout = true
             }
         }
     }
