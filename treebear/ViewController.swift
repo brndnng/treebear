@@ -238,7 +238,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             if(view.annotation?.isKind(of: MKUserLocation.self))!{
                 view.canShowCallout = false
             }else{
-                view.canShowCallout = true
+                if let markerAnnotationView = view as? MKMarkerAnnotationView {
+                    markerAnnotationView.titleVisibility = .visible
+                }
             }
         }
     }
