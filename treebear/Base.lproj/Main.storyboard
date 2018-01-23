@@ -58,13 +58,13 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phF-Oo-bXm">
                                         <rect key="frame" x="16" y="32" width="343" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAp-x0-j9A">
                                         <rect key="frame" x="16" y="78" width="343" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -227,19 +227,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ghl-oq-7DW">
-                                <rect key="frame" x="177.5" y="333.5" width="20" height="20"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4S-3s-4LX">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="200" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-bZ-0IB">
+                                        <rect key="frame" x="16" y="62" width="118" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ykM-Gl-dqG">
+                                        <rect key="frame" x="16" y="16" width="118" height="30"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="VpA-Dm-LEI"/>
-                                    <constraint firstAttribute="width" secondItem="ghl-oq-7DW" secondAttribute="height" multiplier="1:1" id="Yz5-En-1lI"/>
+                                    <constraint firstAttribute="trailing" secondItem="8qU-bZ-0IB" secondAttribute="trailing" constant="16" id="1b8-tO-1wM"/>
+                                    <constraint firstAttribute="trailing" secondItem="ykM-Gl-dqG" secondAttribute="trailing" constant="16" id="AuN-jB-fNk"/>
+                                    <constraint firstItem="8qU-bZ-0IB" firstAttribute="leading" secondItem="j4S-3s-4LX" secondAttribute="leading" constant="16" id="HBT-a1-EFG"/>
+                                    <constraint firstItem="ykM-Gl-dqG" firstAttribute="top" secondItem="j4S-3s-4LX" secondAttribute="top" constant="16" id="IZT-IU-v89"/>
+                                    <constraint firstItem="8qU-bZ-0IB" firstAttribute="top" secondItem="ykM-Gl-dqG" secondAttribute="bottom" constant="16" id="PRe-o0-flj"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="c5E-Fs-i0A"/>
+                                    <constraint firstAttribute="bottom" secondItem="8qU-bZ-0IB" secondAttribute="bottom" constant="16" id="fYb-8K-zar"/>
+                                    <constraint firstItem="ykM-Gl-dqG" firstAttribute="leading" secondItem="j4S-3s-4LX" secondAttribute="leading" constant="16" id="j5b-IW-hEi"/>
+                                    <constraint firstAttribute="height" constant="100" id="pkH-NK-UIa"/>
                                 </constraints>
-                            </activityIndicatorView>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWJ-lA-Zfe">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ghl-oq-7DW">
+                                        <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="VpA-Dm-LEI"/>
+                                            <constraint firstAttribute="width" secondItem="ghl-oq-7DW" secondAttribute="height" multiplier="1:1" id="Yz5-En-1lI"/>
+                                        </constraints>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ghl-oq-7DW" firstAttribute="centerY" secondItem="LWJ-lA-Zfe" secondAttribute="centerY" id="EmK-ZH-o5s"/>
+                                    <constraint firstItem="ghl-oq-7DW" firstAttribute="centerX" secondItem="LWJ-lA-Zfe" secondAttribute="centerX" id="P6f-G0-QOK"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="ghl-oq-7DW" firstAttribute="centerY" secondItem="YDX-pq-Dgg" secondAttribute="centerY" id="Y15-9s-nrd"/>
-                            <constraint firstItem="ghl-oq-7DW" firstAttribute="centerX" secondItem="YDX-pq-Dgg" secondAttribute="centerX" id="ssj-dj-Dob"/>
+                            <constraint firstItem="j4S-3s-4LX" firstAttribute="leading" secondItem="YDX-pq-Dgg" secondAttribute="leading" id="LSV-no-GbC"/>
+                            <constraint firstItem="YDX-pq-Dgg" firstAttribute="trailing" secondItem="LWJ-lA-Zfe" secondAttribute="trailing" id="MqJ-Ix-bPh"/>
+                            <constraint firstItem="YDX-pq-Dgg" firstAttribute="bottom" secondItem="LWJ-lA-Zfe" secondAttribute="bottom" id="dph-4Y-w4T"/>
+                            <constraint firstItem="YDX-pq-Dgg" firstAttribute="top" secondItem="j4S-3s-4LX" secondAttribute="top" constant="20" id="lwq-Wp-H8u"/>
+                            <constraint firstItem="LWJ-lA-Zfe" firstAttribute="top" secondItem="Nwo-4e-6GX" secondAttribute="top" id="ocx-Db-Xii"/>
+                            <constraint firstItem="LWJ-lA-Zfe" firstAttribute="leading" secondItem="YDX-pq-Dgg" secondAttribute="leading" id="s83-VM-Z4O"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YDX-pq-Dgg"/>
                         <userDefinedRuntimeAttributes>
@@ -254,8 +297,12 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="POIExcerpt" destination="8qU-bZ-0IB" id="hL0-Yu-Uw6"/>
+                        <outlet property="POIName" destination="ykM-Gl-dqG" id="zMa-QP-6l6"/>
                         <outlet property="loadingGIF" destination="ghl-oq-7DW" id="OpK-GR-HdV"/>
+                        <outlet property="locationLabel" destination="j4S-3s-4LX" id="YQg-lK-H6F"/>
                         <outlet property="pan2Main" destination="r0d-Uh-1zs" id="xeb-Gk-1dG"/>
+                        <segue destination="eii-dm-tYO" kind="presentation" identifier="SCNNodePressed" id="qjd-s7-X0R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ds6-ws-W2L" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -282,13 +329,13 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEA-4x-CUg">
                                         <rect key="frame" x="16" y="32" width="343" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0B-Zj-tDz">
                                         <rect key="frame" x="16" y="78" width="343" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -580,4 +627,7 @@
             <point key="canvasLocation" x="2058" y="360"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="7q8-Q2-dG7"/>
+    </inferredMetricsTieBreakers>
 </document>

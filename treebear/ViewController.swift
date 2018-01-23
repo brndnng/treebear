@@ -192,8 +192,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "main2AR" && self.destination != nil {
             if let nextViewController = segue.destination as? ARViewController{
-                nextViewController.destination = self.destination
-                nextViewController.locationNodes = self.locationNodes
+                //nextViewController.destination = self.destination
+                //nextViewController.locationNodes = self.locationNodes
                 nextViewController.polylines = self.polylines
             }
         }else if segue.identifier == "annotationPressed" && self.pressedAnnotation != nil{
@@ -236,6 +236,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         POIView.alpha = 0
         mapView.removeOverlays(mapView.overlays)
+        polylines = []
         print("did deselect")
     }
     

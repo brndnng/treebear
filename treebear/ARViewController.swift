@@ -12,6 +12,26 @@ import Hero
 import MapKit
 import SceneKit
 
+class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
+    var	id: Int
+    var title: String
+    var excerpt: String
+    var bgcolor: UIColor
+    
+    init(id:Int, title:String, excerpt: String, color: UIColor, location: CLLocation, image: UIImage){
+        self.id = id
+        self.title = title
+        self.excerpt = excerpt
+        self.bgcolor = color
+        
+        super.init(location: location, image: image)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLocationViewDelegate{
     
 
@@ -20,21 +40,37 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     var sceneLocationView = SceneLocationView()
     var destination : LocationAnnotationNode?
-    var locationNodes : [LocationAnnotationNode] = []
+    var locationNodes : [LocationAnnotationNodeWithDetails] = []
     var polylines : [MKPolyline] = []
+    var selectedObject: LocationAnnotationNodeWithDetails?
+    
+    //For Location Node (the view is hiding in the back)
+    @IBOutlet weak var locationLabel: UIView!
+    @IBOutlet weak var POIExcerpt: UILabel!
+    @IBOutlet weak var POIName: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
         sceneLocationView.locationDelegate = self
         sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
-    sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destination!)
+        //sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destination!)
+        sceneLocationView.run()
+        debugLocations()
         view.addSubview(sceneLocationView)
         for location in locationNodes{
+            //location.scaleRelativeToDistance = true
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: location)
         }
         print(polylines)
         sceneLocationView.addPolylines(polylines)
-        sceneLocationView.run()
+        //sceneLocationView.run()
+        
+        //handle tap on ar obj
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+        sceneLocationView.addGestureRecognizer(tapGesture)
         
     }
     
@@ -50,6 +86,16 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     
     override func viewDidAppear(_ animated: Bool) {
         sceneLocationView.run()
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SCNNodePressed" && self.selectedObject != nil {
+            if let nextViewController = segue.destination as? POIViewController{
+                nextViewController.bgColor = (selectedObject?.bgcolor)!
+                nextViewController.thisPOITitle = selectedObject?.title
+                nextViewController.thisPOIExcerpt = selectedObject?.excerpt
+                nextViewController.thisPOIId = selectedObject?.id
+            }
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -76,6 +122,41 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         default:
             _ = 1
         }
+    }
+    
+    @objc func didTap(_ gesture: UITapGestureRecognizer) {
+        let touchLocation = gesture.location(in: sceneLocationView)
+        
+        if let tappedObject = virtualObject(at: touchLocation) {
+            // Select a new object.
+            selectedObject = existingObjectContainingNode(tappedObject)
+            print("User tapped on annotation: \(selectedObject?.id ?? -1)")
+            print("Point altitude = \(selectedObject?.location.altitude ?? -1)")
+            print("User altitude = \(sceneLocationView.currentLocation()?.altitude ?? -1)")
+            Hero.shared.defaultAnimation = .push(direction: .up)
+            performSegue(withIdentifier: "SCNNodePressed", sender: self)
+        } else {
+            // nothing selected
+            print("pressed on nothing")
+        }
+    }
+    
+    func virtualObject(at point: CGPoint) -> SCNNode? {
+        let hitTestOptions: [SCNHitTestOption: Any] = [.boundingBoxOnly: true]
+        let hitTestResults = sceneLocationView.hitTest(point, options: hitTestOptions)
+        
+        return hitTestResults.first?.node
+    }
+    
+    func existingObjectContainingNode(_ node: SCNNode) -> LocationAnnotationNodeWithDetails? {
+        if let virtualObjectRoot = node as? LocationAnnotationNodeWithDetails {
+            return virtualObjectRoot
+        }
+        
+        guard let parent = node.parent else { return nil }
+        
+        // Recurse up to check if the parent is a `VirtualObject`.
+        return existingObjectContainingNode(parent)
     }
     
     /*
@@ -109,5 +190,40 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {
         
     }
-
+    
+    func debugLocations(){
+        let altitude = sceneLocationView.currentLocation()?.altitude
+        let color = [UIColor(red: 0.0039, green: 0.3412, blue: 0.6078, alpha: 1.0) /* #01579b */,
+            UIColor(red: 0.749, green: 0.2118, blue: 0.0471, alpha: 1.0) /* #bf360c */,
+            UIColor(red: 0.1922, green: 0.1059, blue: 0.5725, alpha: 1.0) /* #311b92 */,
+            UIColor(red: 0.149, green: 0.1961, blue: 0.2196, alpha: 1.0) /* #263238 */]
+        locationNodes.append(LocationAnnotationNodeWithDetails(id: 1, title: "Turkey", excerpt: "RedBird", color: color[0], location: CLLocation(coordinate: CLLocationCoordinate2D(latitude: 22.3375005, longitude: 114.2629677), altitude: altitude ?? 100), image: getImageForLocation(title: "Turkey", excerpt: "RedBird", color: color[0])))
+        locationNodes.append(LocationAnnotationNodeWithDetails(id: 2, title: "Libra", excerpt: "ry", color: color[1], location: CLLocation(coordinate: CLLocationCoordinate2D(latitude: 22.338009, longitude: 114.2641432), altitude: altitude ?? 100), image: getImageForLocation(title: "Libra", excerpt: "ry", color: color[1])))
+        locationNodes.append(LocationAnnotationNodeWithDetails(id: 2, title: "Mushroom", excerpt: "jump", color: color[2], location: CLLocation(coordinate: CLLocationCoordinate2D(latitude: 22.337493, longitude: 114.264215), altitude: altitude ?? 100), image: getImageForLocation(title: "Mushroom", excerpt: "jump", color: color[2])))
+        locationNodes.append(LocationAnnotationNodeWithDetails(id: 2, title: "Concourse", excerpt: "long", color: color[3], location: CLLocation(coordinate: CLLocationCoordinate2D(latitude: 22.337258, longitude: 114.263797), altitude: altitude ?? 100), image: getImageForLocation(title: "Concourse", excerpt: "long", color: color[3])))
+    }
+    
+    func getImageForLocation(title:String, excerpt: String, color: UIColor) -> UIImage{
+        locationLabel.backgroundColor = color
+        POIName.text = title
+        POIName.textColor = .white
+        POIExcerpt.text = excerpt
+        POIExcerpt.textColor = .white
+        return locationLabel.asImage()
+    }
 }
+
+extension UIView {
+    
+    // Using a function since `var image` might conflict with an existing variable
+    // (like on `UIImageView`)
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
+
+
+
