@@ -115,7 +115,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public func run() {
         // Create a session configuration
-		let configuration = ARWorldTrackingConfiguration()
+        let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         
         if orientToTrueNorth {
@@ -248,9 +248,9 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
-        let currentLocation = currentLocation(),
-        let sceneNode = self.sceneNode else {
-            return
+            let currentLocation = currentLocation(),
+            let sceneNode = self.sceneNode else {
+                return
         }
         
         locationNode.location = currentLocation
@@ -343,7 +343,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     public func updatePositionAndScaleOfLocationNode(locationNode: LocationNode, initialSetup: Bool = false, animated: Bool = false, duration: TimeInterval = 0.1) {
         guard let currentPosition = currentScenePosition(),
             let currentLocation = currentLocation() else {
-            return
+                return
         }
         
         SCNTransaction.begin()
@@ -483,16 +483,16 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         }
     }
     // Extensions
-//    func addAnnotation(_ annotation: MKAnnotation) {
-//        guard let altitude = currentLocation()?.altitude else { return }
-//
-//        let node = LocationAnnotationNode(annotation: annotation, altitude: altitude)
-//        addLocationNodeWithConfirmedLocation(locationNode: node)
-//    }
-//
-//    func addAnnotations(_ annotations: [MKAnnotation]) {
-//        annotations.forEach(addAnnotation)
-//    }
+    //    func addAnnotation(_ annotation: MKAnnotation) {
+    //        guard let altitude = currentLocation()?.altitude else { return }
+    //
+    //        let node = LocationAnnotationNode(annotation: annotation, altitude: altitude)
+    //        addLocationNodeWithConfirmedLocation(locationNode: node)
+    //    }
+    //
+    //    func addAnnotations(_ annotations: [MKAnnotation]) {
+    //        annotations.forEach(addAnnotation)
+    //    }
     
     public func addPolyline(_ polyline: MKPolyline) {
         guard let altitude = currentLocation()?.altitude else { print("no altitude found"); return }

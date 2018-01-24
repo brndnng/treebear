@@ -8,12 +8,14 @@ target 'treebear' do
   # Pods for treebear
   pod 'Hero'
   pod 'ARCL'
+  pod 'GoogleSignIn'
   target 'treebearTests' do
     inherit! :search_paths
     use_frameworks!
     # Pods for testing
     pod 'Hero'
     pod 'ARCL'
+    pod 'GoogleSignIn'
   end
 
   target 'treebearUITests' do
@@ -22,6 +24,7 @@ target 'treebear' do
     # Pods for testing
     pod 'Hero'
     pod 'ARCL'
+    pod 'GoogleSignIn'
   end
 
 end

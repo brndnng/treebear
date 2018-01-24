@@ -164,5 +164,5 @@ open class LocationAnnotationNode: LocationNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
 }

@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3384CBB8038FD21A2FBAF549 /* Pods_treebearTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DD325679559162E275725E /* Pods_treebearTests.framework */; };
-		4815B4345FC1329C0BB71F78 /* Pods_treebearUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA2CAAF4CC26106DED818C94 /* Pods_treebearUITests.framework */; };
+		0F43113F1CE051AD3DC39E70 /* Pods_treebear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 492860BCBD8D51DA16140DFC /* Pods_treebear.framework */; };
+		8867498BF2D3BD3F21154B66 /* Pods_treebearTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2E81FD623FBDB159649A78 /* Pods_treebearTests.framework */; };
+		B404494E201887D7006D3303 /* SearchDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404494D201887D7006D3303 /* SearchDropdown.swift */; };
 		B4B7B5242011F1E40034BCF3 /* POIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B7B5232011F1E40034BCF3 /* POIViewController.swift */; };
+		B4B7B52620184EDE0034BCF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */; };
+		B4B7B52720184EDE0034BCF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */; };
+		B4B7B52820184EDE0034BCF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */; };
+		B4B7B531201854080034BCF3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B7B530201854080034BCF3 /* SignInViewController.swift */; };
+		B4B7B532201854080034BCF3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B7B530201854080034BCF3 /* SignInViewController.swift */; };
+		B4B7B533201854080034BCF3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B7B530201854080034BCF3 /* SignInViewController.swift */; };
 		B4C904B62007485100E6C1A0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C904B52007485100E6C1A0 /* MenuViewController.swift */; };
-		BB8A4E1AB5928CC5145C6471 /* Pods_treebear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BCD03FCE52A198C0FC81A5 /* Pods_treebear.framework */; };
 		CA1920241FCD4A7C00A7B057 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1920231FCD4A7C00A7B057 /* ARViewController.swift */; };
 		CA3E62F61FB1B0D000ADC7D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E62F51FB1B0D000ADC7D3 /* AppDelegate.swift */; };
 		CA3E62F81FB1B0D000ADC7D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E62F71FB1B0D000ADC7D3 /* ViewController.swift */; };
@@ -20,6 +26,7 @@
 		CA3E63001FB1B0D000ADC7D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA3E62FE1FB1B0D000ADC7D3 /* LaunchScreen.storyboard */; };
 		CA3E630B1FB1B0D000ADC7D3 /* treebearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E630A1FB1B0D000ADC7D3 /* treebearTests.swift */; };
 		CA3E63161FB1B0D000ADC7D3 /* treebearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E63151FB1B0D000ADC7D3 /* treebearUITests.swift */; };
+		DDFB2068758A8E50B54E8B28 /* Pods_treebearUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B620D5E493432504DFD47D1 /* Pods_treebearUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,15 +47,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09622DD4BCE0162B2340C123 /* Pods-treebearTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests.release.xcconfig"; sourceTree = "<group>"; };
-		1E6A4937B13873D26D693857 /* Pods-treebear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebear.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebear/Pods-treebear.release.xcconfig"; sourceTree = "<group>"; };
-		29C5336458958A5326B4D6BC /* Pods-treebearUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		49DD325679559162E275725E /* Pods_treebearTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebearTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F762E0D33D057649D62CBA2 /* Pods-treebearTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests.debug.xcconfig"; sourceTree = "<group>"; };
-		82574D06ABAA3C54CC8737F1 /* Pods-treebearUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests.release.xcconfig"; sourceTree = "<group>"; };
-		87BCD03FCE52A198C0FC81A5 /* Pods_treebear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A966590D5C886B8150DD7A37 /* Pods-treebear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebear.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebear/Pods-treebear.debug.xcconfig"; sourceTree = "<group>"; };
+		2680EA3009E50D9B27CC87CE /* Pods-treebearUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2E7CAB62E4D94CE1A025986A /* Pods-treebearTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests.release.xcconfig"; sourceTree = "<group>"; };
+		3C186F0D1B8A82F8EC727EB3 /* Pods-treebearTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests.debug.xcconfig"; sourceTree = "<group>"; };
+		492860BCBD8D51DA16140DFC /* Pods_treebear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C2E81FD623FBDB159649A78 /* Pods_treebearTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebearTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		507E75EE2FEC78FF25AAAC11 /* Pods-treebear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebear.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebear/Pods-treebear.debug.xcconfig"; sourceTree = "<group>"; };
+		5622EC879517E1A15E9FE94D /* Pods-treebearUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebearUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6B620D5E493432504DFD47D1 /* Pods_treebearUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebearUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		954E912D730D26566E9E865A /* Pods-treebear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treebear.release.xcconfig"; path = "Pods/Target Support Files/Pods-treebear/Pods-treebear.release.xcconfig"; sourceTree = "<group>"; };
+		B404494D201887D7006D3303 /* SearchDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDropdown.swift; sourceTree = "<group>"; };
 		B4B7B5232011F1E40034BCF3 /* POIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIViewController.swift; sourceTree = "<group>"; };
+		B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B4B7B530201854080034BCF3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		B4B7B53C201860E80034BCF3 /* treebear-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "treebear-Bridging-Header.h"; sourceTree = "<group>"; };
 		B4C904B52007485100E6C1A0 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		CA1920231FCD4A7C00A7B057 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		CA3E62F21FB1B0CF00ADC7D3 /* treebear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = treebear.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +76,6 @@
 		CA3E63111FB1B0D000ADC7D3 /* treebearUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = treebearUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3E63151FB1B0D000ADC7D3 /* treebearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = treebearUITests.swift; sourceTree = "<group>"; };
 		CA3E63171FB1B0D000ADC7D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA2CAAF4CC26106DED818C94 /* Pods_treebearUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_treebearUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB8A4E1AB5928CC5145C6471 /* Pods_treebear.framework in Frameworks */,
+				0F43113F1CE051AD3DC39E70 /* Pods_treebear.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3384CBB8038FD21A2FBAF549 /* Pods_treebearTests.framework in Frameworks */,
+				8867498BF2D3BD3F21154B66 /* Pods_treebearTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,45 +99,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4815B4345FC1329C0BB71F78 /* Pods_treebearUITests.framework in Frameworks */,
+				DDFB2068758A8E50B54E8B28 /* Pods_treebearUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		95BDA5D9D78F8E2F1981E7AE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A966590D5C886B8150DD7A37 /* Pods-treebear.debug.xcconfig */,
-				1E6A4937B13873D26D693857 /* Pods-treebear.release.xcconfig */,
-				4F762E0D33D057649D62CBA2 /* Pods-treebearTests.debug.xcconfig */,
-				09622DD4BCE0162B2340C123 /* Pods-treebearTests.release.xcconfig */,
-				29C5336458958A5326B4D6BC /* Pods-treebearUITests.debug.xcconfig */,
-				82574D06ABAA3C54CC8737F1 /* Pods-treebearUITests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		9C242A60CA291A1D5B438667 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				87BCD03FCE52A198C0FC81A5 /* Pods_treebear.framework */,
-				49DD325679559162E275725E /* Pods_treebearTests.framework */,
-				EA2CAAF4CC26106DED818C94 /* Pods_treebearUITests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		CA3E62E91FB1B0CF00ADC7D3 = {
 			isa = PBXGroup;
 			children = (
+				B404494D201887D7006D3303 /* SearchDropdown.swift */,
+				B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */,
 				CA3E62F41FB1B0D000ADC7D3 /* treebear */,
 				CA3E63091FB1B0D000ADC7D3 /* treebearTests */,
 				CA3E63141FB1B0D000ADC7D3 /* treebearUITests */,
 				CA3E62F31FB1B0CF00ADC7D3 /* Products */,
-				95BDA5D9D78F8E2F1981E7AE /* Pods */,
-				9C242A60CA291A1D5B438667 /* Frameworks */,
+				B4B7B53C201860E80034BCF3 /* treebear-Bridging-Header.h */,
+				FB492CEE8DE32A97F499E167 /* Pods */,
+				FBADEF1C2CE31B4236845A5E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,6 +137,7 @@
 				CA3E62F51FB1B0D000ADC7D3 /* AppDelegate.swift */,
 				CA3E62F71FB1B0D000ADC7D3 /* ViewController.swift */,
 				CA3E62F91FB1B0D000ADC7D3 /* Main.storyboard */,
+				B4B7B530201854080034BCF3 /* SignInViewController.swift */,
 				B4C904B52007485100E6C1A0 /* MenuViewController.swift */,
 				CA3E62FC1FB1B0D000ADC7D3 /* Assets.xcassets */,
 				CA3E62FE1FB1B0D000ADC7D3 /* LaunchScreen.storyboard */,
@@ -174,6 +166,29 @@
 			path = treebearUITests;
 			sourceTree = "<group>";
 		};
+		FB492CEE8DE32A97F499E167 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				507E75EE2FEC78FF25AAAC11 /* Pods-treebear.debug.xcconfig */,
+				954E912D730D26566E9E865A /* Pods-treebear.release.xcconfig */,
+				3C186F0D1B8A82F8EC727EB3 /* Pods-treebearTests.debug.xcconfig */,
+				2E7CAB62E4D94CE1A025986A /* Pods-treebearTests.release.xcconfig */,
+				5622EC879517E1A15E9FE94D /* Pods-treebearUITests.debug.xcconfig */,
+				2680EA3009E50D9B27CC87CE /* Pods-treebearUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FBADEF1C2CE31B4236845A5E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				492860BCBD8D51DA16140DFC /* Pods_treebear.framework */,
+				4C2E81FD623FBDB159649A78 /* Pods_treebearTests.framework */,
+				6B620D5E493432504DFD47D1 /* Pods_treebearUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,12 +196,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA3E631A1FB1B0D000ADC7D3 /* Build configuration list for PBXNativeTarget "treebear" */;
 			buildPhases = (
-				C173E5D6DAA9CF2058266CEA /* [CP] Check Pods Manifest.lock */,
+				2316F6F00E6CD6E0EA76B8C3 /* [CP] Check Pods Manifest.lock */,
 				CA3E62EE1FB1B0CF00ADC7D3 /* Sources */,
 				CA3E62EF1FB1B0CF00ADC7D3 /* Frameworks */,
 				CA3E62F01FB1B0CF00ADC7D3 /* Resources */,
-				A48DCD5203F6C7F943F5C123 /* [CP] Embed Pods Frameworks */,
-				8FFD4523E23ECE0031EEB28F /* [CP] Copy Pods Resources */,
+				119F50B81849E14C38DBEA41 /* [CP] Embed Pods Frameworks */,
+				70813927FD3D37277B9D84F1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,12 +216,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA3E631D1FB1B0D000ADC7D3 /* Build configuration list for PBXNativeTarget "treebearTests" */;
 			buildPhases = (
-				C468FCCA2D90C592E323EFBC /* [CP] Check Pods Manifest.lock */,
+				381BED91251DC73156F28CAB /* [CP] Check Pods Manifest.lock */,
 				CA3E63021FB1B0D000ADC7D3 /* Sources */,
 				CA3E63031FB1B0D000ADC7D3 /* Frameworks */,
 				CA3E63041FB1B0D000ADC7D3 /* Resources */,
-				CB165D09744B9C6D49A38F0C /* [CP] Embed Pods Frameworks */,
-				499AF0E425C622F569775F2C /* [CP] Copy Pods Resources */,
+				C997ED1B0637B4DF4BBAB4DB /* [CP] Embed Pods Frameworks */,
+				9CB03F1B78ACBE64570FB2CA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -222,12 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA3E63201FB1B0D000ADC7D3 /* Build configuration list for PBXNativeTarget "treebearUITests" */;
 			buildPhases = (
-				18333D29DAAC8A3F167BFCC7 /* [CP] Check Pods Manifest.lock */,
+				A26DF6D1FCCA4A1B1815289E /* [CP] Check Pods Manifest.lock */,
 				CA3E630D1FB1B0D000ADC7D3 /* Sources */,
 				CA3E630E1FB1B0D000ADC7D3 /* Frameworks */,
 				CA3E630F1FB1B0D000ADC7D3 /* Resources */,
-				666784A619E20703BA8E2F1F /* [CP] Embed Pods Frameworks */,
-				DBCD9627DEAA3CA3F743BF30 /* [CP] Copy Pods Resources */,
+				EF39AE9788FA7C39B6863E53 /* [CP] Embed Pods Frameworks */,
+				B8C2788B97C6AD1F969BBD1D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -251,15 +266,18 @@
 				TargetAttributes = {
 					CA3E62F11FB1B0CF00ADC7D3 = {
 						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					CA3E63051FB1B0D000ADC7D3 = {
 						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						TestTargetID = CA3E62F11FB1B0CF00ADC7D3;
 					};
 					CA3E63101FB1B0D000ADC7D3 = {
 						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						TestTargetID = CA3E62F11FB1B0CF00ADC7D3;
 					};
@@ -291,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA3E63001FB1B0D000ADC7D3 /* LaunchScreen.storyboard in Resources */,
+				B4B7B52620184EDE0034BCF3 /* GoogleService-Info.plist in Resources */,
 				CA3E62FD1FB1B0D000ADC7D3 /* Assets.xcassets in Resources */,
 				CA3E62FB1FB1B0D000ADC7D3 /* Main.storyboard in Resources */,
 			);
@@ -300,6 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B7B52720184EDE0034BCF3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,81 +327,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B7B52820184EDE0034BCF3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		18333D29DAAC8A3F167BFCC7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-treebearUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		499AF0E425C622F569775F2C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		666784A619E20703BA8E2F1F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
-				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8FFD4523E23ECE0031EEB28F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebear/Pods-treebear-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A48DCD5203F6C7F943F5C123 /* [CP] Embed Pods Frameworks */ = {
+		119F50B81849E14C38DBEA41 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -389,11 +342,17 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-treebear/Pods-treebear-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,7 +360,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebear/Pods-treebear-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C173E5D6DAA9CF2058266CEA /* [CP] Check Pods Manifest.lock */ = {
+		2316F6F00E6CD6E0EA76B8C3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -419,7 +378,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C468FCCA2D90C592E323EFBC /* [CP] Check Pods Manifest.lock */ = {
+		381BED91251DC73156F28CAB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -437,7 +396,79 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CB165D09744B9C6D49A38F0C /* [CP] Embed Pods Frameworks */ = {
+		70813927FD3D37277B9D84F1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-treebear/Pods-treebear-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebear/Pods-treebear-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9CB03F1B78ACBE64570FB2CA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A26DF6D1FCCA4A1B1815289E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-treebearUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B8C2788B97C6AD1F969BBD1D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C997ED1B0637B4DF4BBAB4DB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -445,11 +476,17 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,19 +494,30 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearTests/Pods-treebearTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DBCD9627DEAA3CA3F743BF30 /* [CP] Copy Pods Resources */ = {
+		EF39AE9788FA7C39B6863E53 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treebearUITests/Pods-treebearUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -481,7 +529,9 @@
 			files = (
 				B4B7B5242011F1E40034BCF3 /* POIViewController.swift in Sources */,
 				CA1920241FCD4A7C00A7B057 /* ARViewController.swift in Sources */,
+				B4B7B531201854080034BCF3 /* SignInViewController.swift in Sources */,
 				CA3E62F81FB1B0D000ADC7D3 /* ViewController.swift in Sources */,
+				B404494E201887D7006D3303 /* SearchDropdown.swift in Sources */,
 				CA3E62F61FB1B0D000ADC7D3 /* AppDelegate.swift in Sources */,
 				B4C904B62007485100E6C1A0 /* MenuViewController.swift in Sources */,
 			);
@@ -491,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B7B532201854080034BCF3 /* SignInViewController.swift in Sources */,
 				CA3E630B1FB1B0D000ADC7D3 /* treebearTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +550,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B7B533201854080034BCF3 /* SignInViewController.swift in Sources */,
 				CA3E63161FB1B0D000ADC7D3 /* treebearUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,9 +699,10 @@
 		};
 		CA3E631B1FB1B0D000ADC7D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A966590D5C886B8150DD7A37 /* Pods-treebear.debug.xcconfig */;
+			baseConfigurationReference = 507E75EE2FEC78FF25AAAC11 /* Pods-treebear.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J958EGM4GD;
@@ -659,6 +712,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricky.treebear;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -666,9 +723,10 @@
 		};
 		CA3E631C1FB1B0D000ADC7D3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E6A4937B13873D26D693857 /* Pods-treebear.release.xcconfig */;
+			baseConfigurationReference = 954E912D730D26566E9E865A /* Pods-treebear.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J958EGM4GD;
@@ -678,6 +736,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricky.treebear;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -685,16 +746,19 @@
 		};
 		CA3E631E1FB1B0D000ADC7D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F762E0D33D057649D62CBA2 /* Pods-treebearTests.debug.xcconfig */;
+			baseConfigurationReference = 3C186F0D1B8A82F8EC727EB3 /* Pods-treebearTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HHT89WP22V;
 				INFOPLIST_FILE = treebearTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bran.treebearTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "treebearTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/treebear.app/treebear";
@@ -703,16 +767,18 @@
 		};
 		CA3E631F1FB1B0D000ADC7D3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09622DD4BCE0162B2340C123 /* Pods-treebearTests.release.xcconfig */;
+			baseConfigurationReference = 2E7CAB62E4D94CE1A025986A /* Pods-treebearTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HHT89WP22V;
 				INFOPLIST_FILE = treebearTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bran.treebearTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "treebearTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/treebear.app/treebear";
@@ -721,15 +787,18 @@
 		};
 		CA3E63211FB1B0D000ADC7D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29C5336458958A5326B4D6BC /* Pods-treebearUITests.debug.xcconfig */;
+			baseConfigurationReference = 5622EC879517E1A15E9FE94D /* Pods-treebearUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HHT89WP22V;
 				INFOPLIST_FILE = treebearUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bran.treebearUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "treebearUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = treebear;
@@ -738,15 +807,17 @@
 		};
 		CA3E63221FB1B0D000ADC7D3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82574D06ABAA3C54CC8737F1 /* Pods-treebearUITests.release.xcconfig */;
+			baseConfigurationReference = 2680EA3009E50D9B27CC87CE /* Pods-treebearUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HHT89WP22V;
 				INFOPLIST_FILE = treebearUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bran.treebearUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "treebearUITests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = treebear;

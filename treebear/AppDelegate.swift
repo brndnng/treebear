@@ -7,17 +7,34 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+
+    
 
     var window: UIWindow?
     
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        //self.window!.rootViewController = vc
+        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+            let googleInfo = NSDictionary(contentsOfFile: path),
+            let clientId = googleInfo["CLIENT_ID"] as? String {
+            GIDSignIn.sharedInstance().clientID = clientId
+        }
+        GIDSignIn.sharedInstance().delegate = self
+        
         return true
+    }
+    
+    private func application(application: UIApplication,
+                     openURL url: NSURL, options: [String: AnyObject]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(
+            url as URL!,
+            sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication.rawValue] as! String?,
+            annotation: options[UIApplicationOpenURLOptionsKey.annotation.rawValue])
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -42,7 +59,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        print("signIN")
+        if (error == nil) {
+            // Perform any operations on signed in user here.
+            let userId = user.userID                  // For client-side use only!
+            //            let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            //            let givenName = user.profile.givenName
+            //            let familyName = user.profile.familyName
+            //            let email = user.profile.email
+            //            if(user.profile.hasImage){
+            //                let url = try? user.profile.imageURL(withDimension: 300)
+            //                if(url != nil){
+            //                    let imageData = try? Data(contentsOf: url!)
+            //                    if(imageData != nil){
+            //                        let image = UIImage(data: imageData!)
+            //                    } else{
+            //                        let image = UIImage(named: "user")
+            //                    }
+            //                }else{
+            //                    let image = UIImage(named: "user")
+            //                }
+            //            }
+            print(fullName! + userId!)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController") 
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            
+        } else {
+            print("\(error.localizedDescription)")
+        }
+    }
+    
 
 }
 

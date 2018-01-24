@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9E2EAB09851DBA350A85E3214AFB4C18"
+               BlueprintIdentifier = "84D8B9A25071904CBB03C0CB1753EC24"
                BuildableName = "Pods_treebear.framework"
                BlueprintName = "Pods-treebear"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9E2EAB09851DBA350A85E3214AFB4C18"
+            BlueprintIdentifier = "84D8B9A25071904CBB03C0CB1753EC24"
             BuildableName = "Pods_treebear.framework"
             BlueprintName = "Pods-treebear"
             ReferencedContainer = "container:Pods.xcodeproj">
