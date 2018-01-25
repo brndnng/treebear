@@ -58,10 +58,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vp-Kd-3S6">
-                                <rect key="frame" x="46.5" y="143.5" width="281" height="400"/>
+                                <rect key="frame" x="46.5" y="177" width="281" height="333.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconInApp" translatesAutoresizingMaskIntoConstraints="NO" id="SlW-7m-28G">
-                                        <rect key="frame" x="0.0" y="-50" width="281" height="281"/>
+                                        <rect key="frame" x="0.0" y="-25" width="281" height="281"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="SlW-7m-28G" secondAttribute="height" multiplier="1:1" id="8CV-iy-LNh"/>
                                         </constraints>
@@ -72,7 +72,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLX-jc-AnD" customClass="GIDSignInButton">
-                                        <rect key="frame" x="-15" y="352" width="312" height="48"/>
+                                        <rect key="frame" x="-15" y="285.5" width="312" height="48"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="312" id="Rkz-nk-gDO"/>
@@ -84,7 +84,7 @@
                                 <constraints>
                                     <constraint firstItem="SlW-7m-28G" firstAttribute="leading" secondItem="6vp-Kd-3S6" secondAttribute="leading" id="Op5-em-5Li"/>
                                     <constraint firstAttribute="bottom" secondItem="oLX-jc-AnD" secondAttribute="bottom" id="a2Q-Ts-cuw"/>
-                                    <constraint firstItem="SlW-7m-28G" firstAttribute="top" secondItem="6vp-Kd-3S6" secondAttribute="top" constant="-50" id="asA-gv-0T0"/>
+                                    <constraint firstItem="SlW-7m-28G" firstAttribute="top" secondItem="6vp-Kd-3S6" secondAttribute="top" constant="-25" id="asA-gv-0T0"/>
                                     <constraint firstItem="oLX-jc-AnD" firstAttribute="centerX" secondItem="6vp-Kd-3S6" secondAttribute="centerX" id="boo-D1-h3J"/>
                                     <constraint firstItem="SlW-7m-28G" firstAttribute="width" secondItem="6vp-Kd-3S6" secondAttribute="width" id="cVo-4B-tlf"/>
                                 </constraints>
@@ -92,7 +92,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92156862745098034" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6vp-Kd-3S6" firstAttribute="height" secondItem="4gC-ee-tm4" secondAttribute="height" multiplier="0.6" id="BZ7-7k-Xdm"/>
+                            <constraint firstItem="6vp-Kd-3S6" firstAttribute="height" secondItem="4gC-ee-tm4" secondAttribute="height" multiplier="0.5" id="BZ7-7k-Xdm"/>
                             <constraint firstItem="6vp-Kd-3S6" firstAttribute="width" secondItem="4gC-ee-tm4" secondAttribute="width" multiplier="0.75" id="SJ4-dq-tzq"/>
                             <constraint firstItem="6vp-Kd-3S6" firstAttribute="centerX" secondItem="4gC-ee-tm4" secondAttribute="centerX" id="r4F-nl-sca"/>
                             <constraint firstItem="6vp-Kd-3S6" firstAttribute="centerY" secondItem="4gC-ee-tm4" secondAttribute="centerY" constant="10" id="tYY-po-OO5"/>
@@ -733,7 +733,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7q8-Q2-dG7"/>
-        <segue reference="wjW-Gz-pNB"/>
-        <segue reference="ax9-AL-8eY"/>
+        <segue reference="trR-VH-kNN"/>
+        <segue reference="ECd-yA-3kl"/>
     </inferredMetricsTieBreakers>
 </document>
