@@ -9,16 +9,30 @@
 import UIKit
 import Hero
 
-class MenuViewController: UIViewController, UITableViewDelegate, UICollectionViewDelegate {
+protocol SegueHandler: class {
+    func segueToNext(identifier: String)
+}
 
+class MenuViewController: UIViewController, UITableViewDelegate, UICollectionViewDelegate, SegueHandler {
+    
+    func segueToNext(identifier: String) {
+        switch identifier{
+        case "LoggedOut":
+            Hero.shared.defaultAnimation = .fade
+        default:
+            Hero.shared.defaultAnimation = .push(direction: .left)
+        }
+        performSegue(withIdentifier: identifier, sender: self)
+    }
+    
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -49,15 +63,17 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
         }
     }
     
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+        if segue.identifier == "EmbedH"  {
+            if let nextViewController = segue.destination as? MenuTableViewController{
+                nextViewController.delegate = self
+            }
+        }
+     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

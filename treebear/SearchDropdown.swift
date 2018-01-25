@@ -1,5 +1,5 @@
 //
-//  SignInViewController.swift
+//  SearchDropdown.swift
 //  treebear
 //
 //  Created by Ricky Cheng on 24/1/2018.
@@ -7,20 +7,12 @@
 //
 
 import UIKit
-import GoogleSignIn
-import Hero
 
-class SignInViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
+class SearchDropdown: UISearchController {
 
-    @IBOutlet weak var SignInBtn: GIDSignInButton!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = self
-        
-        SignInBtn.style = .wide
+
         // Do any additional setup after loading the view.
     }
 
@@ -28,15 +20,6 @@ class SignInViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDele
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if(error == nil){
-            print(user.profile.name + " Signed in manually")
-            Hero.shared.defaultAnimation = .fade
-            performSegue(withIdentifier: "loggedInManually", sender: self)
-        }
-    }
-    
     
 
     /*
@@ -48,4 +31,5 @@ class SignInViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDele
         // Pass the selected object to the new view controller.
     }
     */
+
 }

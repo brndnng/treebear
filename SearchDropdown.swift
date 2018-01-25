@@ -8,6 +8,6 @@
 
 import UIKit
 
-class SearchDropdown: UISearchDisplayController {
+class SearchDropdown: UISearchController {
 
 }

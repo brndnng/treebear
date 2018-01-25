@@ -5,6 +5,8 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +18,21 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconInApp" translatesAutoresizingMaskIntoConstraints="NO" id="LRk-xc-doj">
+                                <rect key="frame" x="47" y="203" width="281" height="281"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="LRk-xc-doj" secondAttribute="height" multiplier="1:1" id="fSR-MZ-doh"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.92156862750000001" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="LRk-xc-doj" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.75" id="8DN-6x-REP"/>
+                            <constraint firstItem="LRk-xc-doj" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Fqi-tR-aQ6"/>
+                            <constraint firstItem="LRk-xc-doj" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="dd3-wd-YYS"/>
+                            <constraint firstItem="LRk-xc-doj" firstAttribute="width" secondItem="LRk-xc-doj" secondAttribute="height" multiplier="1:1" id="e8m-pY-egH"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -25,4 +41,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="iconInApp" width="300" height="300"/>
+    </resources>
 </document>

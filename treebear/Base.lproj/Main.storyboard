@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WMa-Lr-Efg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H7w-Y4-gRG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,44 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Entry View Controller-->
+        <scene sceneID="BYB-Q3-79G">
+            <objects>
+                <viewController id="H7w-Y4-gRG" customClass="entryViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="y9i-jU-VcF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconInApp" translatesAutoresizingMaskIntoConstraints="NO" id="dXK-lo-Ilg">
+                                <rect key="frame" x="46.5" y="203" width="281.5" height="281.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="dXK-lo-Ilg" secondAttribute="height" multiplier="1:1" id="1mS-KO-h1D"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="iconInApp"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.92156862750000001" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="dXK-lo-Ilg" firstAttribute="centerX" secondItem="Ch9-fJ-hZZ" secondAttribute="centerX" id="3m6-mA-VaW"/>
+                            <constraint firstItem="dXK-lo-Ilg" firstAttribute="width" secondItem="y9i-jU-VcF" secondAttribute="width" multiplier="0.75" id="Osb-yF-VN3"/>
+                            <constraint firstItem="dXK-lo-Ilg" firstAttribute="centerY" secondItem="Ch9-fJ-hZZ" secondAttribute="centerY" id="uZU-vz-ioh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ch9-fJ-hZZ"/>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="WMa-Lr-Efg" kind="presentation" identifier="cantLogInSliently" id="ax9-AL-8eY"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="loggedInSliently" id="wjW-Gz-pNB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="txt-UN-Cxl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="-719"/>
+        </scene>
         <!--Sign In View Controller-->
         <scene sceneID="FLL-qb-nhc">
             <objects>
@@ -19,33 +57,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLX-jc-AnD" customClass="GIDSignInButton">
-                                <rect key="frame" x="79" y="455" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vp-Kd-3S6">
+                                <rect key="frame" x="46.5" y="143.5" width="281" height="400"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconInApp" translatesAutoresizingMaskIntoConstraints="NO" id="SlW-7m-28G">
+                                        <rect key="frame" x="0.0" y="-50" width="281" height="281"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="SlW-7m-28G" secondAttribute="height" multiplier="1:1" id="8CV-iy-LNh"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="iconInApp"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabledForSubviews" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLX-jc-AnD" customClass="GIDSignInButton">
+                                        <rect key="frame" x="-15" y="352" width="312" height="48"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="312" id="Rkz-nk-gDO"/>
+                                            <constraint firstAttribute="height" constant="48" id="i4C-7Z-M0i"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93333333330000001" green="0.92156862750000001" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="SlW-7m-28G" firstAttribute="leading" secondItem="6vp-Kd-3S6" secondAttribute="leading" id="Op5-em-5Li"/>
+                                    <constraint firstAttribute="bottom" secondItem="oLX-jc-AnD" secondAttribute="bottom" id="a2Q-Ts-cuw"/>
+                                    <constraint firstItem="SlW-7m-28G" firstAttribute="top" secondItem="6vp-Kd-3S6" secondAttribute="top" constant="-50" id="asA-gv-0T0"/>
+                                    <constraint firstItem="oLX-jc-AnD" firstAttribute="centerX" secondItem="6vp-Kd-3S6" secondAttribute="centerX" id="boo-D1-h3J"/>
+                                    <constraint firstItem="SlW-7m-28G" firstAttribute="width" secondItem="6vp-Kd-3S6" secondAttribute="width" id="cVo-4B-tlf"/>
+                                </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eM-JP-NqP">
-                                <rect key="frame" x="149" y="221" width="76" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="disconnect"/>
-                                <connections>
-                                    <action selector="disconnect:" destination="WMa-Lr-Efg" eventType="touchUpInside" id="k0P-Oo-LJa"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92156862745098034" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6vp-Kd-3S6" firstAttribute="height" secondItem="4gC-ee-tm4" secondAttribute="height" multiplier="0.6" id="BZ7-7k-Xdm"/>
+                            <constraint firstItem="6vp-Kd-3S6" firstAttribute="width" secondItem="4gC-ee-tm4" secondAttribute="width" multiplier="0.75" id="SJ4-dq-tzq"/>
+                            <constraint firstItem="6vp-Kd-3S6" firstAttribute="centerX" secondItem="4gC-ee-tm4" secondAttribute="centerX" id="r4F-nl-sca"/>
+                            <constraint firstItem="6vp-Kd-3S6" firstAttribute="centerY" secondItem="4gC-ee-tm4" secondAttribute="centerY" constant="10" id="tYY-po-OO5"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="whO-Pl-8io"/>
                     </view>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="logined" id="trR-VH-kNN"/>
+                        <outlet property="SignInBtn" destination="oLX-jc-AnD" id="7g2-t6-xWz"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="loggedInManually" id="trR-VH-kNN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSX-0N-zWu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135" y="-668"/>
+            <point key="canvasLocation" x="997.60000000000002" y="-719.19040479760122"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -217,7 +281,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM2-7l-IeC">
                                 <rect key="frame" x="0.0" y="200" width="375" height="467"/>
                                 <connections>
-                                    <segue destination="3kW-e5-SnJ" kind="embed" id="BO0-tX-Q0y"/>
+                                    <segue destination="3kW-e5-SnJ" kind="embed" identifier="EmbedH" id="BO0-tX-Q0y"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -243,6 +307,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="pan2Main" destination="vLd-JK-wFg" id="JrR-8P-VaM"/>
+                        <segue destination="WMa-Lr-Efg" kind="presentation" identifier="LoggedOut" id="ECd-yA-3kl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r5b-i4-XnB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -465,10 +530,10 @@
             </objects>
             <point key="canvasLocation" x="2057" y="-115"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Menu Table View Controller-->
         <scene sceneID="1ht-VO-1Zn">
             <objects>
-                <tableViewController id="3kW-e5-SnJ" sceneMemberID="viewController">
+                <tableViewController id="3kW-e5-SnJ" customClass="MenuTableViewController" customModule="treebear" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" bouncesZoom="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hx6-Q7-TtN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="467"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -663,7 +728,12 @@
             <point key="canvasLocation" x="2058" y="360"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="iconInApp" width="300" height="300"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7q8-Q2-dG7"/>
+        <segue reference="wjW-Gz-pNB"/>
+        <segue reference="ax9-AL-8eY"/>
     </inferredMetricsTieBreakers>
 </document>

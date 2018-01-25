@@ -89,11 +89,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             //            }
             print(fullName! + userId!)
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController") 
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController") 
+//            self.window = UIWindow(frame: UIScreen.main.bounds)
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
             
         } else {
             print("\(error.localizedDescription)")
