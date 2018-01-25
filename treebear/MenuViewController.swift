@@ -8,12 +8,16 @@
 
 import UIKit
 import Hero
+import GoogleSignIn
 
 protocol SegueHandler: class {
     func segueToNext(identifier: String)
 }
 
 class MenuViewController: UIViewController, UITableViewDelegate, UICollectionViewDelegate, SegueHandler {
+    @IBOutlet weak var userProPic: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var userEmail: UILabel!
     
     func segueToNext(identifier: String) {
         switch identifier{
@@ -31,6 +35,24 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        userProPic.image = #imageLiteral(resourceName: "user")
+        if (GIDSignIn.sharedInstance().currentUser.profile.hasImage){
+            let url = try? GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 300)
+            if(url != nil){
+                let imageData = try? Data(contentsOf: url!)
+                if(imageData != nil){
+                    userProPic.image = UIImage(data: imageData!)
+                }
+            }
+        }
+        
+        userProPic.layer.cornerRadius = userProPic.frame.size.height / 2;
+        userProPic.layer.masksToBounds = true;
+        userProPic.layer.borderWidth = 0;
+        
+        userName.text = GIDSignIn.sharedInstance().currentUser.profile.name
+        userEmail.text = GIDSignIn.sharedInstance().currentUser.profile.email
+        
     }
     
     override func didReceiveMemoryWarning() {
