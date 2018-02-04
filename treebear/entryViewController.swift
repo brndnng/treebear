@@ -21,6 +21,7 @@ class entryViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        Thread.sleep(forTimeInterval: 0.5)
         GIDSignIn.sharedInstance().signInSilently()
     }
 
