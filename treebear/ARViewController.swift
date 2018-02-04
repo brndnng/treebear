@@ -27,6 +27,15 @@ class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
         super.init(location: location, image: image)
     }
     
+    init(annotation:MKPointAnnotationWithID, image: UIImage, altitude: Double){
+        self.id = annotation.id
+        self.title = annotation.title!
+        self.excerpt = annotation.subtitle!
+        self.bgcolor = annotation.markerTintColor!
+        
+        super.init(location: CLLocation(coordinate: annotation.coordinate, altitude: altitude), image: image)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,7 +48,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     var sceneLocationView = SceneLocationView()
-    var destination : LocationAnnotationNode?
+    var destination : MKPointAnnotationWithID?
     var locationNodes : [LocationAnnotationNodeWithDetails] = []
     var polylines : [MKPolyline] = []
     var selectedObject: LocationAnnotationNodeWithDetails?
@@ -61,8 +70,15 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         debugLocations()
         view.addSubview(sceneLocationView)
         for location in locationNodes{
-            //location.scaleRelativeToDistance = true
+            location.scaleRelativeToDistance = true
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: location)
+        }
+        if(destination != nil){
+            let altitude = sceneLocationView.currentLocation()?.altitude ?? 100
+            let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.subtitle)!, color: UIColor(red: 0, green: 0, blue: 0, alpha: 1)) //TODO: color fixed #000000 for destination, should change
+            var destinationNode = LocationAnnotationNodeWithDetails(annotation: destination!, image: desImage, altitude: altitude)
+            destinationNode.scaleRelativeToDistance = false
+            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destinationNode)
         }
         print(polylines)
         sceneLocationView.addPolylines(polylines)

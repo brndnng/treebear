@@ -36,7 +36,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var POIExcerpt: UILabel!
     
     var centerMapOnUserLocation: Bool = true
-    var destination : LocationAnnotationNode?
+    //var destination : LocationAnnotationNodeWithDetails?
     var locationManager:CLLocationManager!
     var centerMapBaseOnUserLocation: Bool = true
     var locationNodes = [LocationAnnotationNode]()
@@ -44,7 +44,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var polylines = [MKPolyline]()
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
     
-    var pressedAnnotation: MKPointAnnotationWithID?
+    var pressedAnnotation: MKPointAnnotationWithID? //selected annotation
+    var selectedAsDestination: MKPointAnnotationWithID? // only set when user request ar navigation
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +61,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         determineCurrentLocation()
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
-        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
+        //let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
         
         
         //JSON first load
-        destination = LocationAnnotationNode(location: pinLocation, image: UIImage(named: "pin")!)
-        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate, title: "TKO")
+        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate, title: "TKO", subtitle: "Shopping Center?")
         view.addSubview(mapView)
         
         // Long press to add POI
@@ -96,6 +96,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         determineCurrentLocation()
+        selectedAsDestination = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -190,9 +191,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "main2AR" && self.destination != nil {
+        if segue.identifier == "main2AR" && self.selectedAsDestination != nil {
             if let nextViewController = segue.destination as? ARViewController{
-                //nextViewController.destination = self.destination
+                nextViewController.destination = self.selectedAsDestination
                 //nextViewController.locationNodes = self.locationNodes
                 nextViewController.polylines = self.polylines
             }
@@ -214,8 +215,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if(view.annotation?.isKind(of: MKUserLocation.self))!{
             centerMapOnUserLocation = true
         }
-        if ((view.tag) != 0)
-        {
+        if ((view.tag) != 0) {
             print("User tapped on annotation: \(view.tag)")
             //mapView.removeOverlays(mapView.overlays)
             self.polylines.removeAll()
@@ -237,6 +237,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         POIView.alpha = 0
         mapView.removeOverlays(mapView.overlays)
         polylines = []
+        pressedAnnotation = nil
+        selectedAsDestination = nil
         print("did deselect")
     }
     
@@ -247,6 +249,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             }else{
                 if let markerAnnotationView = view as? MKMarkerAnnotationView {
                     markerAnnotationView.titleVisibility = .visible
+                    markerAnnotationView.subtitleVisibility = .hidden
                 }
             }
         }
@@ -275,6 +278,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         
         annotationView?.animatesWhenAdded = true
         annotationView?.titleVisibility = .visible
+        annotationView?.subtitleVisibility = .hidden
         return annotationView
     }
     
@@ -380,11 +384,12 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
     
     }
-    func addPOI(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+    func addPOI(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
         print("add point ",id)
         let annotation = MKPointAnnotationWithID(id: id, color: color)
         annotation.coordinate = coordinate
         annotation.title = title
+        annotation.subtitle = subtitle
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         locationNodes.append(LocationAnnotationNode(location: location, image: image))
         addedPOI.append(annotation)
