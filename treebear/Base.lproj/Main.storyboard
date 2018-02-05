@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconInApp" translatesAutoresizingMaskIntoConstraints="NO" id="dXK-lo-Ilg">
-                                <rect key="frame" x="46.5" y="203" width="281.5" height="281.5"/>
+                                <rect key="frame" x="47" y="203" width="281" height="281"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="dXK-lo-Ilg" secondAttribute="height" multiplier="1:1" id="1mS-KO-h1D"/>
                                 </constraints>
@@ -58,7 +58,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vp-Kd-3S6">
-                                <rect key="frame" x="46.5" y="167" width="281" height="333.5"/>
+                                <rect key="frame" x="47" y="167" width="281" height="333.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconInApp" translatesAutoresizingMaskIntoConstraints="NO" id="SlW-7m-28G">
                                         <rect key="frame" x="35" y="0.0" width="211" height="211"/>
@@ -300,7 +300,7 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ubY-6m-6qm">
-                                <rect key="frame" x="157.5" y="60" width="60" height="100"/>
+                                <rect key="frame" x="157.5" y="60.5" width="60" height="100"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aJP-p6-AE6">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -326,6 +326,7 @@
                                     <constraint firstAttribute="width" constant="60" id="05O-Ng-GtU"/>
                                     <constraint firstAttribute="bottom" secondItem="QLc-LZ-eJC" secondAttribute="bottom" id="GbU-rn-RId"/>
                                     <constraint firstItem="QLc-LZ-eJC" firstAttribute="centerX" secondItem="ubY-6m-6qm" secondAttribute="centerX" id="dCg-7r-aKc"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="e75-NQ-mXD"/>
                                     <constraint firstItem="aJP-p6-AE6" firstAttribute="top" secondItem="ubY-6m-6qm" secondAttribute="top" id="gU5-6M-7by"/>
                                     <constraint firstItem="QLc-LZ-eJC" firstAttribute="top" secondItem="bJO-EK-2eL" secondAttribute="bottom" id="h14-xK-1Ec"/>
                                     <constraint firstItem="aJP-p6-AE6" firstAttribute="leading" secondItem="ubY-6m-6qm" secondAttribute="leading" id="hiB-tn-yXr"/>
@@ -346,7 +347,7 @@
                             <constraint firstItem="S8t-dI-EZC" firstAttribute="top" secondItem="fyd-b5-Htj" secondAttribute="top" id="jfG-gs-HZx"/>
                             <constraint firstItem="ubY-6m-6qm" firstAttribute="centerY" secondItem="S8t-dI-EZC" secondAttribute="centerY" constant="10" id="m0X-wB-eAA"/>
                             <constraint firstItem="uOg-22-N5d" firstAttribute="bottom" secondItem="RM2-7l-IeC" secondAttribute="bottom" id="n99-kc-Og9"/>
-                            <constraint firstItem="ubY-6m-6qm" firstAttribute="height" secondItem="S8t-dI-EZC" secondAttribute="height" multiplier="0.5" id="pU3-LR-5DV"/>
+                            <constraint firstItem="ubY-6m-6qm" firstAttribute="height" secondItem="S8t-dI-EZC" secondAttribute="height" multiplier="0.5" priority="750" id="pU3-LR-5DV"/>
                             <constraint firstItem="S8t-dI-EZC" firstAttribute="leading" secondItem="fyd-b5-Htj" secondAttribute="leading" id="svN-t8-lyC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uOg-22-N5d"/>
@@ -787,7 +788,6 @@
         <image name="iconInApp" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6n4-6b-unJ"/>
         <segue reference="7q8-Q2-dG7"/>
         <segue reference="trR-VH-kNN"/>
         <segue reference="ECd-yA-3kl"/>
