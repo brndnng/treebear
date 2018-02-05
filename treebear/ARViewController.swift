@@ -76,12 +76,11 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         if(destination != nil){
             let altitude = sceneLocationView.currentLocation()?.altitude ?? 100
             let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.subtitle)!, color: UIColor(red: 0, green: 0, blue: 0, alpha: 1)) //TODO: color fixed #000000 for destination, should change
-            var destinationNode = LocationAnnotationNodeWithDetails(annotation: destination!, image: desImage, altitude: altitude)
+            let destinationNode = LocationAnnotationNodeWithDetails(annotation: destination!, image: desImage, altitude: altitude)
             destinationNode.scaleRelativeToDistance = false
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destinationNode)
+            sceneLocationView.addPolylines(polylines)
         }
-        print(polylines)
-        sceneLocationView.addPolylines(polylines)
         //sceneLocationView.run()
         
         //handle tap on ar obj

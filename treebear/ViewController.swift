@@ -34,7 +34,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var POIView: UIView!
     @IBOutlet weak var POINameLabel: UILabel!
     @IBOutlet weak var POIExcerpt: UILabel!
-    
+    @IBOutlet weak var ARNav: UIButton!
     var centerMapOnUserLocation: Bool = true
     //var destination : LocationAnnotationNodeWithDetails?
     var locationManager:CLLocationManager!
@@ -85,6 +85,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         
         // add the gesture to the mapView
         mapView.addGestureRecognizer(panGesture)
+        
+        // adding seperate line for btn
+        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: ARNav.frame.size.height))
+        lineView.backgroundColor = .white
+        ARNav.addSubview(lineView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -125,6 +130,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
     }
     
+    @IBAction func requestedOnARNav(_ sender: UIButton) {
+        selectedAsDestination = pressedAnnotation
+        Hero.shared.defaultAnimation = .slide(direction: .right)
+        performSegue(withIdentifier: "main2AR", sender: self)
+    }
     
     @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
         let translation = pan2Menu.translation(in: nil)
@@ -227,6 +237,12 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
 //                boundingbox.size.height += Double(mapView.bounds.height)
 //                boundingbox.size.width += Double(mapView.bounds.width)
 //                self.mapView.setVisibleMapRect(boundingbox, animated: true)
+                if (self.polylines.isEmpty){
+                    // disable the button
+                    self.ARNav.isEnabled = false
+                }else{
+                    self.ARNav.isEnabled = true
+                }
             }
             pressedAnnotation = view.annotation as? MKPointAnnotationWithID
             showViewALittleBit()
@@ -380,6 +396,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         
         directions.calculate { [unowned self] response, error in
             guard let unwrappedResponse = response else { return }
+            print("gor dir")
             completion(unwrappedResponse.routes[0])
         }
     
@@ -403,7 +420,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     func showViewALittleBit(){
         POIView.backgroundColor = pressedAnnotation?.markerTintColor
         POINameLabel.text = pressedAnnotation?.title
-        POIExcerpt.text = pressedAnnotation?.title
+        POIExcerpt.text = pressedAnnotation?.subtitle
+        print("check polyline")
+        if (polylines.isEmpty){
+            // disable the button
+            ARNav.isEnabled = false
+        }else{
+            ARNav.isEnabled = true
+        }
         POIView.alpha = 1
         view.insertSubview(POIView, aboveSubview: searchBar)
         print("should be brought")

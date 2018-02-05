@@ -152,29 +152,52 @@
                                 <rect key="frame" x="0.0" y="517" width="375" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phF-Oo-bXm">
-                                        <rect key="frame" x="16" y="32" width="343" height="30"/>
+                                        <rect key="frame" x="16" y="32" width="209" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAp-x0-j9A">
-                                        <rect key="frame" x="16" y="78" width="343" height="40"/>
+                                        <rect key="frame" x="16" y="78" width="209" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-gc-52g">
+                                        <rect key="frame" x="241" y="16.5" width="118" height="118"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="118" id="Ucf-ZX-QFn"/>
+                                            <constraint firstAttribute="width" constant="118" id="naS-3t-DA0"/>
+                                        </constraints>
+                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="AR navigation">
+                                                    <attributes>
+                                                        <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="requestedOnARNav:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3qZ-qg-Key"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
+                                    <constraint firstItem="fzs-gc-52g" firstAttribute="centerY" secondItem="Acu-z7-sf4" secondAttribute="centerY" id="0Fc-oD-qcp"/>
                                     <constraint firstItem="phF-Oo-bXm" firstAttribute="top" secondItem="Acu-z7-sf4" secondAttribute="top" constant="32" id="8Ty-b0-fid"/>
+                                    <constraint firstItem="fzs-gc-52g" firstAttribute="leading" secondItem="GAp-x0-j9A" secondAttribute="trailing" constant="16" id="9So-pS-DPS"/>
                                     <constraint firstAttribute="height" constant="150" id="H5b-OE-Yrw"/>
                                     <constraint firstItem="phF-Oo-bXm" firstAttribute="leading" secondItem="Acu-z7-sf4" secondAttribute="leading" constant="16" id="RFT-ew-gML"/>
                                     <constraint firstItem="GAp-x0-j9A" firstAttribute="leading" secondItem="Acu-z7-sf4" secondAttribute="leading" constant="16" id="S7B-uR-eg7"/>
-                                    <constraint firstAttribute="trailing" secondItem="GAp-x0-j9A" secondAttribute="trailing" constant="16" id="V7D-Gb-AS3"/>
+                                    <constraint firstAttribute="trailing" secondItem="fzs-gc-52g" secondAttribute="trailing" constant="16" id="SIq-sf-cQx"/>
                                     <constraint firstAttribute="bottom" secondItem="GAp-x0-j9A" secondAttribute="bottom" constant="32" id="VKJ-Mg-C1j"/>
-                                    <constraint firstAttribute="trailing" secondItem="phF-Oo-bXm" secondAttribute="trailing" constant="16" id="ad9-jq-x0c"/>
                                     <constraint firstItem="GAp-x0-j9A" firstAttribute="top" secondItem="phF-Oo-bXm" secondAttribute="bottom" constant="16" id="fJG-BK-x5t"/>
+                                    <constraint firstItem="fzs-gc-52g" firstAttribute="leading" secondItem="phF-Oo-bXm" secondAttribute="trailing" constant="16" id="xch-Kn-ozU"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="POIOverview"/>
@@ -214,6 +237,7 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="ARNav" destination="fzs-gc-52g" id="1Bs-Dj-xM3"/>
                         <outlet property="POIExcerpt" destination="GAp-x0-j9A" id="qNL-J4-UvR"/>
                         <outlet property="POINameLabel" destination="phF-Oo-bXm" id="L65-RL-wx9"/>
                         <outlet property="POIView" destination="Acu-z7-sf4" id="KIi-yr-mKt"/>
@@ -768,6 +792,7 @@
         <image name="iconInApp" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="6n4-6b-unJ"/>
         <segue reference="7q8-Q2-dG7"/>
         <segue reference="trR-VH-kNN"/>
         <segue reference="ECd-yA-3kl"/>
