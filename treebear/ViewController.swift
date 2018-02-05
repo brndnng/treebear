@@ -87,7 +87,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addGestureRecognizer(panGesture)
         
         // adding seperate line for btn
-        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: ARNav.frame.size.height))
+        let lineView = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
         lineView.backgroundColor = .white
         ARNav.addSubview(lineView)
     }
