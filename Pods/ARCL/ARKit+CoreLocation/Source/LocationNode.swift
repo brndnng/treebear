@@ -41,9 +41,16 @@ open class LocationNode: SCNNode {
     ///at regular intervals. You can do this with `SceneLocationView`'s `updatePositionOfLocationNode`.
     public var continuallyUpdatePositionAndScale = true
     
-    public init(location: CLLocation?) {
+    public enum TypeOfAltitude{
+        case fixedAltitude, sameAltitudeAsUser, snapToGround
+    }
+    
+    public var typeOfAltitude: TypeOfAltitude
+    
+    public init(location: CLLocation?, altitudeType: TypeOfAltitude) {
         self.location = location
         self.locationConfirmed = location != nil
+        self.typeOfAltitude = altitudeType
         super.init()
     }
     
@@ -51,7 +58,7 @@ open class LocationNode: SCNNode {
         fatalError("init(coder:) has not been implemented")
     }
     //extensions
-    public static func create(polyline: MKPolyline, altitude: CLLocationDistance)  -> [LocationNode] {
+    public static func create(polyline: MKPolyline, altitude: CLLocationDistance, altitudeType: TypeOfAltitude = .snapToGround)  -> [LocationNode] {
         let points = polyline.points()
         
         let lightNode = SCNNode()
@@ -100,7 +107,7 @@ open class LocationNode: SCNNode {
             boxNode.addChildNode(lightNode)
             boxNode.addChildNode(lightNode3)
             
-            let locationNode = LocationNode(location: currentLocation)
+            let locationNode = LocationNode(location: currentLocation, altitudeType: altitudeType)
             locationNode.addChildNode(boxNode)
             nodes.append(locationNode)
         }
@@ -141,7 +148,7 @@ open class LocationAnnotationNode: LocationNode {
     ///For landmarks in the distance, the default is correct
     public var scaleRelativeToDistance = false
     
-    public init(location: CLLocation?, image: UIImage) {
+    public init(location: CLLocation?, image: UIImage, altitudeType: TypeOfAltitude = .fixedAltitude) {
         self.image = image
         
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
@@ -151,7 +158,7 @@ open class LocationAnnotationNode: LocationNode {
         annotationNode = SCNNode()
         annotationNode.geometry = plane
         
-        super.init(location: location)
+        super.init(location: location, altitudeType: altitudeType)
         
         let billboardConstraint = SCNBillboardConstraint()
         billboardConstraint.freeAxes = SCNBillboardAxis.Y

@@ -24,7 +24,7 @@ class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
         self.excerpt = excerpt
         self.bgcolor = color
         
-        super.init(location: location, image: image)
+        super.init(location: location, image: image, altitudeType: .sameAltitudeAsUser)
     }
     
     init(annotation:MKPointAnnotationWithID, image: UIImage, altitude: Double){
@@ -33,7 +33,7 @@ class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
         self.excerpt = annotation.subtitle!
         self.bgcolor = annotation.markerTintColor!
         
-        super.init(location: CLLocation(coordinate: annotation.coordinate, altitude: altitude), image: image)
+        super.init(location: CLLocation(coordinate: annotation.coordinate, altitude: altitude), image: image, altitudeType: .sameAltitudeAsUser)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -368,7 +368,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             (distance > 100 || locationNode.continuallyAdjustNodePositionWhenWithinRange || initialSetup) {
             if distance > 100 {
                 //If the item is too far away, bring it closer and scale it down
-                let scale = 100 / Float(distance)
+                let scale = 10 / Float(distance)
                 
                 adjustedDistance = distance * Double(scale)
                 
@@ -386,11 +386,22 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
                 
                 locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             } else {
-                adjustedDistance = distance
+                adjustedDistance = distance / 10
+                
+                let adjustedTranslation = SCNVector3(
+                    x: Float(locationTranslation.longitudeTranslation) / 10,
+                    y: Float(locationTranslation.altitudeTranslation) / 10,
+                    z: Float(locationTranslation.latitudeTranslation) / 10)
+                
+//                let position = SCNVector3(
+//                    x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
+//                    y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
+//                    z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
+                
                 let position = SCNVector3(
-                    x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
-                    y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
-                    z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
+                    x: currentPosition.x + adjustedTranslation.x,
+                    y: currentPosition.y + adjustedTranslation.y,
+                    z: currentPosition.z - adjustedTranslation.z)
                 
                 locationNode.position = position
                 locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
