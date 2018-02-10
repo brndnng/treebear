@@ -149,7 +149,9 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
             print("Point altitude = \(selectedObject?.location.altitude ?? -1)")
             print("User altitude = \(sceneLocationView.currentLocation()?.altitude ?? -1)")
             Hero.shared.defaultAnimation = .push(direction: .up)
-            performSegue(withIdentifier: "SCNNodePressed", sender: self)
+            if(selectedObject?.id != nil){
+                performSegue(withIdentifier: "SCNNodePressed", sender: self)
+            }
         } else {
             // nothing selected
             print("pressed on nothing")
