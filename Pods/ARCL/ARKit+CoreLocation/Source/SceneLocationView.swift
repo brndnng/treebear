@@ -72,6 +72,8 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     private var didFetchInitialLocation = false
     
+    private var groundPosition = -5.0
+    
     ///Whether debugging feature points should be displayed.
     ///Defaults to false
     var showFeaturePoints = false
@@ -333,6 +335,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     }
     
     func updatePositionAndScaleOfLocationNodes() {
+        groundPosition = getGroundPos()
         for locationNode in locationNodes {
             if locationNode.continuallyUpdatePositionAndScale {
                 updatePositionAndScaleOfLocationNode(locationNode: locationNode, animated: true)
@@ -344,6 +347,16 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         guard let currentPosition = currentScenePosition(),
             let currentLocation = currentLocation() else {
                 return
+        }
+        
+        //update the attitude based on attitude type
+        switch locationNode.typeOfAltitude{
+        case .sameAltitudeAsUser:
+            locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude)
+        case .snapToGround:
+            locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude - groundPosition)
+        default:
+            _ = 1
         }
         
         SCNTransaction.begin()
@@ -513,6 +526,24 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public func addPolylines(_ polylines: [MKPolyline]) {
         polylines.forEach(addPolyline)
+    }
+    
+    func getGroundPos() -> Double{
+        var level = 0.0
+        for i in 1...3{
+            for j in 1...3{
+                let result = self.hitTest(CGPoint(x:0.25 * Double(i), y:0.25 * Double(j)), types: [.existingPlane, .estimatedHorizontalPlane])
+                for plane in result{
+                    if(plane.worldTransform.columns.3.y < 0){
+                        level = Double(plane.worldTransform.columns.3.y)
+                    }
+                }
+            }
+        }
+        if(level >= 0){
+            level = -5.0
+        }
+        return level
     }
 }
 

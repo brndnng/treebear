@@ -387,7 +387,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4S-3s-4LX">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="200" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-bZ-0IB">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="200" text="POI Excerpt" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-bZ-0IB">
                                         <rect key="frame" x="16" y="62" width="118" height="22"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -436,6 +436,7 @@
                         <constraints>
                             <constraint firstItem="j4S-3s-4LX" firstAttribute="leading" secondItem="YDX-pq-Dgg" secondAttribute="leading" id="LSV-no-GbC"/>
                             <constraint firstItem="YDX-pq-Dgg" firstAttribute="trailing" secondItem="LWJ-lA-Zfe" secondAttribute="trailing" id="MqJ-Ix-bPh"/>
+                            <constraint firstItem="j4S-3s-4LX" firstAttribute="width" relation="lessThanOrEqual" secondItem="YDX-pq-Dgg" secondAttribute="width" id="SjF-Pp-Yol"/>
                             <constraint firstItem="YDX-pq-Dgg" firstAttribute="bottom" secondItem="LWJ-lA-Zfe" secondAttribute="bottom" id="dph-4Y-w4T"/>
                             <constraint firstItem="YDX-pq-Dgg" firstAttribute="top" secondItem="j4S-3s-4LX" secondAttribute="top" constant="20" id="lwq-Wp-H8u"/>
                             <constraint firstItem="LWJ-lA-Zfe" firstAttribute="top" secondItem="Nwo-4e-6GX" secondAttribute="top" id="ocx-Db-Xii"/>
@@ -789,7 +790,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6n4-6b-unJ"/>
-        <segue reference="7q8-Q2-dG7"/>
+        <segue reference="qjd-s7-X0R"/>
         <segue reference="trR-VH-kNN"/>
         <segue reference="ECd-yA-3kl"/>
     </inferredMetricsTieBreakers>

@@ -224,7 +224,10 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         locationLabel.backgroundColor = color
         POIName.text = title
         POIName.textColor = .white
+        POIName.lineBreakMode = .byTruncatingTail
+        POIName.sizeToFit()
         POIExcerpt.text = excerpt
+        POIExcerpt.lineBreakMode = .byWordWrapping
         POIExcerpt.textColor = .white
         return locationLabel.asImage()
     }
