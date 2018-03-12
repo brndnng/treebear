@@ -14,6 +14,7 @@
 		B4044956201999CE006D3303 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4044955201999CE006D3303 /* MenuTableViewController.swift */; };
 		B404495820199F52006D3303 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404495720199F52006D3303 /* MenuViewController.swift */; };
 		B49CE6B32049C28A00AA8C9A /* extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49CE6B22049C28A00AA8C9A /* extras.swift */; };
+		B49CE6B52056B02700AA8C9A /* BadgesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49CE6B42056B02700AA8C9A /* BadgesCollectionViewController.swift */; };
 		B4B7B5242011F1E40034BCF3 /* POIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B7B5232011F1E40034BCF3 /* POIViewController.swift */; };
 		B4B7B52620184EDE0034BCF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */; };
 		B4B7B52720184EDE0034BCF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */; };
@@ -64,6 +65,7 @@
 		B4044955201999CE006D3303 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		B404495720199F52006D3303 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B49CE6B22049C28A00AA8C9A /* extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extras.swift; sourceTree = "<group>"; };
+		B49CE6B42056B02700AA8C9A /* BadgesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesCollectionViewController.swift; sourceTree = "<group>"; };
 		B4B7B5232011F1E40034BCF3 /* POIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIViewController.swift; sourceTree = "<group>"; };
 		B4B7B52520184EDD0034BCF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4B7B530201854080034BCF3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				B4B7B5232011F1E40034BCF3 /* POIViewController.swift */,
 				B404495120188987006D3303 /* SearchDropdown.swift */,
 				B49CE6B22049C28A00AA8C9A /* extras.swift */,
+				B49CE6B42056B02700AA8C9A /* BadgesCollectionViewController.swift */,
 			);
 			path = treebear;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				B4B7B5242011F1E40034BCF3 /* POIViewController.swift in Sources */,
 				CA1920241FCD4A7C00A7B057 /* ARViewController.swift in Sources */,
 				B49CE6B32049C28A00AA8C9A /* extras.swift in Sources */,
+				B49CE6B52056B02700AA8C9A /* BadgesCollectionViewController.swift in Sources */,
 				B4B7B531201854080034BCF3 /* SignInViewController.swift in Sources */,
 				CA3E62F81FB1B0D000ADC7D3 /* ViewController.swift in Sources */,
 				B404495820199F52006D3303 /* MenuViewController.swift in Sources */,

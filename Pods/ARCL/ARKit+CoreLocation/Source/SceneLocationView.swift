@@ -543,6 +543,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         if(level >= 0){
             level = -5.0
         }
+        print(level)
         return level
     }
 }
