@@ -47,10 +47,17 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var pressedAnnotation: MKPointAnnotationWithID? //selected annotation
     var selectedAsDestination: MKPointAnnotationWithID? // only set when user request ar navigation
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        
+       //post test
+        let helpers = Helpers()
+        helpers.postRequest(args:["type":"test",
+                                  "at":"map"], completionHandler: printResponse)
+        
         view.sendSubview(toBack: POIView)
         mapView.isHidden = false
         mapView.delegate = self
@@ -431,6 +438,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         POIView.alpha = 1
         view.insertSubview(POIView, aboveSubview: searchBar)
         print("should be brought")
+    }
+    
+    func printResponse(_data : Data){
+        print(String(data: _data, encoding: .utf8))
     }
 }
 

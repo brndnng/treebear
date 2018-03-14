@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 class ExtenedColors{
-    var tripColor = [
+    public var tripColor = [
         ["light": UIColorFromRGB(rgbValue: 0xF48FB1), "dark": UIColorFromRGB(rgbValue: 0xAD1457)],
         ["light": UIColorFromRGB(rgbValue: 0xCE93D8), "dark": UIColorFromRGB(rgbValue: 0x6A1B9A)],
         ["light": UIColorFromRGB(rgbValue: 0x9FA8DA), "dark": UIColorFromRGB(rgbValue: 0x283593)],
@@ -18,14 +18,45 @@ class ExtenedColors{
         ["light": UIColorFromRGB(rgbValue: 0xBCAAA4), "dark": UIColorFromRGB(rgbValue: 0x4E342E)],
     ]
     
-    var noTripColor = ["light": UIColorFromRGB(rgbValue: 0xB0BEC5), "dark": UIColorFromRGB(rgbValue: 0x37474F)]
+    public var noTripColor = ["light": UIColorFromRGB(rgbValue: 0xB0BEC5), "dark": UIColorFromRGB(rgbValue: 0x37474F)]
     
-    var destColor = ["light": UIColorFromRGB(rgbValue: 0xA5D6A7), "dark": UIColorFromRGB(rgbValue: 0x2E7D32)]
+    public var destColor = ["light": UIColorFromRGB(rgbValue: 0xA5D6A7), "dark": UIColorFromRGB(rgbValue: 0x2E7D32)]
 }
 
 class Helpers{
-    func getDist(from:CLLocationCoordinate2D, to:CLLocationCoordinate2D) -> Double {
+    public func getDist(from:CLLocationCoordinate2D, to:CLLocationCoordinate2D) -> Double {
         return 0.0
+    }
+    
+    public func postRequest(args:[String:String], completionHandler: @escaping (Data)->Void) -> Void {
+        let headers = [
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Cache-Control": "no-cache"
+        ]
+        
+        let postData = NSMutableData(data: "\(args.first?.key)=\(args.first?.value)".data(using: String.Encoding.utf8)!)
+        for (postKey, postValue) in args.dropFirst(){
+            postData.append("&\(postKey)=\(postValue)".data(using: String.Encoding.utf8)!)
+        }
+        
+        let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/postTest.php/")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.httpBody = postData as Data
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                //let httpResponse = response as? HTTPURLResponse
+                completionHandler(data!)
+            }
+        })
+        
+        dataTask.resume()
     }
 }
 
