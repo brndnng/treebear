@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 
+
 class ExtenedColors{
     public var tripColor = [
         ["light": UIColorFromRGB(rgbValue: 0xF48FB1), "dark": UIColorFromRGB(rgbValue: 0xAD1457)],
@@ -28,7 +29,7 @@ class Helpers{
         return 0.0
     }
     
-    public func postRequest(args:[String:String], completionHandler: @escaping (Data)->Void) -> Void {
+    public func postRequest(args:[String:String], completionHandler: @escaping (JSON)->Void) -> Void {
         let headers = [
             "Content-Type": "application/x-www-form-urlencoded",
             "Cache-Control": "no-cache"
@@ -52,7 +53,12 @@ class Helpers{
                 print(error)
             } else {
                 //let httpResponse = response as? HTTPURLResponse
-                completionHandler(data!)
+                do {
+                    let json = try JSON(data: data!)
+                    completionHandler(json)
+                } catch {
+                    print("JSON parsing error.")
+                }
             }
         })
         

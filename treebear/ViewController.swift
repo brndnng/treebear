@@ -440,8 +440,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         print("should be brought")
     }
     
-    func printResponse(_data : Data){
-        print(String(data: _data, encoding: .utf8))
+    func printResponse(_json : JSON){
+        print(_json)
     }
 }
 
