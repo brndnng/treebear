@@ -21,7 +21,7 @@ class MKPointAnnotationWithID:MKPointAnnotation{
     }
 }
 
-class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate,CLLocationManagerDelegate {
+class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var pan2Menu: UIScreenEdgePanGestureRecognizer!

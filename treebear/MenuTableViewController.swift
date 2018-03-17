@@ -53,6 +53,13 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section{
+        case 1:
+            if(indexPath.row == 0){
+                // starred location
+            }else{
+                //trips
+                delegate?.segueToNext(identifier: "Trips")
+            }
         case 3:
             GIDSignIn.sharedInstance().signOut()
             print("logout")
