@@ -349,14 +349,18 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
                 return
         }
         
-        //update the attitude based on attitude type
+        //update the attitude and scaling based on attitude type
+        var scalingFactor: Float
         switch locationNode.typeOfAltitude{
         case .sameAltitudeAsUser:
             locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude)
+            scalingFactor = 10.0
         case .snapToGround:
             locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude - groundPosition)
+            scalingFactor = 1.0
         default:
             _ = 1
+            scalingFactor = 1.0
         }
         
         SCNTransaction.begin()
@@ -381,7 +385,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             (distance > 100 || locationNode.continuallyAdjustNodePositionWhenWithinRange || initialSetup) {
             if distance > 100 {
                 //If the item is too far away, bring it closer and scale it down
-                let scale = 10 / Float(distance)
+                let scale = (100 / scalingFactor) / Float(distance)
                 
                 adjustedDistance = distance * Double(scale)
                 
@@ -399,12 +403,12 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
                 
                 locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             } else {
-                adjustedDistance = distance / 10
+                adjustedDistance = distance / scalingFactor
                 
                 let adjustedTranslation = SCNVector3(
-                    x: Float(locationTranslation.longitudeTranslation) / 10,
-                    y: Float(locationTranslation.altitudeTranslation) / 10,
-                    z: Float(locationTranslation.latitudeTranslation) / 10)
+                    x: Float(locationTranslation.longitudeTranslation) / scalingFactor,
+                    y: Float(locationTranslation.altitudeTranslation) / scalingFactor,
+                    z: Float(locationTranslation.latitudeTranslation) / scalingFactor)
                 
 //                let position = SCNVector3(
 //                    x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
