@@ -403,7 +403,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
                 
                 locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             } else {
-                adjustedDistance = distance / scalingFactor
+                adjustedDistance = distance / Double(scalingFactor)
                 
                 let adjustedTranslation = SCNVector3(
                     x: Float(locationTranslation.longitudeTranslation) / scalingFactor,
