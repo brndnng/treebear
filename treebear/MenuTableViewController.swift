@@ -8,6 +8,8 @@
 
 import UIKit
 import GoogleSignIn
+import SafariServices
+import Hero
 
 class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
     
@@ -59,6 +61,18 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
             }else{
                 //trips
                 delegate?.segueToNext(identifier: "Trips")
+            }
+        case 2:
+            if(indexPath.row == 0){
+                //about us
+                let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/")!)
+                Hero.shared.defaultAnimation = .push(direction: .left)
+                present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
+            } else {
+                //t&c
+                let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/")!)
+                Hero.shared.defaultAnimation = .push(direction: .left)
+                present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
             }
         case 3:
             GIDSignIn.sharedInstance().signOut()
