@@ -23,10 +23,11 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
         switch identifier{
         case "LoggedOut":
             Hero.shared.defaultAnimation = .fade
+            hero_unwindToRootViewController()
         default:
             Hero.shared.defaultAnimation = .push(direction: .left)
+            performSegue(withIdentifier: identifier, sender: self)
         }
-        performSegue(withIdentifier: identifier, sender: self)
     }
     
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
@@ -37,7 +38,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
         // Do any additional setup after loading the view.
         userProPic.image = #imageLiteral(resourceName: "user")
         if (GIDSignIn.sharedInstance().currentUser.profile.hasImage){
-            let url = try? GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 300)
+            let url = GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 300)
             if(url != nil){
                 let imageData = try? Data(contentsOf: url!)
                 if(imageData != nil){

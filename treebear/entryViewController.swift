@@ -14,13 +14,14 @@ class entryViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = self
 
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
         Thread.sleep(forTimeInterval: 0.5)
         GIDSignIn.sharedInstance().signInSilently()
     }
