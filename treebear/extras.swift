@@ -26,7 +26,7 @@ class ExtenedColors{
 
 class Helpers{
     public func getDist(from:CLLocationCoordinate2D, to:CLLocationCoordinate2D) -> Double {
-        return 0.0
+        return CLLocation(latitude: to.latitude, longitude: to.longitude).distance(from: CLLocation(latitude: from.latitude, longitude: from.longitude))
     }
     
     public func postRequest(args:[String:String], completionHandler: @escaping (JSON)->Void) -> Void {
@@ -63,6 +63,15 @@ class Helpers{
         })
         
         dataTask.resume()
+    }
+    
+    public func getImageByURL(url: String, completionHandler: @escaping (UIImage)->Void) -> Void{
+        let url = URL(string: url)
+        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+        if let image = data {
+            completionHandler(UIImage(data: image)!)
+        }
+        
     }
 }
 
