@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TripTableViewCell: UITableViewCell {
+class TripsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var tripPic: UIImageView!
     @IBOutlet weak var tripName: UILabel!

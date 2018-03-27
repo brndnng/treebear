@@ -356,7 +356,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude)
             scalingFactor = 10.0
         case .snapToGround:
-            locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude - groundPosition)
+            locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude + groundPosition)
             scalingFactor = 1.0
         default:
             _ = 1

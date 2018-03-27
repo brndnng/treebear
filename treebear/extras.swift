@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import GoogleSignIn
 
 
 class ExtenedColors{
@@ -35,12 +36,12 @@ class Helpers{
             "Cache-Control": "no-cache"
         ]
         
-        let postData = NSMutableData(data: "\(args.first?.key)=\(args.first?.value)".data(using: String.Encoding.utf8)!)
-        for (postKey, postValue) in args.dropFirst(){
+        let postData = NSMutableData(data: "idToken=\(GIDSignIn.sharedInstance().currentUser.authentication.idToken!)".data(using: String.Encoding.utf8)!)
+        for (postKey, postValue) in args{
             postData.append("&\(postKey)=\(postValue)".data(using: String.Encoding.utf8)!)
         }
         
-        let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/postTest.php/")! as URL,
+        let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/json/postTest.php/")! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
         request.httpMethod = "POST"
@@ -57,7 +58,7 @@ class Helpers{
                     let json = try JSON(data: data!)
                     completionHandler(json)
                 } catch {
-                    print("JSON parsing error.")
+                    print("JSON parsing error.\n\(response)")
                 }
             }
         })

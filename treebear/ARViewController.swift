@@ -58,6 +58,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     @IBOutlet weak var POIExcerpt: UILabel!
     @IBOutlet weak var POIName: UILabel!
     
+    let colors = ExtenedColors()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +76,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         }
         if(destination != nil){
             let altitude = sceneLocationView.currentLocation()?.altitude ?? 100
-            let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.subtitle)!, color: UIColor(red: 0, green: 0, blue: 0, alpha: 1)) //TODO: color fixed #000000 for destination, should change
+            let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.subtitle)!, color: colors.destColor["dark"]!)
             let destinationNode = LocationAnnotationNodeWithDetails(annotation: destination!, image: desImage, altitude: altitude)
             destinationNode.scaleRelativeToDistance = false
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destinationNode)
@@ -226,6 +227,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         POIName.textColor = .white
         POIName.lineBreakMode = .byTruncatingTail
         POIName.sizeToFit()
+        locationLabel.frame.size.width = POIName.frame.size.width + 32
         POIExcerpt.text = excerpt
         POIExcerpt.lineBreakMode = .byWordWrapping
         POIExcerpt.textColor = .white

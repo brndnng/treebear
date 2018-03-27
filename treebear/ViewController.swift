@@ -55,8 +55,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         
        //post test
         let helpers = Helpers()
-        helpers.postRequest(args:["type":"test",
-                                  "at":"map"], completionHandler: printResponse)
+        helpers.postRequest(args:["type":"user",
+                                  "action":"set"], completionHandler: printResponse)
         
         view.sendSubview(toBack: POIView)
         mapView.isHidden = false
@@ -149,14 +149,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         switch pan2Menu.state {
         case .began:
             // begin the transition as normal
-            //            let story = UIStoryboard(name: "Main", bundle: nil)
-            //            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
-            //            arVC.loadViewIfNeeded()
             Hero.shared.defaultAnimation = .slide(direction: .left)
             performSegue(withIdentifier: "main2Menu", sender: self)
-        //testText.text = "test passed"
         case .ended:
-            if progress + -1 * pan2Menu.velocity(in: nil).x / view.bounds.width > 0.3 {
+            if progress - pan2Menu.velocity(in: nil).x / view.bounds.width > 0.3 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()

@@ -67,9 +67,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
         switch pan2Main.state {
         case .began:
             // begin the transition as normal
-            //            let story = UIStoryboard(name: "Main", bundle: nil)
-            //            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
-            //            arVC.loadViewIfNeeded()
             Hero.shared.defaultAnimation = .slide(direction: .right)
             hero_dismissViewController()
         //testText.text = "test passed"

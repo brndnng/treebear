@@ -11,15 +11,16 @@ import UIKit
 import Hero
 
 class BadgesCollectionViewController: UIViewController {
-
+    
+    @IBOutlet weak var blocker: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
 
+        // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         let slidingBadges = CardGroupSliding(frame: view.frame)
         slidingBadges.icons = [UIImage(named:"iconInApp")!,
                                UIImage(named:"compass")!]
@@ -27,9 +28,16 @@ class BadgesCollectionViewController: UIViewController {
         slidingBadges.iconsSize = view.frame.height / 4
         slidingBadges.iconsRadius = view.frame.height / 8
         
+        slidingBadges.alpha = 0
         view.addSubview(slidingBadges)
+        UIView.animate(withDuration: 0.5, animations: {
+            slidingBadges.alpha = 1.0
+            self.blocker.alpha = 0
+        })
+        
         slidingBadges.startSlide()
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
