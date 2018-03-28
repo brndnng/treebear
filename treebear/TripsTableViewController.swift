@@ -16,7 +16,11 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var serverResponse: JSON?
     var onGoingTrips: [Int: [String: Any]]?
-    var pressedCellTripId: String?
+    var pressedCellTripId: Int?
+    
+    let helper = Helpers()
+    let colors = ExtenedColors()
+    let alert = UIAlertController(title: nil, message: "Loading", preferredStyle: .alert)
 
     @IBOutlet weak var pan2Menu: UIScreenEdgePanGestureRecognizer!
     
@@ -33,9 +37,27 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         
+        //table height fix
+        self.tableView.estimatedRowHeight = 0;
+        self.tableView.estimatedSectionHeaderHeight = 0;
+        self.tableView.estimatedSectionFooterHeight = 0;
+        
+        alert.view.tintColor = .black
+        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50)) as UIActivityIndicatorView
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
+        
         view.addSubview(tableView)
         view.addSubview(view4Pan)
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        helper.postRequest(args: ["action": "get",
+                                  "type": "finished"], completionHandler: insertDataToLayout)
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,15 +73,43 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 2
+        if(section == 0){
+            return 2
+        } else if(section == 1){
+            if(serverResponse != nil){
+                return serverResponse!["num_trip"].int!
+            }
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TripsTableViewCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TripsTableViewCell", for: indexPath) as? TripsTableViewCell else { fatalError("The dequeued cell is not an instance of TripsTableViewCell.") }
 
-        // Configure the cell...
-        
 
+            // Configure the cell...
+        if(indexPath.section == 0){
+            
+        } else if (indexPath.section == 1){
+                if(serverResponse != nil){
+                    helper.getImageByURL(url: serverResponse!["trip"][indexPath.row]["picURL"].string!){
+                        (img) in
+                        DispatchQueue.main.async {
+                            cell.tripPic.image = img
+                            cell.setNeedsLayout()
+                        }
+                    }
+                    cell.id = serverResponse!["trip"][indexPath.row]["id"].int
+                    cell.tripName.text = serverResponse!["trip"][indexPath.row]["title"].string
+                    cell.tripExcerpt.text = serverResponse!["trip"][indexPath.row]["excerpt"].string
+                    cell.progressPercentage.text = "Finished"
+                    cell.barView.frame.size.width = cell.progressBar.frame.size.width
+                    cell.barColor = colors.destColor["dark"]
+                    cell.barView.backgroundColor = colors.destColor["dark"]
+                    cell.progressPercentage.textColor = cell.barView.backgroundColor
+                    cell.barView.layer.cornerRadius = cell.barView.frame.height / 2
+            }
+        }
         return cell
     }
     
@@ -80,9 +130,6 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
         switch pan2Menu.state {
         case .began:
             // begin the transition as normal
-            //            let story = UIStoryboard(name: "Main", bundle: nil)
-            //            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
-            //            arVC.loadViewIfNeeded()
             Hero.shared.defaultAnimation = .pull(direction: .right)
             navigationController?.hero_dismissViewController()
         //testText.text = "test passed"
@@ -100,10 +147,17 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Hero.shared.defaultAnimation = .push(direction: .left)
-        performSegue(withIdentifier: "getDetailsOfTrip", sender: self)
+        if let cell = tableView.cellForRow(at: indexPath) as? TripsTableViewCell {
+            pressedCellTripId = cell.id
+            Hero.shared.defaultAnimation = .push(direction: .left)
+            performSegue(withIdentifier: "getDetailsOfTrip", sender: self)
+        }
     }
-
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -146,11 +200,25 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "getDetailsOfTrip" /* && self.pressedCellTripId != nil*/ {
+        if segue.identifier == "getDetailsOfTrip" && self.pressedCellTripId != nil {
             if let nextViewController = segue.destination as? TripDetailsViewController{
-                //nextViewController.id = self.self.pressedCellTripId!
+                nextViewController.tripId = self.pressedCellTripId!
             }
         }
+    }
+    
+    func insertDataToLayout(_json: JSON){
+        self.serverResponse = _json["trips"]
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            if(self.tableView.contentSize.height > self.view.frame.height){
+                self.tableView.isScrollEnabled = true
+            }else{
+                self.tableView.isScrollEnabled = false
+            }
+            self.alert.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
 

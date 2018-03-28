@@ -634,33 +634,55 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t4U-XV-aAr" userLabel="ProgressView">
-                                                    <rect key="frame" x="98" y="49" width="226.5" height="17"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <rect key="frame" x="98" y="63" width="226.5" height="17"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iwp-2y-iAl" userLabel="BarView">
+                                                            <rect key="frame" x="0.0" y="5.5" width="226.5" height="5.5"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="iwp-2y-iAl" firstAttribute="leading" secondItem="t4U-XV-aAr" secondAttribute="leading" id="aaq-0h-Ir7"/>
+                                                        <constraint firstItem="iwp-2y-iAl" firstAttribute="width" secondItem="t4U-XV-aAr" secondAttribute="width" id="qlM-2b-BJC"/>
+                                                        <constraint firstItem="iwp-2y-iAl" firstAttribute="height" secondItem="t4U-XV-aAr" secondAttribute="height" multiplier="1:3" id="scA-7k-f6m"/>
+                                                        <constraint firstItem="iwp-2y-iAl" firstAttribute="centerY" secondItem="t4U-XV-aAr" secondAttribute="centerY" id="veT-VQ-dsF"/>
+                                                    </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prog." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKg-jw-lTI">
-                                                    <rect key="frame" x="332.5" y="49" width="34.5" height="17"/>
+                                                    <rect key="frame" x="332.5" y="63" width="34.5" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TripExcerpt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWG-zv-uZT">
+                                                    <rect key="frame" x="106" y="43" width="261" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="qKg-jw-lTI" firstAttribute="top" secondItem="UWG-zv-uZT" secondAttribute="bottom" constant="8" id="9U5-CE-KLu"/>
+                                                <constraint firstItem="t4U-XV-aAr" firstAttribute="top" secondItem="UWG-zv-uZT" secondAttribute="bottom" constant="8" id="A46-X6-mvU"/>
+                                                <constraint firstItem="UWG-zv-uZT" firstAttribute="leading" secondItem="7hA-6u-z4p" secondAttribute="trailing" constant="16" id="Hyv-JT-Wzh"/>
                                                 <constraint firstItem="xvb-3k-SLg" firstAttribute="top" secondItem="bQT-0E-9OE" secondAttribute="top" constant="11" id="Oqa-JX-aGv"/>
+                                                <constraint firstItem="UWG-zv-uZT" firstAttribute="top" secondItem="xvb-3k-SLg" secondAttribute="bottom" constant="8" id="QGv-IV-Thl"/>
                                                 <constraint firstItem="xvb-3k-SLg" firstAttribute="leading" secondItem="7hA-6u-z4p" secondAttribute="trailing" constant="8" id="Qfx-TC-tbW"/>
                                                 <constraint firstAttribute="trailing" secondItem="xvb-3k-SLg" secondAttribute="trailing" constant="8" id="Qjf-2h-Hc4"/>
                                                 <constraint firstItem="t4U-XV-aAr" firstAttribute="height" secondItem="qKg-jw-lTI" secondAttribute="height" id="Ug2-iM-Afc"/>
                                                 <constraint firstItem="qKg-jw-lTI" firstAttribute="leading" secondItem="t4U-XV-aAr" secondAttribute="trailing" constant="8" id="WsT-Dt-Y9n"/>
                                                 <constraint firstItem="7hA-6u-z4p" firstAttribute="leading" secondItem="bQT-0E-9OE" secondAttribute="leading" id="ake-Y6-036"/>
-                                                <constraint firstItem="t4U-XV-aAr" firstAttribute="top" secondItem="xvb-3k-SLg" secondAttribute="bottom" constant="14" id="e4P-OU-dzF"/>
                                                 <constraint firstItem="7hA-6u-z4p" firstAttribute="top" secondItem="bQT-0E-9OE" secondAttribute="top" id="nw9-FB-QPd"/>
+                                                <constraint firstAttribute="trailing" secondItem="UWG-zv-uZT" secondAttribute="trailing" constant="8" id="rVz-tc-xhM"/>
                                                 <constraint firstItem="t4U-XV-aAr" firstAttribute="leading" secondItem="7hA-6u-z4p" secondAttribute="trailing" constant="8" id="uFd-WR-mYw"/>
-                                                <constraint firstItem="qKg-jw-lTI" firstAttribute="top" secondItem="xvb-3k-SLg" secondAttribute="bottom" constant="14" id="xHa-lD-xZc"/>
                                                 <constraint firstAttribute="trailing" secondItem="qKg-jw-lTI" secondAttribute="trailing" constant="8" id="zF4-Cg-2JE"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="barView" destination="iwp-2y-iAl" id="AxN-ig-gSO"/>
                                             <outlet property="progressBar" destination="t4U-XV-aAr" id="2Dp-qc-gOp"/>
                                             <outlet property="progressPercentage" destination="qKg-jw-lTI" id="vNf-zk-8Mm"/>
+                                            <outlet property="tripExcerpt" destination="UWG-zv-uZT" id="cOF-gL-Ta4"/>
                                             <outlet property="tripName" destination="xvb-3k-SLg" id="4oZ-jd-4Cv"/>
                                             <outlet property="tripPic" destination="7hA-6u-z4p" id="hst-fA-44E"/>
                                         </connections>
@@ -696,7 +718,7 @@
                     </connections>
                 </screenEdgePanGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4066" y="89"/>
+            <point key="canvasLocation" x="4064.8000000000002" y="88.605697151424295"/>
         </scene>
         <!--Trip Details-->
         <scene sceneID="TWo-LL-DAO">

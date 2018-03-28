@@ -25,7 +25,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var POIMapView: MKMapView!
     @IBOutlet weak var POITableView: UITableView!
     
-    let tripId: String = "1"
+    var tripId: Int?
     var poiTable: [Int: JSON] = [:]
     var poiSequence: [Int] = []
     
@@ -55,6 +55,14 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         
         POIMapView.delegate = self
         
+        //table height fix
+        self.POITableView.estimatedRowHeight = 0;
+        self.POITableView.estimatedSectionHeaderHeight = 0;
+        self.POITableView.estimatedSectionFooterHeight = 0;
+        
+        //add uiview to table footer
+        POITableView.tableFooterView = UIView()
+        
         view.addSubview(panEdgeBack)
         
         //logic need to set suitable title or not render the button
@@ -63,9 +71,11 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        helper.postRequest(args: ["action": "get",
-                                  "type": "trip",
-                                  "tripId": "\(tripId)"], completionHandler: insertDataToLayout)
+        if(tripId != nil){
+            helper.postRequest(args: ["action": "get",
+                                      "type": "trip",
+                                      "tripId": "\(tripId!)"], completionHandler: insertDataToLayout)
+        }
     }
 
     override func didReceiveMemoryWarning() {
