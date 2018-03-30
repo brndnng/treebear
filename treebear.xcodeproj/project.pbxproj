@@ -17,6 +17,7 @@
 		B43170DC205C076D00484E6A /* TripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43170DB205C076D00484E6A /* TripsTableViewController.swift */; };
 		B43170DE205C07A300484E6A /* TripsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43170DD205C07A300484E6A /* TripsTableViewCell.swift */; };
 		B43170E0206A26E700484E6A /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43170DF206A26E700484E6A /* TripDetailsViewController.swift */; };
+		B43170E4206CCB1E00484E6A /* StarredPOIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43170E3206CCB1D00484E6A /* StarredPOIViewController.swift */; };
 		B49CE6B32049C28A00AA8C9A /* extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49CE6B22049C28A00AA8C9A /* extras.swift */; };
 		B49CE6B52056B02700AA8C9A /* BadgesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49CE6B42056B02700AA8C9A /* BadgesCollectionViewController.swift */; };
 		B4B7B5242011F1E40034BCF3 /* POIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B7B5232011F1E40034BCF3 /* POIViewController.swift */; };
@@ -72,6 +73,7 @@
 		B43170DB205C076D00484E6A /* TripsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsTableViewController.swift; sourceTree = "<group>"; };
 		B43170DD205C07A300484E6A /* TripsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsTableViewCell.swift; sourceTree = "<group>"; };
 		B43170DF206A26E700484E6A /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
+		B43170E3206CCB1D00484E6A /* StarredPOIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredPOIViewController.swift; sourceTree = "<group>"; };
 		B49CE6B22049C28A00AA8C9A /* extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extras.swift; sourceTree = "<group>"; };
 		B49CE6B42056B02700AA8C9A /* BadgesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesCollectionViewController.swift; sourceTree = "<group>"; };
 		B4B7B5232011F1E40034BCF3 /* POIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				CA3E62F51FB1B0D000ADC7D3 /* AppDelegate.swift */,
 				CA3E62F71FB1B0D000ADC7D3 /* ViewController.swift */,
 				CA3E62F91FB1B0D000ADC7D3 /* Main.storyboard */,
+				B43170E3206CCB1D00484E6A /* StarredPOIViewController.swift */,
 				B43170DF206A26E700484E6A /* TripDetailsViewController.swift */,
 				B43170DD205C07A300484E6A /* TripsTableViewCell.swift */,
 				B43170DB205C076D00484E6A /* TripsTableViewController.swift */,
@@ -556,6 +559,7 @@
 				B43170DC205C076D00484E6A /* TripsTableViewController.swift in Sources */,
 				B49CE6B32049C28A00AA8C9A /* extras.swift in Sources */,
 				B43170DA205AAE3900484E6A /* SwiftyJSON.swift in Sources */,
+				B43170E4206CCB1E00484E6A /* StarredPOIViewController.swift in Sources */,
 				B43170E0206A26E700484E6A /* TripDetailsViewController.swift in Sources */,
 				B49CE6B52056B02700AA8C9A /* BadgesCollectionViewController.swift in Sources */,
 				B4B7B531201854080034BCF3 /* SignInViewController.swift in Sources */,

@@ -14,6 +14,8 @@ class BadgesCollectionViewController: UIViewController {
     
     @IBOutlet weak var blocker: UIView!
     
+    let helper = Helpers()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,20 +24,30 @@ class BadgesCollectionViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         let slidingBadges = CardGroupSliding(frame: view.frame)
-        slidingBadges.icons = [UIImage(named:"iconInApp")!,
-                               UIImage(named:"compass")!]
+        slidingBadges.icons = [UIImage(named:"iconInApp")!]
         
         slidingBadges.iconsSize = view.frame.height / 4
         slidingBadges.iconsRadius = view.frame.height / 8
         
-        slidingBadges.alpha = 0
-        view.addSubview(slidingBadges)
-        UIView.animate(withDuration: 0.5, animations: {
-            slidingBadges.alpha = 1.0
-            self.blocker.alpha = 0
-        })
-        
-        slidingBadges.startSlide()
+        helper.postRequest(args: ["action": "get",
+                                  "type": "badges"]){
+                                    (_json) in
+                                    for url in _json["picURL"].arrayValue{
+                                        self.helper.getImageByURL(url: url.stringValue){
+                                        (image) in
+                                            slidingBadges.icons?.append(image)
+                                        }
+                                    }
+                                    DispatchQueue.main.async {
+                                        slidingBadges.alpha = 0
+                                        self.view.addSubview(slidingBadges)
+                                        slidingBadges.startSlide()
+                                        UIView.animate(withDuration: 0.5, animations: {
+                                            slidingBadges.alpha = 1.0
+                                            self.blocker.alpha = 0
+                                        })
+                                    }
+        }
     }
     
 

@@ -9,7 +9,7 @@
 import UIKit
 import Hero
 
-class TripsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TripsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var view4Pan: UIView!
@@ -42,6 +42,8 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableView.estimatedSectionHeaderHeight = 0;
         self.tableView.estimatedSectionFooterHeight = 0;
         
+        navigationController?.delegate = self
+        
         alert.view.tintColor = .black
         let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50)) as UIActivityIndicatorView
         loadingIndicator.hidesWhenStopped = true
@@ -49,15 +51,9 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
         loadingIndicator.startAnimating();
         
         alert.view.addSubview(loadingIndicator)
-        present(alert, animated: true, completion: nil)
         
         view.addSubview(tableView)
         view.addSubview(view4Pan)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        helper.postRequest(args: ["action": "get",
-                                  "type": "finished"], completionHandler: insertDataToLayout)
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,6 +139,13 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
             Hero.shared.update(progress)
         default:
             _ = 1
+        }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        present(alert, animated: true){
+            self.helper.postRequest(args: ["action": "get",
+                                           "type": "finished"], completionHandler: self.insertDataToLayout)
         }
     }
     

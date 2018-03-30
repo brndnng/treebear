@@ -163,7 +163,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                     
                     //if either endpoints of the polyline is too far from the poi, draw a stright line instead
-                    if(startLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 50 || endLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 50){
+                    if(startLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100 || endLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100){
                         let strightLine = [start, end]
                         let strightPolyline = MKPolyline(coordinates: strightLine, count: 2)
                         self.POIMapView.add(strightPolyline)
@@ -197,7 +197,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             let thisRowId = poiSequence[indexPath.row]
             cell.textLabel?.text = poiTable[thisRowId]!["title"].string
             cell.detailTextLabel?.text = poiTable[thisRowId]!["excerpt"].string
-            cell.tag = thisRowId
+            //cell.tag = thisRowId
         }
         return cell
     }
@@ -303,6 +303,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @objc func rightButtonTapped(sender: UIBarButtonItem){
         if(self.navigationItem.rightBarButtonItem?.title == "Enroll"){
+            //cehck availible slot and is currently enrolled
             //tell the server
             helper.postRequest(args: ["type": "tripStart",
                                       "action": "set",
@@ -317,6 +318,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                                         }
             }
         }else if(self.navigationItem.rightBarButtonItem?.title == "Drop"){
+            //cehck in enrolled list or not
             //tell the server
             helper.postRequest(args: ["type": "tripEnd",
                                       "action": "set",
