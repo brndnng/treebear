@@ -31,39 +31,42 @@ class Helpers{
     }
     
     public func postRequest(args:[String:String], completionHandler: @escaping (JSON)->Void) -> Void {
-        let headers = [
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Cache-Control": "no-cache"
-        ]
-        
-        let postData = NSMutableData(data: "idToken=\(GIDSignIn.sharedInstance().currentUser.authentication.idToken!)".data(using: String.Encoding.utf8)!)
-        for (postKey, postValue) in args{
-            postData.append("&\(postKey)=\(postValue)".data(using: String.Encoding.utf8)!)
-        }
-        
-        let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/json/postTest.php/")! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "POST"
-        request.allHTTPHeaderFields = headers
-        request.httpBody = postData as Data
-        
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error)
-            } else {
-                //let httpResponse = response as? HTTPURLResponse
-                do {
-                    let json = try JSON(data: data!)
-                    completionHandler(json)
-                } catch {
-                    print("JSON parsing error.\n\(response)")
-                }
+        //update id token to avoid 403
+        GIDSignIn.sharedInstance().currentUser.authentication.getTokensWithHandler(){ (_, _) in
+            let headers = [
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Cache-Control": "no-cache"
+            ]
+            
+            let postData = NSMutableData(data: "idToken=\(GIDSignIn.sharedInstance().currentUser.authentication.idToken!)".data(using: String.Encoding.utf8)!)
+            for (postKey, postValue) in args{
+                postData.append("&\(postKey)=\(postValue)".data(using: String.Encoding.utf8)!)
             }
-        })
-        
-        dataTask.resume()
+            
+            let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/json/postTest.php/")! as URL,
+                                              cachePolicy: .useProtocolCachePolicy,
+                                              timeoutInterval: 10.0)
+            request.httpMethod = "POST"
+            request.allHTTPHeaderFields = headers
+            request.httpBody = postData as Data
+            
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+                if (error != nil) {
+                    print(error)
+                } else {
+                    //let httpResponse = response as? HTTPURLResponse
+                    do {
+                        let json = try JSON(data: data!)
+                        completionHandler(json)
+                    } catch {
+                        print("JSON parsing error.\n\(response)")
+                    }
+                }
+            })
+            
+            dataTask.resume()
+        }
     }
     
     public func getImageByURL(url: String, completionHandler: @escaping (UIImage)->Void) -> Void{

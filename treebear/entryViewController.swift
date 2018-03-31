@@ -11,6 +11,8 @@ import GoogleSignIn
 import Hero
 
 class entryViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate{
+    
+    let helper = Helpers()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,11 @@ class entryViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         Hero.shared.defaultAnimation = .fade
         if(error == nil){
             print(user.profile.name + " Signed in sliently")
+            helper.postRequest(args:["type":"user",
+                                     "action":"set"]){
+                                        (_json) in
+                                        //check user default and update if needed
+            }
             performSegue(withIdentifier: "loggedInSliently", sender: self)
         }else{
             performSegue(withIdentifier: "cantLogInSliently", sender: self)

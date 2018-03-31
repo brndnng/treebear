@@ -119,7 +119,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             
             for (_, poi):(String, JSON) in json["POIS"] {
                 //adding points to mapView
-                let annotation = MKPointAnnotationWithID(id: poi["id"].int!, color: self.colors.noTripColor["dark"]!)
+                let annotation = MKPointAnnotationWithID(id: poi["id"].int!, color: self.colors.noTripColor["dark"]!, excerpt: "")
                 annotation.coordinate = CLLocationCoordinate2D(latitude: poi["latitude"].double!, longitude: poi["longitude"].double!)
                 annotation.title = poi["title"].string
                 self.POIMapView.addAnnotation(annotation)

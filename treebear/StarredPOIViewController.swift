@@ -209,7 +209,7 @@ class StarredPOIViewController: UIViewController, UITableViewDelegate, UITableVi
         DispatchQueue.main.async {
             for i in 0...(_json["num_POI"].int! - 1) {
                 //add point to map
-                let annotation = MKPointAnnotationWithID(id: _json["POIS"][i]["id"].int!, color: self.colors.noTripColor["dark"]!)
+                let annotation = MKPointAnnotationWithID(id: _json["POIS"][i]["id"].int!, color: self.colors.noTripColor["dark"]!, excerpt: "")
                 annotation.coordinate = CLLocationCoordinate2D(latitude: _json["POIS"][i]["latitude"].double!, longitude: _json["POIS"][i]["longitude"].double!)
                 annotation.title = _json["POIS"][i]["title"].string
                 self.mapView.addAnnotation(annotation)

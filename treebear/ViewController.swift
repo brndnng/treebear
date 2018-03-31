@@ -14,10 +14,12 @@ import Hero
 class MKPointAnnotationWithID:MKPointAnnotation{
     let id: Int
     var markerTintColor: UIColor?
+    let excerpt: String
     
-    init(id: Int, color: UIColor){
+    init(id: Int, color: UIColor, excerpt: String){
         self.id = id
         self.markerTintColor = color
+        self.excerpt = excerpt
     }
 }
 
@@ -35,6 +37,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var POINameLabel: UILabel!
     @IBOutlet weak var POIExcerpt: UILabel!
     @IBOutlet weak var ARNav: UIButton!
+    @IBOutlet weak var starButton: UIButton!
+    
     var centerMapOnUserLocation: Bool = true
     //var destination : LocationAnnotationNodeWithDetails?
     var locationManager:CLLocationManager!
@@ -43,21 +47,19 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var addedPOI = [MKAnnotation]()
     var polylines = [MKPolyline]()
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
+    var lastUpdateLocation: CLLocationCoordinate2D?
     
     var pressedAnnotation: MKPointAnnotationWithID? //selected annotation
     var selectedAsDestination: MKPointAnnotationWithID? // only set when user request ar navigation
     
+    let helper = Helpers()
+    let colors = ExtenedColors()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
-        
-       //post test
-        let helpers = Helpers()
-        helpers.postRequest(args:["type":"user",
-                                  "action":"set"], completionHandler: printResponse)
-        
+
         view.sendSubview(toBack: POIView)
         mapView.isHidden = false
         mapView.delegate = self
@@ -66,13 +68,17 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.showsPointsOfInterest = false
         
         determineCurrentLocation()
-        
-        let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
+//
+//        let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
         //let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
         
-        
         //JSON first load
-        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate, title: "TKO", subtitle: "Shopping Center?")
+        while true { //busy wait til the location is availible
+            if(locationManager.location?.coordinate != nil) {
+                addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
+                break
+            }
+        }
         view.addSubview(mapView)
         
         // Long press to add POI
@@ -94,9 +100,16 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addGestureRecognizer(panGesture)
         
         // adding seperate line for btn
-        let lineView = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
-        lineView.backgroundColor = .white
-        ARNav.addSubview(lineView)
+        let lineView1 = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
+        lineView1.backgroundColor = .white
+        ARNav.addSubview(lineView1)
+        let lineView2 = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
+        lineView2.backgroundColor = .white
+        starButton.addSubview(lineView2)
+        
+        ARNav.tintColor = .white
+        starButton.tintColor = .white
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -141,6 +154,19 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         selectedAsDestination = pressedAnnotation
         Hero.shared.defaultAnimation = .slide(direction: .right)
         performSegue(withIdentifier: "main2AR", sender: self)
+    }
+   
+    @IBAction func starPOI(_ sender: UIButton) {
+        helper.postRequest(args: ["action": "set",
+                                  "type": "star",
+                                  "POIId": "\(pressedAnnotation?.id ?? -1)"]){
+                                    (_json) in
+                                    if(_json["status"].stringValue == "success"){
+                                        DispatchQueue.main.async {
+                                            self.showToast(message: "\(self.pressedAnnotation?.title ?? "") Starred.")
+                                        }
+                                    }
+        }
     }
     
     @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
@@ -214,7 +240,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             if let nextViewController = segue.destination as? POIViewController{
                 nextViewController.bgColor = (self.pressedAnnotation?.markerTintColor)!
                 nextViewController.thisPOITitle = self.pressedAnnotation?.title
-                nextViewController.thisPOIExcerpt = self.pressedAnnotation?.title
+                nextViewController.thisPOIExcerpt = self.pressedAnnotation?.excerpt
                 nextViewController.thisPOIId = self.pressedAnnotation?.id
             }
         }
@@ -243,8 +269,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 if (self.polylines.isEmpty){
                     // disable the button
                     self.ARNav.isEnabled = false
+                    self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
                 }else{
                     self.ARNav.isEnabled = true
+                    self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
                 }
             }
             pressedAnnotation = view.annotation as? MKPointAnnotationWithID
@@ -265,11 +293,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         for view in views{
             if(view.annotation?.isKind(of: MKUserLocation.self))!{
                 view.canShowCallout = false
-            }else{
-                if let markerAnnotationView = view as? MKMarkerAnnotationView {
-                    markerAnnotationView.titleVisibility = .visible
-                    markerAnnotationView.subtitleVisibility = .hidden
-                }
             }
         }
     }
@@ -282,10 +305,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         
         if let annotation = annotation as? MKPointAnnotationWithID {
         
-            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: String(annotation.id)) as? MKMarkerAnnotationView
+            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "POImarker") as? MKMarkerAnnotationView
             
             if annotationView == nil {
-                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.id))
+                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "POImarker")
             } else {
                 annotationView?.annotation = annotation
             }
@@ -315,9 +338,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        // load JSON
+        addAnnotationBasedPOST(coordinate: mapView.region.center)
     }
-    
+ 
     func centerMapWithLocationAndRange(Center: CLLocationCoordinate2D, Meters: Double){
         let region = MKCoordinateRegionMakeWithDistance(Center, Meters, Meters)
         
@@ -406,30 +429,64 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
     func addPOI(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
         print("add point ",id)
-        let annotation = MKPointAnnotationWithID(id: id, color: color)
+        let annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
         annotation.coordinate = coordinate
         annotation.title = title
-        annotation.subtitle = subtitle
+        //annotation.subtitle = subtitle
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         locationNodes.append(LocationAnnotationNode(location: location, image: image))
         addedPOI.append(annotation)
         mapView.addAnnotation(annotation)
     }
+    
     func addPolyline(polyline: MKPolyline){
         mapView.add(polyline)
         polylines.append(polyline)
     }
     
+    func addAnnotationBasedPOST(coordinate:CLLocationCoordinate2D){
+        if(lastUpdateLocation == nil || CLLocation(coordinate: coordinate, altitude: 0).distance(from: CLLocation(coordinate: lastUpdateLocation!, altitude: 0)) > 100){
+            
+            helper.postRequest(args: ["action": "get",
+                                      "type":"poi",
+                                      "lat": "\(coordinate.latitude)",
+                                      "long": "\(coordinate.longitude)",
+                                      "range": "500"]){
+                                        (_json) in
+                                        DispatchQueue.main.async {
+                                            for poi in _json["POIS"].arrayValue{
+                                                var POIadded = false
+                                                for annotation in self.mapView.annotations{
+                                                    if let annotationWithID = annotation as? MKPointAnnotationWithID{
+                                                        if (annotationWithID.id == poi["id"].intValue){
+                                                            POIadded = true
+                                                            break
+                                                        }
+                                                    }
+                                                }
+                                                if(!POIadded){
+                                                    let colorOfAnnotation = self.colors.noTripColor["dark"]!
+                                                    self.addPOI(id: poi["id"].intValue, color: colorOfAnnotation, coordinate: CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude:poi["longitude"].doubleValue), title: poi["title"].stringValue, subtitle: poi["excerpt"].stringValue, altitude: poi["altitude"].doubleValue)
+                                                }
+                                            }
+                                            self.lastUpdateLocation = coordinate
+                                        }
+            }
+        }
+    }
+    
     func showViewALittleBit(){
         POIView.backgroundColor = pressedAnnotation?.markerTintColor
         POINameLabel.text = pressedAnnotation?.title
-        POIExcerpt.text = pressedAnnotation?.subtitle
+        POIExcerpt.text = pressedAnnotation?.excerpt
         print("check polyline")
         if (polylines.isEmpty){
             // disable the button
             ARNav.isEnabled = false
+             self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
         }else{
             ARNav.isEnabled = true
+             self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         }
         POIView.alpha = 1
         view.insertSubview(POIView, aboveSubview: searchBar)
@@ -440,4 +497,27 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         print(_json)
     }
 }
+
+extension UIViewController {
+    
+    func showToast(message : String) {
+        
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-160, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        toastLabel.sizeToFit()
+        toastLabel.frame.size = CGSize(width: toastLabel.frame.width + 16, height: toastLabel.frame.height + 16)
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    } }
 
