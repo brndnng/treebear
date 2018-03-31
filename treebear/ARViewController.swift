@@ -283,6 +283,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
                                                 let coordinate = CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude: poi["longitude"].doubleValue)
                                                 let altitude = poi["altitude"].doubleValue
                                                 let node = LocationAnnotationNodeWithDetails(id: id, title: title, excerpt: excerpt, color: color, location: CLLocation(coordinate: coordinate, altitude: altitude), image: self.getImageForLocation(title: title, excerpt: excerpt, color: color))
+                                                node.scaleRelativeToDistance = true
                                                 self.locationNodes.append(node)
                                                 self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
                                             }
