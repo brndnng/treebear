@@ -87,3 +87,12 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor {
         alpha: CGFloat(1.0)
     )
 }
+
+struct SearchItem {
+    let type : String
+    let title : String
+    let id : Int
+    let excerpt : String
+    let coordinates: CLLocationCoordinate2D
+    
+}
