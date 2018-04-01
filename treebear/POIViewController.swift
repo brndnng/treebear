@@ -9,7 +9,7 @@
 import UIKit
 import Hero
 
-class POIViewController: UIViewController {
+class POIViewController: UIViewController,UIScrollViewDelegate {
     
     var thisPOITitle: String?
     var thisPOIExcerpt: String?
@@ -22,9 +22,15 @@ class POIViewController: UIViewController {
     @IBOutlet weak var ScrollingDetails: UIScrollView!
     @IBOutlet weak var PanDownMap: UIPanGestureRecognizer!
     
+    var cardsList = [Card]()
+    //Test card
+//    var cardView = UIImageView()
+//    var cardInfo = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        ScrollingDetails.delegate = self
         //Load JSON
         updateContent()
     }
@@ -40,6 +46,55 @@ class POIViewController: UIViewController {
         POIExcerpt.text = thisPOIExcerpt
         POIOverView.backgroundColor = bgColor
         ScrollingDetails.backgroundColor = bgColor
+        
+//        cardView.frame = CGRect(x: ScrollingDetails.frame.origin.x+20, y: ScrollingDetails.frame.origin.y-50, width: ScrollingDetails.frame.size.width-40, height: ScrollingDetails.frame.size.height/2)
+//        cardView.contentMode = UIViewContentMode.scaleToFill
+//        cardInfo.frame = CGRect(x: ScrollingDetails.frame.origin.x+20, y: cardView.frame.origin.y+cardView.frame.size.height/2+20, width: ScrollingDetails.frame.size.width-40, height: ScrollingDetails.frame.size.height/2)
+        
+        let helpers = Helpers()
+        print("Searching for POI: ",thisPOIId)
+        helpers.postRequest(args:["type":"poi",
+                                  "action":"get","POIId":String(describing: thisPOIId)]){(_json) in
+                                    DispatchQueue.main.async {
+//                                        print(_json["cards"])
+                                        let cards = _json["cards"].array
+                                        for card in cards!{
+                                            if card["card_type"].stringValue == "info" {
+                                                var cardView = UIImageView()
+                                                var cardInfo = UILabel()
+                                                cardView.frame = CGRect(x: self.ScrollingDetails.frame.origin.x+20, y: self.ScrollingDetails.frame.origin.y-50, width: self.ScrollingDetails.frame.size.width-40, height: self.ScrollingDetails.frame.size.height/2)
+                                                cardView.contentMode = UIViewContentMode.scaleToFill
+                                                cardInfo.frame = CGRect(x: self.ScrollingDetails.frame.origin.x+20, y: cardView.frame.origin.y+cardView.frame.size.height/2+20, width: self.ScrollingDetails.frame.size.width-40, height: self.ScrollingDetails.frame.size.height/2)
+                                                
+                                                print(card["info"].stringValue)
+                                                helpers.getImageByURL(url: card["picURL"].stringValue){(_img) in DispatchQueue.main.async{
+                                                    cardView.image = _img
+                                                    
+                                                    }}
+                                                cardInfo.text = card["info"].stringValue
+//                                                self.ScrollingDetails.addSubview(cardInfo)
+//                                                self.ScrollingDetails.addSubview(cardView)
+//                                                var a = InfoCard(info: cardInfo, trip: card["trip"].intValue, pic: cardView)
+//                                                a.applyCard(baseview: self.ScrollingDetails)
+                                                self.cardsList.append(InfoCard(info: cardInfo, trip: card["trip"].intValue, pic: cardView))
+//                                                print(self.cardsList)
+                                            }
+                                            else if card["card_type"].stringValue == "quiz" {
+                                                
+                                            }
+                                        }
+                                        for card in self.cardsList{
+                                            card.applyCard(baseview: self.ScrollingDetails)
+                                            }
+                                    }
+                                    
+        }
+//        for card in cardsList{
+//            print(card)
+//            card.applyCard(baseview: ScrollingDetails)
+//        }
+//        ScrollingDetails.addSubview(self.cardInfo)
+//        ScrollingDetails.addSubview(self.cardView)
         view.addSubview(ScrollingDetails)
     }
 

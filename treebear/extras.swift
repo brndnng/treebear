@@ -94,3 +94,47 @@ struct SearchItem {
     let excerpt : String
     let coordinates: CLLocationCoordinate2D
 }
+class Card {
+    var type: String { return ""}
+    func applyCard(baseview: UIView){
+        
+    }
+}
+class InfoCard : Card {
+    override var type: String { return "info"}
+    var info: UILabel
+    var trip: Int
+    var pic: UIImageView
+    init(info: UILabel, trip: Int, pic: UIImageView) {
+        self.info = info
+        self.trip = trip
+        self.pic = pic
+    }
+    override func applyCard(baseview: UIView){
+        print("Add subview of InfoCard")
+        baseview.addSubview(pic)
+        baseview.addSubview(info)
+    }
+}
+class QuizCard : Card {
+    override var type: String {return "quiz"}
+    var question: UILabel
+    var options: [UIButton]
+    var CorrectAns: String
+    var trip: Int
+    init(question: UILabel, options:[UIButton],CorrectAns: String, trip: Int) {
+        self.question = question
+        self.options = options
+        self.CorrectAns = CorrectAns
+        self.trip = trip
+    }
+    override func applyCard(baseview: UIView) {
+        print("Add subview of QuizCard")
+        baseview.addSubview(question)
+        for option in options{
+            baseview.addSubview(option)
+        }
+    }
+}
+
+
