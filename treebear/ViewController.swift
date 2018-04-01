@@ -514,7 +514,7 @@ extension UIViewController {
         toastLabel.sizeToFit()
         toastLabel.frame.size = CGSize(width: toastLabel.frame.width + 16, height: toastLabel.frame.height + 16)
         self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 4.0, delay: 2.0, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()

@@ -245,7 +245,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     @objc func updateTooltips(){
         helper.postRequest(args: ["action": "get",
                                   "type": "poi",
-                                  "range": "60",
+                                  "range": "100",
                                   "lat": "\(self.sceneLocationView.currentLocation()?.coordinate.latitude ?? 0.0)",
                                   "long": "\(self.sceneLocationView.currentLocation()?.coordinate.longitude ?? 0.0)"]){
                                     (_json) in
