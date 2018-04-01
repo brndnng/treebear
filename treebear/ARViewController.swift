@@ -13,7 +13,7 @@ import MapKit
 import SceneKit
 
 class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
-    var	id: Int
+    var    id: Int
     var title: String
     var excerpt: String
     var bgcolor: UIColor
@@ -43,7 +43,7 @@ class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
 
 class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLocationViewDelegate{
     
-
+    
     @IBOutlet weak var loadingGIF: UIActivityIndicatorView!
     @IBOutlet weak var pan2Main: UIScreenEdgePanGestureRecognizer!
     
@@ -66,17 +66,17 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         loadingGIF.startAnimating()
-
+        
         sceneLocationView.locationDelegate = self
         sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
         //sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destination!)
         sceneLocationView.run()
-//        debugLocations()
+        //        debugLocations()
         view.addSubview(sceneLocationView)
-//        for location in locationNodes{
-//            location.scaleRelativeToDistance = true
-//            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: location)
-//        }
+        //        for location in locationNodes{
+        //            location.scaleRelativeToDistance = true
+        //            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: location)
+        //        }
         if(destination != nil){
             let altitude = sceneLocationView.currentLocation()?.altitude ?? 100
             let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.subtitle)!, color: colors.destColor["dark"]!)
@@ -97,7 +97,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         super.viewDidLayoutSubviews()
         sceneLocationView.frame = view.bounds
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -126,7 +126,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         postTimer = nil
     }
     
-
+    
     @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
         let translation = pan2Main.translation(in: nil)
         let progress = CGFloat(-1 * translation.x / 2 / sceneLocationView.bounds.width)
@@ -142,7 +142,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
                 Hero.shared.cancel()
             }
         case .changed:
-           Hero.shared.update(progress)
+            Hero.shared.update(progress)
         default:
             _ = 1
         }
@@ -186,14 +186,14 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     
     //MARK: SceneLocationViewDelegate
@@ -245,50 +245,50 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     @objc func updateTooltips(){
         helper.postRequest(args: ["action": "get",
                                   "type": "poi",
-                                  "range": "100",
+                                  "range": "60",
                                   "lat": "\(self.sceneLocationView.currentLocation()?.coordinate.latitude ?? 0.0)",
-                                  "long": "\(self.sceneLocationView.currentLocation()?.coordinate.longitude ?? 0.0)"]){
-                                    (_json) in
-                                    for index in stride(from:(self.locationNodes.count-1), through: 0, by: -1){
-                                        let node = self.locationNodes[index]
-                                        var needToRemove = true
-                                        for poi in _json["POIS"].arrayValue{
-                                            if(poi["id"].intValue == node.id){
-                                                needToRemove = false
-                                                break
-                                            }
-                                        }
-                                        if (needToRemove){
-                                            DispatchQueue.main.async {
-                                                self.sceneLocationView.removeLocationNode(locationNode: node)
-                                                self.locationNodes.remove(at: index)
-                                            }
-                                        }
-                                    }
-                                    for poi in _json["POIS"].arrayValue{
-                                        var needToAdd = true
-                                        for node in self.locationNodes{
-                                            if(node.id == poi["id"].intValue){
-                                                needToAdd = false
-                                                break
-                                            }
-                                        }
-                                        if(needToAdd){
-                                            DispatchQueue.main.async {
-                                                //create the obj
-                                                let id = poi["id"].intValue
-                                                let title = poi["title"].stringValue
-                                                let excerpt = poi["excerpt"].stringValue
-                                                let color = self.colors.noTripColor["dark"]!
-                                                let coordinate = CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude: poi["longitude"].doubleValue)
-                                                let altitude = poi["altitude"].doubleValue
-                                                let node = LocationAnnotationNodeWithDetails(id: id, title: title, excerpt: excerpt, color: color, location: CLLocation(coordinate: coordinate, altitude: altitude), image: self.getImageForLocation(title: title, excerpt: excerpt, color: color))
-                                                node.scaleRelativeToDistance = true
-                                                self.locationNodes.append(node)
-                                                self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
-                                            }
-                                        }
-                                    }
+            "long": "\(self.sceneLocationView.currentLocation()?.coordinate.longitude ?? 0.0)"]){
+                (_json) in
+                for index in stride(from:(self.locationNodes.count-1), through: 0, by: -1){
+                    let node = self.locationNodes[index]
+                    var needToRemove = true
+                    for poi in _json["POIS"].arrayValue{
+                        if(poi["id"].intValue == node.id){
+                            needToRemove = false
+                            break
+                        }
+                    }
+                    if (needToRemove){
+                        DispatchQueue.main.async {
+                            self.sceneLocationView.removeLocationNode(locationNode: node)
+                            self.locationNodes.remove(at: index)
+                        }
+                    }
+                }
+                for poi in _json["POIS"].arrayValue{
+                    var needToAdd = true
+                    for node in self.locationNodes{
+                        if(node.id == poi["id"].intValue){
+                            needToAdd = false
+                            break
+                        }
+                    }
+                    if(needToAdd){
+                        DispatchQueue.main.async {
+                            //create the obj
+                            let id = poi["id"].intValue
+                            let title = poi["title"].stringValue
+                            let excerpt = poi["excerpt"].stringValue
+                            let color = self.colors.noTripColor["dark"]!
+                            let coordinate = CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude: poi["longitude"].doubleValue)
+                            let altitude = poi["altitude"].doubleValue
+                            let node = LocationAnnotationNodeWithDetails(id: id, title: title, excerpt: excerpt, color: color, location: CLLocation(coordinate: coordinate, altitude: altitude), image: self.getImageForLocation(title: title, excerpt: excerpt, color: color))
+                            node.scaleRelativeToDistance = true
+                            self.locationNodes.append(node)
+                            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
+                        }
+                    }
+                }
         }
     }
 }
@@ -304,6 +304,5 @@ extension UIView {
         }
     }
 }
-
 
 

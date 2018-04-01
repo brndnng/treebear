@@ -23,8 +23,9 @@ class MKPointAnnotationWithID:MKPointAnnotation{
     }
 }
 
-class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
-    
+class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+
+
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var pan2Menu: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var panUpPOI: UIPanGestureRecognizer!
@@ -37,7 +38,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var POINameLabel: UILabel!
     @IBOutlet weak var POIExcerpt: UILabel!
     @IBOutlet weak var ARNav: UIButton!
-    @IBOutlet weak var starButton: UIButton!
+    @IBOutlet weak var searchTableView: UITableView!
+    
+    @IBOutlet weak var searchTableHeight: NSLayoutConstraint!
     
     var centerMapOnUserLocation: Bool = true
     //var destination : LocationAnnotationNodeWithDetails?
@@ -51,13 +54,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var SearchedItems = [SearchItem]()
     var responseFromServer: JSON?
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
-    var lastUpdateLocation: CLLocationCoordinate2D?
     
     var pressedAnnotation: MKPointAnnotationWithID? //selected annotation
     var selectedAsDestination: MKPointAnnotationWithID? // only set when user request ar navigation
-    
-    let helper = Helpers()
-    let colors = ExtenedColors()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,16 +67,24 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         searchTableView.dataSource = self
         searchTableView.isHidden = true
         searchTableView.allowsSelection = true
+        searchTableView.backgroundColor = UIColor(white: 1,alpha:0.5)
         searchBar.delegate = self
         searchBar.placeholder = "Search POI/Trips"
+        searchBar.showsCancelButton = false
+        searchBar.enablesReturnKeyAutomatically = true
 //        searchTableView.
         // set up keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide
             , object: nil)
         
-        //post test
+
+        definesPresentationContext = true
+        
+       //post test
         let helpers = Helpers()
+        helpers.postRequest(args:["type":"user",
+                                  "action":"set"], completionHandler: printResponse)
         
         view.sendSubview(toBack: POIView)
         mapView.isHidden = false
@@ -87,23 +94,17 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.showsPointsOfInterest = false
         
         determineCurrentLocation()
-//
-//        let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
+        
+        let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
         //let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
         
-        //JSON first load
-        while true { //busy wait til the location is availible
-            if(locationManager.location?.coordinate != nil) {
-                addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
-                break
-            }
-        }
-        view.addSubview(mapView)
         
+        //JSON first load
+        addPOI(id: 1500, color: .blue,coordinate: pinCoordinate, title: "TKO", subtitle: "Shopping Center?")
+        view.addSubview(mapView)
         // Tap to close keyboard
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         mapView.addGestureRecognizer(tap)
-        
         // Long press to add POI
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         mapView.addGestureRecognizer(longPress)
@@ -112,7 +113,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         view.addSubview(searchBar)
         view.addSubview(view4EdgePan)
         view.addSubview(view4EdgePan2Menu)
-        
+        view.addSubview(searchTableView)
         // add pan gesture to detect when the map moves
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
         
@@ -123,16 +124,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addGestureRecognizer(panGesture)
         
         // adding seperate line for btn
-        let lineView1 = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
-        lineView1.backgroundColor = .white
-        ARNav.addSubview(lineView1)
-        let lineView2 = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
-        lineView2.backgroundColor = .white
-        starButton.addSubview(lineView2)
-        
-        ARNav.tintColor = .white
-        starButton.tintColor = .white
-        
+        let lineView = UIView(frame: CGRect(x: -16, y: 0, width: 1, height: ARNav.frame.size.height))
+        lineView.backgroundColor = .white
+        ARNav.addSubview(lineView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -178,19 +172,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         Hero.shared.defaultAnimation = .slide(direction: .right)
         performSegue(withIdentifier: "main2AR", sender: self)
     }
-   
-    @IBAction func starPOI(_ sender: UIButton) {
-        helper.postRequest(args: ["action": "set",
-                                  "type": "star",
-                                  "POIId": "\(pressedAnnotation?.id ?? -1)"]){
-                                    (_json) in
-                                    if(_json["status"].stringValue == "success"){
-                                        DispatchQueue.main.async {
-                                            self.showToast(message: "\(self.pressedAnnotation?.title ?? "") Starred.")
-                                        }
-                                    }
-        }
-    }
     
     @IBAction func swipeRight(_ sender: UIScreenEdgePanGestureRecognizer) {
         let translation = pan2Menu.translation(in: nil)
@@ -198,10 +179,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         switch pan2Menu.state {
         case .began:
             // begin the transition as normal
+            //            let story = UIStoryboard(name: "Main", bundle: nil)
+            //            let arVC = story.instantiateViewController(withIdentifier: "ARVC")
+            //            arVC.loadViewIfNeeded()
             Hero.shared.defaultAnimation = .slide(direction: .left)
             performSegue(withIdentifier: "main2Menu", sender: self)
+        //testText.text = "test passed"
         case .ended:
-            if progress - pan2Menu.velocity(in: nil).x / view.bounds.width > 0.3 {
+            if progress + -1 * pan2Menu.velocity(in: nil).x / view.bounds.width > 0.3 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
@@ -263,7 +248,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             if let nextViewController = segue.destination as? POIViewController{
                 nextViewController.bgColor = (self.pressedAnnotation?.markerTintColor)!
                 nextViewController.thisPOITitle = self.pressedAnnotation?.title
-                nextViewController.thisPOIExcerpt = self.pressedAnnotation?.excerpt
+                nextViewController.thisPOIExcerpt = self.pressedAnnotation?.title
                 nextViewController.thisPOIId = self.pressedAnnotation?.id
             }
         }
@@ -292,10 +277,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 if (self.polylines.isEmpty){
                     // disable the button
                     self.ARNav.isEnabled = false
-                    self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
                 }else{
                     self.ARNav.isEnabled = true
-                    self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
                 }
             }
             pressedAnnotation = view.annotation as? MKPointAnnotationWithID
@@ -316,6 +299,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         for view in views{
             if(view.annotation?.isKind(of: MKUserLocation.self))!{
                 view.canShowCallout = false
+            }else{
+                if let markerAnnotationView = view as? MKMarkerAnnotationView {
+                    markerAnnotationView.titleVisibility = .visible
+                    markerAnnotationView.subtitleVisibility = .hidden
+                }
             }
         }
     }
@@ -328,10 +316,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         
         if let annotation = annotation as? MKPointAnnotationWithID {
         
-            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "POImarker") as? MKMarkerAnnotationView
+            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: String(annotation.id)) as? MKMarkerAnnotationView
             
             if annotationView == nil {
-                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "POImarker")
+                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.id))
             } else {
                 annotationView?.annotation = annotation
             }
@@ -361,9 +349,9 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        addAnnotationBasedPOST(coordinate: mapView.region.center)
+        // load JSON
     }
- 
+    
     func centerMapWithLocationAndRange(Center: CLLocationCoordinate2D, Meters: Double){
         let region = MKCoordinateRegionMakeWithDistance(Center, Meters, Meters)
         
@@ -465,7 +453,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         addedPOI.append(annotation)
         mapView.addAnnotation(annotation)
     }
-    
     func addPOIandSelect(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
         print("add point ",id)
         let annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
@@ -478,55 +465,21 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
     }
-    
     func addPolyline(polyline: MKPolyline){
         mapView.add(polyline)
         polylines.append(polyline)
     }
     
-    func addAnnotationBasedPOST(coordinate:CLLocationCoordinate2D){
-        if(lastUpdateLocation == nil || CLLocation(coordinate: coordinate, altitude: 0).distance(from: CLLocation(coordinate: lastUpdateLocation!, altitude: 0)) > 100){
-            
-            helper.postRequest(args: ["action": "get",
-                                      "type":"poi",
-                                      "lat": "\(coordinate.latitude)",
-                                      "long": "\(coordinate.longitude)",
-                                      "range": "500"]){
-                                        (_json) in
-                                        DispatchQueue.main.async {
-                                            for poi in _json["POIS"].arrayValue{
-                                                var POIadded = false
-                                                for annotation in self.mapView.annotations{
-                                                    if let annotationWithID = annotation as? MKPointAnnotationWithID{
-                                                        if (annotationWithID.id == poi["id"].intValue){
-                                                            POIadded = true
-                                                            break
-                                                        }
-                                                    }
-                                                }
-                                                if(!POIadded){
-                                                    let colorOfAnnotation = self.colors.noTripColor["dark"]!
-                                                    self.addPOI(id: poi["id"].intValue, color: colorOfAnnotation, coordinate: CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude:poi["longitude"].doubleValue), title: poi["title"].stringValue, subtitle: poi["excerpt"].stringValue, altitude: poi["altitude"].doubleValue)
-                                                }
-                                            }
-                                            self.lastUpdateLocation = coordinate
-                                        }
-            }
-        }
-    }
-    
     func showViewALittleBit(){
         POIView.backgroundColor = pressedAnnotation?.markerTintColor
         POINameLabel.text = pressedAnnotation?.title
-        POIExcerpt.text = pressedAnnotation?.excerpt
+        POIExcerpt.text = pressedAnnotation?.subtitle
         print("check polyline")
         if (polylines.isEmpty){
             // disable the button
             ARNav.isEnabled = false
-             self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
         }else{
             ARNav.isEnabled = true
-             self.ARNav.imageView?.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         }
         POIView.alpha = 1
         view.insertSubview(POIView, aboveSubview: searchBar)
@@ -536,7 +489,6 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     func printResponse(_json : JSON){
         print(_json)
     }
-    
     func createSearchItemsFromResponse(_json : JSON){
 //        SearchedItems.removeAll()
 //        self.responseFromServer = _json["trips"]
@@ -554,14 +506,24 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             }
             print(self.SearchedItems)
             self.searchTableView.reloadData()
-            if(self.searchTableView.contentSize.height > self.view.frame.height){
-                self.searchTableView.isScrollEnabled = true
-            }else{
-                self.searchTableView.isScrollEnabled = false
-            }
+//            if(self.searchTableView.contentSize.height > self.view.frame.height){
+//                self.searchTableView.isScrollEnabled = true
+//            }else{
+//                self.searchTableView.isScrollEnabled = false
+//            }
         }
     }
     
+    //search functions
+//    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+//        let helpers = Helpers()
+//        print("Searching for: ",searchText)
+//        helpers.postRequest(args:["type":"search",
+//                                  "action":"get","key":searchText], completionHandler: printResponse)
+//        filteredSearchedItems = SearchedItems.filter({( item : SearchItem) -> Bool in
+//            return item.title.lowercased().contains(searchText.lowercased())
+//        })
+//    }
     //tableView functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("Numofitems:",SearchedItems.count)
@@ -578,6 +540,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             //        item = SearchedItems[indexPath.row]
         print("Item",item)
             //        }
+        cell.backgroundColor = UIColor.clear
         cell.textLabel!.text = item.title
         cell.detailTextLabel!.text = item.type
         cell.id = item.id
@@ -636,6 +599,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
         searchActive = false;
+        SearchedItems.removeAll();
         view.endEditing(true)
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
@@ -650,6 +614,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0{
                 self.view.frame.origin.y -= keyboardSize.height
+//                self.searchTableView.frame.origin.y = 20
                 self.searchTableHeight.constant -= keyboardSize.height
 //                self.view.bringSubview(toFront: searchBar)
 //                self.searchTableView.frame = CGRect(x: self.searchTableView.frame.origin.x, y: self.searchTableView.frame.origin.y, width: self.searchTableView.frame.size.width, height: self.searchTableView.frame.height-keyboardSize.height)
@@ -666,26 +631,12 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     }
 }
 
-extension UIViewController {
-    
-    func showToast(message : String) {
-        
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-160, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center;
-        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        toastLabel.sizeToFit()
-        toastLabel.frame.size = CGSize(width: toastLabel.frame.width + 16, height: toastLabel.frame.height + 16)
-        self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 2.0, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-    } }
+
+//extension ViewController: UISearchResultsUpdating {
+//    // MARK: - UISearchResultsUpdating Delegate
+//    func updateSearchResults(for searchController: UISearchController) {
+//        print(searchController.searchBar.text!)
+//        filterContentForSearchText(searchController.searchBar.text!)
+//    }
+//}
 

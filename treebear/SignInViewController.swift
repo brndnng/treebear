@@ -13,7 +13,6 @@ import Hero
 class SignInViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
 
     @IBOutlet weak var SignInBtn: GIDSignInButton!
-    let helper = Helpers()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +31,6 @@ class SignInViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDele
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if(error == nil){
             print(user.profile.name + " Signed in manually")
-            helper.postRequest(args:["type":"user",
-                                     "action":"set"]){
-                                        (_json) in
-                                        //check user default and update if needed
-            }
             Hero.shared.defaultAnimation = .fade
             performSegue(withIdentifier: "loggedInManually", sender: self)
         }

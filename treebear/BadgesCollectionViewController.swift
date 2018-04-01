@@ -18,7 +18,7 @@ class BadgesCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -34,7 +34,7 @@ class BadgesCollectionViewController: UIViewController {
                                     (_json) in
                                     for url in _json["picURL"].arrayValue{
                                         self.helper.getImageByURL(url: url.stringValue){
-                                        (image) in
+                                            (image) in
                                             slidingBadges.icons?.append(image)
                                         }
                                     }
@@ -50,23 +50,23 @@ class BadgesCollectionViewController: UIViewController {
         }
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 // Acknowledgement: The following classes are modified from PaoloCuscela/Cards (MIT License).
@@ -95,7 +95,7 @@ class BadgesCollectionViewController: UIViewController {
      Data source for the collection view.
      */
     public var icons: [UIImage]?
-
+    
     
     // Priv vars
     fileprivate final let CellID = "SlidingCVCell"
@@ -127,12 +127,12 @@ class BadgesCollectionViewController: UIViewController {
         slidingCV.backgroundColor = UIColor.white
         slidingCV.isUserInteractionEnabled = false
         
-//        backgroundIV.addSubview(subtitleLbl)
-//        backgroundIV.addSubview(titleLbl)
-//        backgroundIV.addSubview(slidingCV)
-//        blurV.removeFromSuperview()
-//
-//        backgroundIV.backgroundColor = UIColor.white
+        //        backgroundIV.addSubview(subtitleLbl)
+        //        backgroundIV.addSubview(titleLbl)
+        //        backgroundIV.addSubview(slidingCV)
+        //        blurV.removeFromSuperview()
+        //
+        //        backgroundIV.backgroundColor = UIColor.white
         
         //startSlide()
     }
@@ -238,7 +238,6 @@ open class SlidingCVCell: UICollectionViewCell {
         iconIV.contentMode = .scaleAspectFill
     }
 }
-
 
 
 

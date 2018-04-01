@@ -55,15 +55,14 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section{
-        case 0:
+        case 1:
             if(indexPath.row == 0){
                 // starred location
-                delegate?.segueToNext(identifier: "StarredPOI")
             }else{
                 //trips
                 delegate?.segueToNext(identifier: "Trips")
             }
-        case 1:
+        case 2:
             if(indexPath.row == 0){
                 //about us
                 let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/")!)
@@ -75,7 +74,7 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
                 Hero.shared.defaultAnimation = .push(direction: .left)
                 present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
             }
-        case 2:
+        case 3:
             GIDSignIn.sharedInstance().signOut()
             print("logout")
             delegate?.segueToNext(identifier: "LoggedOut")

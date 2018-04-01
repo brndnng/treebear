@@ -68,7 +68,50 @@ class Helpers{
             dataTask.resume()
         }
     }
-    
+//    public func getSearchedItemsFromPostRequest(args:[String:String], completionHandler: @escaping ([SearchItem])->Void) -> Void {
+//        var args = args
+//        var items = [SearchItem]()
+//        let headers = [
+//            "Content-Type": "application/x-www-form-urlencoded",
+//            "Cache-Control": "no-cache"
+//        ]
+//        let postData = NSMutableData(data: "idToken=\(GIDSignIn.sharedInstance().currentUser.authentication.idToken!)".data(using: String.Encoding.utf8)!)
+//        for (postKey, postValue) in args{
+//            postData.append("&\(postKey)=\(postValue)".data(using: String.Encoding.utf8)!)
+//        }
+//        //        print(postData.)
+//        let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/json/postTest.php/")! as URL,
+//                                          cachePolicy: .useProtocolCachePolicy,
+//                                          timeoutInterval: 10.0)
+//        request.httpMethod = "POST"
+//        request.allHTTPHeaderFields = headers
+//        request.httpBody = postData as Data
+//        
+//        let session = URLSession.shared
+//        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+//            if (error != nil) {
+//                print(error)
+//                
+//            } else {
+//                //let httpResponse = response as? HTTPURLResponse
+//                //                print(response)
+//                do {
+//                    let json = try JSON(data: data!)
+//                    let trips = json["trips"]["trip"].array
+//                    for trip in trips!{
+//                        //            print(trip)
+//                        items.append(SearchItem(type: "trip", title: trip["title"].stringValue, id: trip["id"].intValue))
+//                        print(items)
+//                    }
+//                    completionHandler(items)
+//                } catch {
+//                    print("JSON parsing error.")
+//                }
+//            }
+//        })
+//        
+//        dataTask.resume()
+//    }
     public func getImageByURL(url: String, completionHandler: @escaping (UIImage)->Void) -> Void{
         let url = URL(string: url)
         let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
