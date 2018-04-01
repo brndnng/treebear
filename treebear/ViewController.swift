@@ -650,7 +650,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0{
                 self.view.frame.origin.y -= keyboardSize.height
-                self.searchTableView.frame.origin.y = 0
+                self.searchTableHeight.constant -= keyboardSize.height
 //                self.view.bringSubview(toFront: searchBar)
 //                self.searchTableView.frame = CGRect(x: self.searchTableView.frame.origin.x, y: self.searchTableView.frame.origin.y, width: self.searchTableView.frame.size.width, height: self.searchTableView.frame.height-keyboardSize.height)
             }
@@ -660,6 +660,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0{
                 self.view.frame.origin.y += keyboardSize.height
+                self.searchTableHeight.constant += keyboardSize.height
             }
         }
     }
