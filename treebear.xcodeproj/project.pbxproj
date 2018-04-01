@@ -35,6 +35,7 @@
 		CA3E63001FB1B0D000ADC7D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA3E62FE1FB1B0D000ADC7D3 /* LaunchScreen.storyboard */; };
 		CA3E630B1FB1B0D000ADC7D3 /* treebearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E630A1FB1B0D000ADC7D3 /* treebearTests.swift */; };
 		CA3E63161FB1B0D000ADC7D3 /* treebearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3E63151FB1B0D000ADC7D3 /* treebearUITests.swift */; };
+		CA9ED2792070E2980069E27E /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9ED2782070E2980069E27E /* SearchTableViewCell.swift */; };
 		DDFB2068758A8E50B54E8B28 /* Pods_treebearUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B620D5E493432504DFD47D1 /* Pods_treebearUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		CA3E63111FB1B0D000ADC7D3 /* treebearUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = treebearUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3E63151FB1B0D000ADC7D3 /* treebearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = treebearUITests.swift; sourceTree = "<group>"; };
 		CA3E63171FB1B0D000ADC7D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA9ED2782070E2980069E27E /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 			children = (
 				CA3E62F51FB1B0D000ADC7D3 /* AppDelegate.swift */,
 				CA3E62F71FB1B0D000ADC7D3 /* ViewController.swift */,
+				CA9ED2782070E2980069E27E /* SearchTableViewCell.swift */,
 				CA3E62F91FB1B0D000ADC7D3 /* Main.storyboard */,
 				B43170E3206CCB1D00484E6A /* StarredPOIViewController.swift */,
 				B43170DF206A26E700484E6A /* TripDetailsViewController.swift */,
@@ -565,6 +568,7 @@
 				B4B7B531201854080034BCF3 /* SignInViewController.swift in Sources */,
 				CA3E62F81FB1B0D000ADC7D3 /* ViewController.swift in Sources */,
 				B43170DE205C07A300484E6A /* TripsTableViewCell.swift in Sources */,
+				CA9ED2792070E2980069E27E /* SearchTableViewCell.swift in Sources */,
 				B404495820199F52006D3303 /* MenuViewController.swift in Sources */,
 				B404495220188987006D3303 /* SearchDropdown.swift in Sources */,
 				B4044956201999CE006D3303 /* MenuTableViewController.swift in Sources */,
@@ -741,11 +745,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J958EGM4GD;
+				DEVELOPMENT_TEAM = HHT89WP22V;
 				INFOPLIST_FILE = treebear/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PODS_ROOT = "${SRCROOT}/Pods";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricky.treebear;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandon.treebear;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -765,11 +769,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J958EGM4GD;
+				DEVELOPMENT_TEAM = HHT89WP22V;
 				INFOPLIST_FILE = treebear/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PODS_ROOT = "${SRCROOT}/Pods";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricky.treebear;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandon.treebear;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;

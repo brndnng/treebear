@@ -23,7 +23,7 @@ class MKPointAnnotationWithID:MKPointAnnotation{
     }
 }
 
-class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var pan2AR: UIScreenEdgePanGestureRecognizer!
     @IBOutlet weak var pan2Menu: UIScreenEdgePanGestureRecognizer!
@@ -38,14 +38,23 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var POIExcerpt: UILabel!
     @IBOutlet weak var ARNav: UIButton!
     @IBOutlet weak var starButton: UIButton!
+    @IBOutlet weak var searchTableView: UITableView!
+    @IBOutlet weak var searchTableHeight: NSLayoutConstraint!
+    //    @IBOutlet weak var searchTableView: UITableView!
+//    @IBOutlet weak var searchTableHeight: NSLayoutConstraint!
     
     var centerMapOnUserLocation: Bool = true
     //var destination : LocationAnnotationNodeWithDetails?
+    var searchActive : Bool = false
     var locationManager:CLLocationManager!
     var centerMapBaseOnUserLocation: Bool = true
     var locationNodes = [LocationAnnotationNode]()
     var addedPOI = [MKAnnotation]()
     var polylines = [MKPolyline]()
+    var filteredSearchedItems = [SearchItem]()
+    var SearchedItems = [SearchItem]()
+    var responseFromServer: JSON?
+    
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
     var lastUpdateLocation: CLLocationCoordinate2D?
     
@@ -59,7 +68,21 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        // set up table view
+        searchTableView.delegate = self
+        searchTableView.dataSource = self
+        searchTableView.isHidden = true
+        searchTableView.allowsSelection = true
+        searchTableView.backgroundColor = UIColor(white: 1,alpha:0.5)
+        searchBar.delegate = self
+        searchBar.placeholder = "Search POI/Trips"
+        searchBar.showsCancelButton = false
+//        searchBar.enablesReturnKeyAutomatically = true
 
+        // set up keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         view.sendSubview(toBack: POIView)
         mapView.isHidden = false
         mapView.delegate = self
@@ -81,6 +104,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
         view.addSubview(mapView)
         
+        // Tap to close keyboard
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        mapView.addGestureRecognizer(tap)
+        
         // Long press to add POI
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         mapView.addGestureRecognizer(longPress)
@@ -89,6 +116,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         view.addSubview(searchBar)
         view.addSubview(view4EdgePan)
         view.addSubview(view4EdgePan2Menu)
+        view.addSubview(searchTableView)
         
         // add pan gesture to detect when the map moves
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
@@ -378,6 +406,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         print("Error \(error)")
     }
     
+    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+        }
+    
     @objc func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
         let point = recognizer.location(in: mapView)
         let coordinate: CLLocationCoordinate2D = mapView.convert(point, toCoordinateFrom: mapView)
@@ -439,6 +471,19 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addAnnotation(annotation)
     }
     
+    func addPOIandSelect(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+        print("add point ",id)
+        let annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
+        annotation.coordinate = coordinate
+        annotation.title = title
+        //annotation.subtitle = subtitle
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        locationNodes.append(LocationAnnotationNode(location: location, image: image))
+        addedPOI.append(annotation)
+        mapView.addAnnotation(annotation)
+        mapView.selectAnnotation(annotation, animated: true)
+    }
+    
     func addPolyline(polyline: MKPolyline){
         mapView.add(polyline)
         polylines.append(polyline)
@@ -495,6 +540,144 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     
     func printResponse(_json : JSON){
         print(_json)
+    }
+    func createSearchItemsFromResponse(_json : JSON){
+        //        SearchedItems.removeAll()
+        //        self.responseFromServer = _json["trips"]
+        let trips = _json["trips"]["trip"].array
+        let POIS = _json["POIS"]["POI"].array
+        DispatchQueue.main.async {
+            self.SearchedItems.removeAll()
+            for trip in trips!{
+                //            print(trip)
+                self.SearchedItems.append(SearchItem(type: "trip", title: trip["title"].stringValue, id: trip["id"].intValue, excerpt: trip["excerpt"].stringValue, coordinates: CLLocationCoordinate2D(latitude: -1, longitude: -1)))
+                //                print("Searched: ",self.SearchedItems)
+            }
+            for POI in POIS!{
+                self.SearchedItems.append(SearchItem(type: "POI", title: POI["title"].stringValue, id: POI["id"].intValue, excerpt: POI["excerpt"].stringValue,coordinates: CLLocationCoordinate2D(latitude: POI["latitude"].doubleValue,longitude: POI["longitude"].doubleValue)))
+            }
+            print(self.SearchedItems)
+            self.searchTableView.reloadData()
+            //            if(self.searchTableView.contentSize.height > self.view.frame.height){
+            //                self.searchTableView.isScrollEnabled = true
+            //            }else{
+            //                self.searchTableView.isScrollEnabled = false
+            //            }
+        }
+    }
+    //tableView functions
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Numofitems:",SearchedItems.count)
+        return SearchedItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = searchTableView.dequeueReusableCell(withIdentifier: "SearchedItemsCell", for: indexPath) as! SearchTableViewCell// ?? SearchTableViewCell(style: .default, reuseIdentifier: "SearchedItemsCells")  //else { fatalError("The dequeued cell is not an instance of SearchTableViewCell.") }
+        
+        let item: SearchItem
+        //        if isFiltering() {
+        item = SearchedItems[indexPath.row]
+        //        } else {
+        //        item = SearchedItems[indexPath.row]
+        print("Item",item)
+        //        }
+        cell.backgroundColor = UIColor.clear
+        cell.textLabel!.text = item.title
+        cell.detailTextLabel!.text = item.type
+        cell.id = item.id
+        cell.excerpt = item.excerpt
+        cell.coordinates = item.coordinates
+        return cell
+        
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = searchTableView.cellForRow(at: indexPath) as? SearchTableViewCell {
+            let pressed_cell_id = cell.id
+            if (cell.detailTextLabel!.text == "POI"){
+                view.endEditing(true)
+                searchBar.text = ""
+                searchTableView.isHidden = true
+                searchTableView.reloadData()
+                addPOIandSelect(id: cell.id!, coordinate: cell.coordinates!, title: cell.textLabel!.text!,subtitle:cell.excerpt!)
+                
+            }
+                // TODO: case when selected cell is a trip
+            else if (cell.detailTextLabel!.text == "trip"){
+                
+            }
+            view.endEditing(true)
+        }
+        
+        
+    }
+    // searchBar functions
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if (searchText.isEmpty){
+            searchTableView.isHidden = true
+            SearchedItems.removeAll()
+            view.endEditing(true)
+        }
+        else{
+            searchTableView.isHidden = false
+            let helpers = Helpers()
+            print("Searching for: ",searchText)
+            helpers.postRequest(args:["type":"search",
+                                      "action":"get","key":searchText],completionHandler: createSearchItemsFromResponse)
+            print("Searched:",SearchedItems)
+            filteredSearchedItems = SearchedItems.filter({( item : SearchItem) -> Bool in
+                return item.title.lowercased().contains(searchText.lowercased())
+            })
+        }
+        self.searchTableView.reloadData()
+    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false;
+        searchBar.text = ""
+        searchTableView.isHidden = true
+        SearchedItems.removeAll();
+        view.endEditing(true)
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true;
+        searchTableView.isHidden = true
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
+        searchActive = false;
+        searchBar.text = ""
+        searchTableView.isHidden = true
+        SearchedItems.removeAll();
+        view.endEditing(true)
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        searchActive = false;
+        searchBar.text = ""
+        searchTableView.isHidden = true
+        SearchedItems.removeAll();
+        view.endEditing(true)
+    }
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchBar.text?.isEmpty ?? true
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        self.searchBar.showsCancelButton = false
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+                //                self.searchTableView.frame.origin.y = 20
+                self.searchTableHeight.constant -= keyboardSize.height
+                //                self.view.bringSubview(toFront: searchBar)
+                //                self.searchTableView.frame = CGRect(x: self.searchTableView.frame.origin.x, y: self.searchTableView.frame.origin.y, width: self.searchTableView.frame.size.width, height: self.searchTableView.frame.height-keyboardSize.height)
+            }
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+                self.searchTableHeight.constant += keyboardSize.height
+            }
+        }
     }
 }
 
