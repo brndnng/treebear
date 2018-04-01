@@ -222,8 +222,58 @@
                                                 <fragment content="AR Navigation">
                                                     <attributes>
                                                         <color key="NSColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <font key="NSFont" metaFont="smallSystem"/>
+                                                        <font key="NSFont" size="10" name=".AppleSystemUIFont"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <state key="selected">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="AR Navigation">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="10" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -248,6 +298,56 @@
                                                         <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <font key="NSFont" metaFont="system" size="10"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <state key="selected">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Star">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="10" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -333,6 +433,7 @@
                         <segue destination="idh-el-agI" kind="presentation" identifier="main2AR" id="EwR-83-23O"/>
                         <segue destination="93U-gj-Gdh" kind="presentation" identifier="main2Menu" id="6n4-6b-unJ"/>
                         <segue destination="eii-dm-tYO" kind="presentation" identifier="annotationPressed" id="7q8-Q2-dG7"/>
+                        <segue destination="vj1-TO-Srd" kind="presentation" identifier="searchTripDetails" id="k0u-li-YTt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -826,7 +927,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nNN-to-o1j">
-                                <rect key="frame" x="0.0" y="64" width="10" height="667"/>
+                                <rect key="frame" x="0.0" y="20" width="10" height="667"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="sws-GQ-ral"/>
                                 </constraints>
@@ -838,7 +939,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOL-NU-0yC" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="744.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="788.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOC-r2-RDO">
                                                 <rect key="frame" x="8" y="8" width="359" height="24"/>
@@ -886,7 +987,7 @@
                                                 </constraints>
                                             </view>
                                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YA7-AJ-VZA" userLabel="POI">
-                                                <rect key="frame" x="8" y="133.5" width="359" height="603"/>
+                                                <rect key="frame" x="8" y="133.5" width="359" height="647"/>
                                                 <subviews>
                                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MRi-dD-682">
                                                         <rect key="frame" x="8" y="8" width="343" height="343"/>
@@ -895,7 +996,7 @@
                                                         </constraints>
                                                     </mapView>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IhG-Tc-Pkm">
-                                                        <rect key="frame" x="8" y="351" width="343" height="244"/>
+                                                        <rect key="frame" x="8" y="351" width="343" height="288"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="poiCell" textLabel="As3-C0-p1z" detailTextLabel="5Yx-41-mMd" style="IBUITableViewCellStyleSubtitle" id="FDf-m0-Ll7">
@@ -1302,7 +1403,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m0b-Y9-6ms" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2058" y="360"/>
+            <point key="canvasLocation" x="2081" y="443"/>
         </scene>
     </scenes>
     <resources>
@@ -1312,6 +1413,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6n4-6b-unJ"/>
+        <segue reference="k0u-li-YTt"/>
         <segue reference="7q8-Q2-dG7"/>
         <segue reference="trR-VH-kNN"/>
         <segue reference="ECd-yA-3kl"/>

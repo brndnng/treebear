@@ -206,6 +206,7 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
         if segue.identifier == "getDetailsOfTrip" && self.pressedCellTripId != nil {
             if let nextViewController = segue.destination as? TripDetailsViewController{
                 nextViewController.tripId = self.pressedCellTripId!
+                nextViewController.from = "TripsTableViewController"
             }
         }
     }

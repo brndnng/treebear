@@ -40,6 +40,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var searchTableView: UITableView!
     @IBOutlet weak var searchTableHeight: NSLayoutConstraint!
+    var maxSearchTableHeight: CGFloat?
     //    @IBOutlet weak var searchTableView: UITableView!
 //    @IBOutlet weak var searchTableHeight: NSLayoutConstraint!
     
@@ -54,6 +55,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var filteredSearchedItems = [SearchItem]()
     var SearchedItems = [SearchItem]()
     var responseFromServer: JSON?
+    var pressedCellTripId: Int?
     
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
     var lastUpdateLocation: CLLocationCoordinate2D?
@@ -91,11 +93,12 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.showsPointsOfInterest = false
         
         determineCurrentLocation()
-//
-//        let pinCoordinate = CLLocationCoordinate2D(latitude: 22.309454, longitude: 114.262633)
-        //let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 100)
+
+        //table height fix
+        self.searchTableView.estimatedRowHeight = 0;
+        self.searchTableView.estimatedSectionHeaderHeight = 0;
+        self.searchTableView.estimatedSectionFooterHeight = 0;
         
-        //JSON first load
         while true { //busy wait til the location is availible
             if(locationManager.location?.coordinate != nil) {
                 addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
@@ -150,6 +153,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         super.viewWillDisappear(animated)
         determineCurrentLocation()
         selectedAsDestination = nil
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        maxSearchTableHeight = view.frame.height - view.safeAreaInsets.top - searchBar.frame.height
     }
     
     override func didReceiveMemoryWarning() {
@@ -270,6 +277,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 nextViewController.thisPOITitle = self.pressedAnnotation?.title
                 nextViewController.thisPOIExcerpt = self.pressedAnnotation?.excerpt
                 nextViewController.thisPOIId = self.pressedAnnotation?.id
+            }
+        }else if segue.identifier == "searchTripDetails" && self.pressedCellTripId != nil {
+            if let nextViewController = segue.destination as? TripDetailsViewController{
+                nextViewController.tripId = self.pressedCellTripId!
+                nextViewController.from = "ViewController"
             }
         }
     }
@@ -601,9 +613,10 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 addPOIandSelect(id: cell.id!, coordinate: cell.coordinates!, title: cell.textLabel!.text!,subtitle:cell.excerpt!)
                 
             }
-                // TODO: case when selected cell is a trip
             else if (cell.detailTextLabel!.text == "trip"){
-                
+                pressedCellTripId = pressed_cell_id
+                Hero.shared.defaultAnimation = .push(direction: .left)
+                performSegue(withIdentifier: "searchTripDetails" , sender: self)
             }
             view.endEditing(true)
         }
@@ -629,6 +642,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             })
         }
         self.searchTableView.reloadData()
+        self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false;
@@ -665,7 +679,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             if self.view.frame.origin.y == 0{
                 self.view.frame.origin.y -= keyboardSize.height
                 //                self.searchTableView.frame.origin.y = 20
-                self.searchTableHeight.constant -= keyboardSize.height
+                maxSearchTableHeight = maxSearchTableHeight! - keyboardSize.height
+                self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
                 //                self.view.bringSubview(toFront: searchBar)
                 //                self.searchTableView.frame = CGRect(x: self.searchTableView.frame.origin.x, y: self.searchTableView.frame.origin.y, width: self.searchTableView.frame.size.width, height: self.searchTableView.frame.height-keyboardSize.height)
             }
@@ -675,7 +690,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0{
                 self.view.frame.origin.y += keyboardSize.height
-                self.searchTableHeight.constant += keyboardSize.height
+                maxSearchTableHeight = maxSearchTableHeight! - keyboardSize.height
+                self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
             }
         }
     }

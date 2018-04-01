@@ -30,7 +30,7 @@ class LocationAnnotationNodeWithDetails:LocationAnnotationNode{
     init(annotation:MKPointAnnotationWithID, image: UIImage, altitude: Double){
         self.id = annotation.id
         self.title = annotation.title!
-        self.excerpt = annotation.subtitle!
+        self.excerpt = annotation.excerpt
         self.bgcolor = annotation.markerTintColor!
         
         super.init(location: CLLocation(coordinate: annotation.coordinate, altitude: altitude), image: image, altitudeType: .sameAltitudeAsUser)
@@ -79,7 +79,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
 //        }
         if(destination != nil){
             let altitude = sceneLocationView.currentLocation()?.altitude ?? 100
-            let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.subtitle)!, color: colors.destColor["dark"]!)
+            let desImage = getImageForLocation(title: (destination?.title)!, excerpt: (destination?.excerpt)!, color: colors.destColor["dark"]!)
             let destinationNode = LocationAnnotationNodeWithDetails(annotation: destination!, image: desImage, altitude: altitude)
             destinationNode.scaleRelativeToDistance = false
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destinationNode)

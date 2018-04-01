@@ -52,9 +52,10 @@ class POIViewController: UIViewController,UIScrollViewDelegate {
 //        cardInfo.frame = CGRect(x: ScrollingDetails.frame.origin.x+20, y: cardView.frame.origin.y+cardView.frame.size.height/2+20, width: ScrollingDetails.frame.size.width-40, height: ScrollingDetails.frame.size.height/2)
         
         let helpers = Helpers()
-        print("Searching for POI: ",thisPOIId)
+        print("Searching for POI: ",thisPOIId!)
         helpers.postRequest(args:["type":"poi",
-                                  "action":"get","POIId":String(describing: thisPOIId)]){(_json) in
+                                  "action":"get",
+                                  "POIId":"\(thisPOIId!)"]){(_json) in
                                     DispatchQueue.main.async {
 //                                        print(_json["cards"])
                                         let cards = _json["cards"].array

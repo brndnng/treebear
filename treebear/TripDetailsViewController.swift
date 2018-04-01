@@ -28,6 +28,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     var tripId: Int?
     var poiTable: [Int: JSON] = [:]
     var poiSequence: [Int] = []
+    var from: String?
     
     let helper = Helpers()
     let colors = ExtenedColors()
@@ -285,7 +286,11 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         case .began:
             // begin the transition as normal
             Hero.shared.defaultAnimation = .pull(direction: .right)
-            navigationController?.popViewController(animated: true)
+            if(from == "TripsTableViewController"){
+                navigationController?.popViewController(animated: true)
+            }else if(from == "ViewController"){
+                hero_dismissViewController()
+            }
         case .ended:
             if progress + edgePanBack.velocity(in: nil).x / view.bounds.width > 0.3 {
                 Hero.shared.finish()
