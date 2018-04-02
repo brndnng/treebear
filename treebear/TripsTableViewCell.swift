@@ -20,6 +20,7 @@ class TripsTableViewCell: UITableViewCell {
     
     var id: Int?
     var barColor: UIColor?
+    @IBOutlet weak var percentageWidth: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()

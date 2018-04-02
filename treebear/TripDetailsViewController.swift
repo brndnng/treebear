@@ -35,6 +35,8 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     var serverResponse: JSON?
     var navigationBar: UINavigationBar?
     var firstLoad = true
+    var onGoingTrip = false
+    var POIDetails: [String: Bool]?
     
     let helper = Helpers()
     let colors = ExtenedColors()
@@ -46,7 +48,14 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         
         // Add a loading overlay
-        let bgColor = colors.noTripColor["dark"]
+        let onGoing = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
+        var bgColor = colors.noTripColor["dark"]
+        if let index = onGoing.index(of: tripId!){
+            bgColor = colors.tripColor[index]["dark"]
+            onGoingTrip = true
+            var TripDetails = UserDefaults.standard.dictionary(forKey: "tripsDetails")
+            POIDetails = TripDetails!["POIS"] as? [String: Bool]
+        }
         contentView.backgroundColor = bgColor
         scrollView.backgroundColor = bgColor
         alert.view.tintColor = .black
@@ -158,7 +167,15 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             
             for (_, poi):(String, JSON) in json["POIS"] {
                 //adding points to mapView
-                let annotation = MKPointAnnotationWithID(id: poi["id"].int!, color: self.colors.noTripColor["dark"]!, excerpt: "")
+                var color = self.colors.noTripColor["dark"]!
+                if(self.onGoingTrip){
+                    if let finished = self.POIDetails!["\(poi["id"].intValue)"]{
+                        if(finished){
+                            color = self.colors.destColor["dark"]!
+                        }
+                    }
+                }
+                let annotation = MKPointAnnotationWithID(id: poi["id"].int!, color: color, excerpt: "")
                 annotation.coordinate = CLLocationCoordinate2D(latitude: poi["latitude"].double!, longitude: poi["longitude"].double!)
                 annotation.title = poi["title"].string
                 self.POIMapView.addAnnotation(annotation)
@@ -211,7 +228,6 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             self.POITableView.setNeedsLayout()
             
             //reset scrollView content size
-            
             self.contentView.layoutIfNeeded()
             self.scrollView.contentSize = self.contentView.frame.size
             
@@ -236,6 +252,15 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         if !poiTable.isEmpty{
             // Configure the cell...
             let thisRowId = poiSequence[indexPath.row]
+            if(self.onGoingTrip){
+                if let finished = self.POIDetails!["\(thisRowId)"]{
+                    if(finished){
+                        cell.backgroundColor = self.colors.destColor["dark"]
+                        cell.textLabel?.textColor = .white
+                        cell.detailTextLabel?.textColor = .white
+                    }
+                }
+            }
             cell.textLabel?.text = poiTable[thisRowId]!["title"].string
             cell.detailTextLabel?.text = poiTable[thisRowId]!["excerpt"].string
             //cell.tag = thisRowId

@@ -15,7 +15,7 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var view4Pan: UIView!
     
     var serverResponse: JSON?
-    var onGoingTrips: [Int: [String: Any]]?
+    var onGoingTrips: [Int]?
     var pressedCellTripId: Int?
     
     let helper = Helpers()
@@ -32,6 +32,9 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        onGoingTrips = UserDefaults.standard.array(forKey: "tripsInProgress") as? [Int]
+        onGoingTrips = onGoingTrips?.filter({ $0 != -1})
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -70,7 +73,7 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if(section == 0){
-            return 2
+            return onGoingTrips!.count
         } else if(section == 1){
             if(serverResponse != nil){
                 return serverResponse!["num_trip"].int!
@@ -81,10 +84,39 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TripsTableViewCell", for: indexPath) as? TripsTableViewCell else { fatalError("The dequeued cell is not an instance of TripsTableViewCell.") }
-
-
+        
             // Configure the cell...
         if(indexPath.section == 0){
+            let tripInfo = UserDefaults.standard.dictionary(forKey: "tripsDetails")!["\(onGoingTrips![indexPath.row])"] as! [String: Any]
+            helper.getImageByURL(url: (tripInfo["pic_url"] as! String)){
+                (img) in
+                DispatchQueue.main.async {
+                    cell.tripPic.image = img
+                    cell.setNeedsLayout()
+                }
+                cell.id = self.onGoingTrips![indexPath.row]
+                cell.tripName.text = tripInfo["name"] as? String
+                cell.tripExcerpt.text = tripInfo["excerpt"] as? String
+                let trip = UserDefaults.standard.array(forKey: "tripsInProgress") as? [Int]
+                let tripPosition = trip?.index(of: self.onGoingTrips![indexPath.row])
+                cell.backgroundColor = self.colors.tripColor[tripPosition!]["dark"]
+                cell.barColor = .white
+                cell.barView.backgroundColor = .white
+                var doneCount = 0
+                var poiCount = 0
+                for (_, value) in (tripInfo["POIS"] as? [String:Bool])!{
+                    poiCount += 1
+                    if(value == true){
+                        doneCount += 1
+                    }
+                }
+                let percentage = Int(doneCount / poiCount)
+                cell.progressPercentage.text = "\(percentage)%"
+                cell.percentageWidth.constant = cell.progressBar.frame.size.width * CGFloat(percentage / 100)
+                cell.barView.setNeedsLayout()
+                cell.progressPercentage.textColor = cell.barView.backgroundColor
+                cell.barView.layer.cornerRadius = cell.barView.frame.height / 2
+            }
             
         } else if (indexPath.section == 1){
                 if(serverResponse != nil){
@@ -99,7 +131,8 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     cell.tripName.text = serverResponse!["trip"][indexPath.row]["title"].string
                     cell.tripExcerpt.text = serverResponse!["trip"][indexPath.row]["excerpt"].string
                     cell.progressPercentage.text = "Finished"
-                    cell.barView.frame.size.width = cell.progressBar.frame.size.width
+                    cell.percentageWidth.constant = cell.progressBar.frame.size.width
+                    cell.barView.setNeedsLayout()
                     cell.barColor = colors.destColor["dark"]
                     cell.barView.backgroundColor = colors.destColor["dark"]
                     cell.progressPercentage.textColor = cell.barView.backgroundColor
