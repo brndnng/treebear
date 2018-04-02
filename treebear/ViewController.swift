@@ -690,7 +690,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0{
                 self.view.frame.origin.y += keyboardSize.height
-                maxSearchTableHeight = maxSearchTableHeight! - keyboardSize.height
+                maxSearchTableHeight = maxSearchTableHeight! + keyboardSize.height
                 self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
             }
         }
