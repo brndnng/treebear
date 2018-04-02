@@ -77,6 +77,84 @@ class Helpers{
         }
         
     }
+    
+    public func syncUserDefaultIfNeeded(completionHandler: @escaping ()->Void){
+        if(UserDefaults.standard.object(forKey: "tripsInProgress") == nil){
+            postRequest(args:["type":"user",
+                              "action":"set"]){
+                                (_json) in
+                                //check user default and update if needed
+                                
+                                    var tripsInProgress: [Int] = []
+                                    for poiId in _json["onGoing"].arrayValue{
+                                        tripsInProgress.append(poiId.intValue)
+                                    }
+                                    if(tripsInProgress.count < 5){
+                                        for _ in (tripsInProgress.count)...4{
+                                            tripsInProgress.append(-1)
+                                        }
+                                    }else if(tripsInProgress.count > 5){
+                                        tripsInProgress = Array(tripsInProgress[0..<5])
+                                    }
+                                    UserDefaults.standard.set(tripsInProgress, forKey: "tripsInProgress")
+                                
+                                    self.recursion(remaining: tripsInProgress.filter({$0 != -1}), tripsDetails: [:])
+                                //}
+
+            }
+            postRequest(args: ["action": "get",
+                               "type": "finished"]){
+                                (_json) in
+                                var finishedTrips:[Int] = []
+                                for trip in _json["trips"]["trip"].arrayValue{
+                                    finishedTrips.append(trip["id"].intValue)
+                                }
+                                UserDefaults.standard.set(finishedTrips, forKey: "finishedTrips")
+            }
+            
+            //wait til above async finish
+            while true{
+                if(UserDefaults.standard.object(forKey: "tripsInProgress") != nil &&
+                    UserDefaults.standard.object(forKey: "tripsDetails") != nil &&
+                    UserDefaults.standard.object(forKey: "finishedTrips") != nil){
+                    completionHandler()
+                    break
+                }
+            }
+        } else{
+            postRequest(args:["type":"user",
+                              "action":"set"]){ (_json) in
+                                DispatchQueue.main.async {
+                                    completionHandler()
+                                }
+            }
+        }
+    }
+    
+    func recursion(remaining: [Int], tripsDetails:[String: Any]){
+        if(remaining.isEmpty){
+            UserDefaults.standard.set(tripsDetails, forKey: "tripsDetails")
+        }else{
+            //add to trip details
+            postRequest(args: ["action": "get",
+                               "type": "trip",
+                               "tripId": "\(remaining[0])"]){
+                                (serverResponse) in
+                                var pois:[String: Bool] = [:]
+                                for poi in serverResponse["POI_sequence"].arrayValue{
+                                    pois["\(poi.intValue)"] = false
+                                }
+                                let tripDetails: [String : Any] = ["name": serverResponse["title"].stringValue,
+                                                                    "excerpt": serverResponse["excerpt"].stringValue,
+                                                                    "pic_url": serverResponse["picURL"].stringValue,
+                                                                    "POIS": pois]
+                                var tripsDetail = tripsDetails
+                                tripsDetail["\(serverResponse["id"].intValue)"] = tripDetails
+                                //recursion
+                                self.recursion(remaining: Array(remaining.dropFirst()), tripsDetails: tripsDetail)
+            }
+        }
+    }
 }
 
 func UIColorFromRGB(rgbValue: UInt) -> UIColor {
@@ -136,5 +214,28 @@ class QuizCard : Card {
         }
     }
 }
+
+extension UIViewController {
+    
+    func showToast(message : String) {
+        
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-160, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        toastLabel.sizeToFit()
+        toastLabel.frame.size = CGSize(width: toastLabel.frame.width + 16, height: toastLabel.frame.height + 16)
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 2.0, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    } }
 
 

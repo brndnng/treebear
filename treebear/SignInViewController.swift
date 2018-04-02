@@ -32,13 +32,14 @@ class SignInViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDele
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if(error == nil){
             print(user.profile.name + " Signed in manually")
-            helper.postRequest(args:["type":"user",
-                                     "action":"set"]){
-                                        (_json) in
-                                        //check user default and update if needed
+            SignInBtn.isHidden = true
+            helper.syncUserDefaultIfNeeded(){
+                () in
+                DispatchQueue.main.async {
+                    Hero.shared.defaultAnimation = .fade
+                    self.performSegue(withIdentifier: "loggedInManually", sender: self)
+                }
             }
-            Hero.shared.defaultAnimation = .fade
-            performSegue(withIdentifier: "loggedInManually", sender: self)
         }
     }
     

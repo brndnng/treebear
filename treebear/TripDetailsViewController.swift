@@ -16,6 +16,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var panEdgeBack: UIView!
     @IBOutlet var edgePanBack: UIScreenEdgePanGestureRecognizer!
+    @IBOutlet weak var buffer: UIView!
     
     @IBOutlet weak var tripName: UILabel!
     @IBOutlet weak var tripExcerpt: UILabel!
@@ -24,11 +25,16 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var POICard: UIView!
     @IBOutlet weak var POIMapView: MKMapView!
     @IBOutlet weak var POITableView: UITableView!
+    @IBOutlet weak var POITableHeight: NSLayoutConstraint!
+
     
     var tripId: Int?
     var poiTable: [Int: JSON] = [:]
     var poiSequence: [Int] = []
     var from: String?
+    var serverResponse: JSON?
+    var navigationBar: UINavigationBar?
+    var firstLoad = true
     
     let helper = Helpers()
     let colors = ExtenedColors()
@@ -40,8 +46,9 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         
         // Add a loading overlay
-        contentView.backgroundColor = colors.noTripColor["dark"]
-        scrollView.backgroundColor = colors.noTripColor["dark"]
+        let bgColor = colors.noTripColor["dark"]
+        contentView.backgroundColor = bgColor
+        scrollView.backgroundColor = bgColor
         alert.view.tintColor = .black
         let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50)) as UIActivityIndicatorView
         loadingIndicator.hidesWhenStopped = true
@@ -66,17 +73,47 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         
         view.addSubview(panEdgeBack)
         
+        if(from! == "ViewController" && navigationBar == nil){
+            navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: 1000, height: 200))
+            navigationBar?.barTintColor = .white
+            view.addSubview(navigationBar!)
+        }
+        
+        var rightButton: UIBarButtonItem?
         //logic need to set suitable title or not render the button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Enroll", style: .plain, target: self, action: #selector(rightButtonTapped))
-        navigationItem.rightBarButtonItem?.possibleTitles = ["Enroll", "Drop"]
+        let tripsInProgress:[Int] = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
+        let finishedTrips:[Int] = UserDefaults.standard.array(forKey: "finishedTrips") as! [Int]
+        if(tripsInProgress.index(of: tripId!) != nil){
+            rightButton = UIBarButtonItem(title: "Drop", style: .plain, target: self, action: #selector(rightButtonTapped))
+        } else if(finishedTrips.index(of: tripId!) == nil){
+            rightButton = UIBarButtonItem(title: "Enroll", style: .plain, target: self, action: #selector(rightButtonTapped))
+            if(tripsInProgress.index(of: -1) == nil){
+                rightButton?.isEnabled = false
+            }
+        }
+        rightButton?.possibleTitles = ["Enroll", "Drop"]
+    
+        if(from! == "ViewController"){
+            let navigationItem = UINavigationItem(title: "Trip Details")
+            if(rightButton != nil){
+                navigationItem.rightBarButtonItem = rightButton
+            }
+            navigationBar?.items = [navigationItem]
+            
+        }else if(from! == "TripsTableViewController"){
+            if(rightButton != nil){
+                navigationItem.rightBarButtonItem = rightButton
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if(tripId != nil){
+        if(tripId != nil && firstLoad){
             helper.postRequest(args: ["action": "get",
                                       "type": "trip",
                                       "tripId": "\(tripId!)"], completionHandler: insertDataToLayout)
         }
+        navigationBar?.frame.size.width = view.frame.width
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +133,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     */
     
     func insertDataToLayout(_json: JSON){
+        serverResponse = _json
         let json = _json
         DispatchQueue.main.async {
             //all this in main thread
@@ -130,12 +168,6 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             
             //tell the table to reload
             self.POITableView.reloadData()
-            //set tableView height
-            var frameSize = self.POITableView.frame.size
-            frameSize.height = self.POITableView.contentSize.height
-            self.POITableView.frame.size = frameSize
-            self.POITableView.setNeedsLayout()
-            self.view.layoutIfNeeded()
             
             // set map area
             self.POIMapView.showAnnotations(self.POIMapView.annotations, animated: true)
@@ -174,12 +206,20 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
             
+            //set tableView height
+            self.POITableHeight.constant = self.POITableView.contentSize.height
+            self.POITableView.setNeedsLayout()
+            
             //reset scrollView content size
+            
+            self.contentView.layoutIfNeeded()
             self.scrollView.contentSize = self.contentView.frame.size
             
             //dismiss the loading overlay
             self.alert.dismiss(animated: true, completion: nil)
             Hero.shared.defaultAnimation = .pull(direction: .right)
+            
+            self.firstLoad = false
         }
     }
     
@@ -309,33 +349,73 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @objc func rightButtonTapped(sender: UIBarButtonItem){
         if(self.navigationItem.rightBarButtonItem?.title == "Enroll"){
             //cehck availible slot and is currently enrolled
-            //tell the server
-            helper.postRequest(args: ["type": "tripStart",
-                                      "action": "set",
-                                      "tripId": "\(self.tripId)"]){
-                                        (_json) in
-                                        if(_json["status"].string == "success"){
-                                            // add to userDefault
-                                            //change the button title
-                                            DispatchQueue.main.async{
-                                                self.navigationItem.rightBarButtonItem?.title = "Drop"
-                                            }
-                                        }
+            var tripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
+            if let indexOfTrip = tripsInProgress.index(of: -1){
+                if(tripsInProgress.index(of: tripId!) == nil){
+                    //tell the server
+                    helper.postRequest(args: ["type": "tripStart",
+                                              "action": "set",
+                                              "tripId": "\(self.tripId!)"]){
+                                                (_json) in
+                                                if(_json["status"].string == "success"){
+                                                    // add to userDefault
+                                                    tripsInProgress[indexOfTrip] = self.serverResponse!["id"].intValue
+                                                    UserDefaults.standard.set(tripsInProgress, forKey: "tripsInProgress")
+                                                    //add to trip details
+                                                    var pois:[String: Bool] = [:]
+                                                    for poi in self.serverResponse!["POI_sequence"].arrayValue{
+                                                        pois["\(poi.intValue)"] = false
+                                                    }
+                                                    let tripDetails: [String : Any] = ["name": self.serverResponse!["title"].stringValue,
+                                                                      "excerpt": self.serverResponse!["excerpt"].stringValue,
+                                                                      "pic_url": self.serverResponse!["picURL"].stringValue,
+                                                                      "POIS": pois]
+                                                    var tripsDetails = UserDefaults.standard.dictionary(forKey: "tripsDetails")
+                                                    tripsDetails!["\(self.serverResponse!["id"].intValue)"] = tripDetails
+                                                    UserDefaults.standard.set(tripsDetails, forKey: "tripsDetails")
+
+                                                    //change the button title
+                                                    DispatchQueue.main.async{
+                                                        self.navigationItem.rightBarButtonItem?.title = "Drop"
+                                                        //change bg color
+                                                        let bgColor = self.colors.tripColor[indexOfTrip]["dark"]
+                                                        self.scrollView.backgroundColor = bgColor
+                                                        self.contentView.backgroundColor = bgColor
+                                                        //toast
+                                                        self.showToast(message: self.serverResponse!["title"].stringValue  + " Enrolled")
+                                                    }
+                                                }
+                    }
+                }
             }
         }else if(self.navigationItem.rightBarButtonItem?.title == "Drop"){
             //cehck in enrolled list or not
-            //tell the server
-            helper.postRequest(args: ["type": "tripEnd",
-                                      "action": "set",
-                                      "tripId": "\(self.tripId)"]){
-                                        (_json) in
-                                        if(_json["status"].string == "success"){
-                                            // remove from userDefault
-                                            //change the button title
-                                            DispatchQueue.main.async{
-                                                self.navigationItem.rightBarButtonItem?.title = "Enroll"
+            var tripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
+            if let indexOfTrip = tripsInProgress.index(of: tripId!){
+                //tell the server
+                helper.postRequest(args: ["type": "tripEnd",
+                                          "action": "set",
+                                          "tripId": "\(self.tripId!)"]){
+                                            (_json) in
+                                            if(_json["status"].string == "success"){
+                                                // remove from userDefault
+                                                tripsInProgress[indexOfTrip] = -1
+                                                UserDefaults.standard.set(tripsInProgress, forKey: "tripsInProgress")
+                                                //remove from trip details
+                                                var tripsDetail = UserDefaults.standard.dictionary(forKey: "tripsDetails")
+                                                tripsDetail?.removeValue(forKey: "\(self.tripId!)")
+                                                UserDefaults.standard.set(tripsDetail, forKey: "tripsDetails")
+                                                //change the button title
+                                                DispatchQueue.main.async{
+                                                    self.navigationItem.rightBarButtonItem?.title = "Enroll"
+                                                    //change bg color
+                                                    self.contentView.backgroundColor = self.colors.noTripColor["dark"]
+                                                    self.scrollView.backgroundColor = self.colors.noTripColor["dark"]
+                                                    //toast
+                                                    self.showToast(message: self.serverResponse!["title"].stringValue  + " Dropped")
+                                                }
                                             }
-                                        }
+                }
             }
         }
     }

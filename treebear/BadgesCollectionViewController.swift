@@ -15,6 +15,7 @@ class BadgesCollectionViewController: UIViewController {
     @IBOutlet weak var blocker: UIView!
     
     let helper = Helpers()
+    var firstLoad = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,25 +29,27 @@ class BadgesCollectionViewController: UIViewController {
         
         slidingBadges.iconsSize = view.frame.height / 4
         slidingBadges.iconsRadius = view.frame.height / 8
-        
-        helper.postRequest(args: ["action": "get",
-                                  "type": "badges"]){
-                                    (_json) in
-                                    for url in _json["picURL"].arrayValue{
-                                        self.helper.getImageByURL(url: url.stringValue){
-                                        (image) in
-                                            slidingBadges.icons?.append(image)
+        if(firstLoad){
+            helper.postRequest(args: ["action": "get",
+                                      "type": "badges"]){
+                                        (_json) in
+                                        for url in _json["picURL"].arrayValue{
+                                            self.helper.getImageByURL(url: url.stringValue){
+                                            (image) in
+                                                slidingBadges.icons?.append(image)
+                                            }
                                         }
-                                    }
-                                    DispatchQueue.main.async {
-                                        slidingBadges.alpha = 0
-                                        self.view.addSubview(slidingBadges)
-                                        slidingBadges.startSlide()
-                                        UIView.animate(withDuration: 0.5, animations: {
-                                            slidingBadges.alpha = 1.0
-                                            self.blocker.alpha = 0
-                                        })
-                                    }
+                                        DispatchQueue.main.async {
+                                            slidingBadges.alpha = 0
+                                            self.view.addSubview(slidingBadges)
+                                            slidingBadges.startSlide()
+                                            UIView.animate(withDuration: 0.5, animations: {
+                                                slidingBadges.alpha = 1.0
+                                                self.blocker.alpha = 0
+                                            })
+                                        }
+            }
+            firstLoad = false
         }
     }
     

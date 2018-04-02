@@ -570,6 +570,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             }
             print(self.SearchedItems)
             self.searchTableView.reloadData()
+            self.searchTableHeight.constant = min(self.maxSearchTableHeight!, self.searchTableView.contentSize.height)
             //            if(self.searchTableView.contentSize.height > self.view.frame.height){
             //                self.searchTableView.isScrollEnabled = true
             //            }else{
@@ -628,7 +629,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         if (searchText.isEmpty){
             searchTableView.isHidden = true
             SearchedItems.removeAll()
-            view.endEditing(true)
+            //view.endEditing(true)
         }
         else{
             searchTableView.isHidden = false
@@ -641,8 +642,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 return item.title.lowercased().contains(searchText.lowercased())
             })
         }
-        self.searchTableView.reloadData()
-        self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
+        //self.searchTableView.reloadData()
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false;
@@ -691,32 +691,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             if self.view.frame.origin.y != 0{
                 self.view.frame.origin.y += keyboardSize.height
                 maxSearchTableHeight = maxSearchTableHeight! + keyboardSize.height
-                self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
+                //self.searchTableHeight.constant = min(maxSearchTableHeight!, searchTableView.contentSize.height)
             }
         }
     }
 }
 
-extension UIViewController {
-    
-    func showToast(message : String) {
-        
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-160, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center;
-        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        toastLabel.sizeToFit()
-        toastLabel.frame.size = CGSize(width: toastLabel.frame.width + 16, height: toastLabel.frame.height + 16)
-        self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 2.0, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-    } }
+
 

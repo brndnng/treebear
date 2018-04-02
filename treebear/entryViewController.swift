@@ -37,12 +37,13 @@ class entryViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         Hero.shared.defaultAnimation = .fade
         if(error == nil){
             print(user.profile.name + " Signed in sliently")
-            helper.postRequest(args:["type":"user",
-                                     "action":"set"]){
-                                        (_json) in
-                                        //check user default and update if needed
+            helper.syncUserDefaultIfNeeded(){
+                () in
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "loggedInSliently", sender: self)
+                }
             }
-            performSegue(withIdentifier: "loggedInSliently", sender: self)
+
         }else{
             performSegue(withIdentifier: "cantLogInSliently", sender: self)
         }

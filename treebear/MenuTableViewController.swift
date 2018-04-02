@@ -76,9 +76,32 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
                 present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
             }
         case 2:
-            GIDSignIn.sharedInstance().signOut()
-            print("logout")
-            delegate?.segueToNext(identifier: "LoggedOut")
+            let dialogMessage = UIAlertController(title: "Comfirm to Logout", message: "All progress of on-going trips will be lost. Are you sure to log out?", preferredStyle: .alert)
+            
+            // Create OK button with action handler
+            let ok = UIAlertAction(title: "Logout", style: .default, handler: { (action) -> Void in
+                GIDSignIn.sharedInstance().signOut()
+                print("logout")
+                let defaults = UserDefaults.standard
+                let dictionary = defaults.dictionaryRepresentation()
+                dictionary.keys.forEach { key in
+                    defaults.removeObject(forKey: key)
+                }
+                UserDefaults.standard.synchronize()
+                self.delegate?.segueToNext(identifier: "LoggedOut")
+            })
+            
+            // Create Cancel button with action handlder
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+                print("Cancel button tapped")
+            }
+            
+            //Add OK and Cancel button to dialog message
+            dialogMessage.addAction(ok)
+            dialogMessage.addAction(cancel)
+            
+            // Present dialog message to user
+            self.present(dialogMessage, animated: true, completion: nil)
         default:
             _ = 1
         }
