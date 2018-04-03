@@ -53,6 +53,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     var polylines : [MKPolyline] = []
     var selectedObject: LocationAnnotationNodeWithDetails?
     var postTimer: Timer?
+    let tripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
     
     //For Location Node (the view is hiding in the back)
     @IBOutlet weak var locationLabel: UIView!
@@ -279,7 +280,13 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
                                                 let id = poi["id"].intValue
                                                 let title = poi["title"].stringValue
                                                 let excerpt = poi["excerpt"].stringValue
-                                                let color = self.colors.noTripColor["dark"]!
+                                                var color = self.colors.noTripColor["dark"]!
+                                                for trip in poi["asso_trip"].arrayValue{
+                                                    if let index = self.tripsInProgress.index(of: trip.intValue){
+                                                        color = self.colors.tripColor[index]["dark"]!
+                                                        break
+                                                    }
+                                                }
                                                 let coordinate = CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude: poi["longitude"].doubleValue)
                                                 let altitude = poi["altitude"].doubleValue
                                                 let node = LocationAnnotationNodeWithDetails(id: id, title: title, excerpt: excerpt, color: color, location: CLLocation(coordinate: coordinate, altitude: altitude), image: self.getImageForLocation(title: title, excerpt: excerpt, color: color))

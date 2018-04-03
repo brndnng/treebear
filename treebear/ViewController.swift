@@ -56,6 +56,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     var SearchedItems = [SearchItem]()
     var responseFromServer: JSON?
     var pressedCellTripId: Int?
+    var tripsInProgress: [Int] = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
     
     fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
     var lastUpdateLocation: CLLocationCoordinate2D?
@@ -157,6 +158,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     
     override func viewDidAppear(_ animated: Bool) {
         maxSearchTableHeight = view.frame.height - view.safeAreaInsets.top - searchBar.frame.height
+        let newTripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
+        if(newTripsInProgress != tripsInProgress){
+            //reload annotation for updated color
+            lastUpdateLocation = nil
+            tripsInProgress = newTripsInProgress
+            mapView.removeAnnotations(mapView.annotations.filter({ $0 is MKPointAnnotationWithID }))
+            addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -522,7 +531,13 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                                                     }
                                                 }
                                                 if(!POIadded){
-                                                    let colorOfAnnotation = self.colors.noTripColor["dark"]!
+                                                    var colorOfAnnotation = self.colors.noTripColor["dark"]!
+                                                    for trip in poi["asso_trip"].arrayValue{
+                                                        if let index = self.tripsInProgress.index(of: trip.intValue){
+                                                            colorOfAnnotation = self.colors.tripColor[index]["dark"]!
+                                                            break
+                                                        }
+                                                    }
                                                     self.addPOI(id: poi["id"].intValue, color: colorOfAnnotation, coordinate: CLLocationCoordinate2D(latitude: poi["latitude"].doubleValue, longitude:poi["longitude"].doubleValue), title: poi["title"].stringValue, subtitle: poi["excerpt"].stringValue, altitude: poi["altitude"].doubleValue)
                                                 }
                                             }
