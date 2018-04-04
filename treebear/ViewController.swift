@@ -158,13 +158,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     
     override func viewDidAppear(_ animated: Bool) {
         maxSearchTableHeight = view.frame.height - view.safeAreaInsets.top - searchBar.frame.height
-        let newTripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
-        if(newTripsInProgress != tripsInProgress){
-            //reload annotation for updated color
-            lastUpdateLocation = nil
-            tripsInProgress = newTripsInProgress
-            mapView.removeAnnotations(mapView.annotations.filter({ $0 is MKPointAnnotationWithID }))
-            addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
+        if let newTripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as? [Int]{
+            if(newTripsInProgress != tripsInProgress){
+                //reload annotation for updated color
+                lastUpdateLocation = nil
+                tripsInProgress = newTripsInProgress
+                mapView.removeAnnotations(mapView.annotations.filter({ $0 is MKPointAnnotationWithID }))
+                addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
+            }
         }
     }
     
