@@ -66,12 +66,12 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
         case 1:
             if(indexPath.row == 0){
                 //about us
-                let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/")!)
+                let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/ios/about.html")!)
                 Hero.shared.defaultAnimation = .push(direction: .left)
                 present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
             } else {
                 //t&c
-                let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/")!)
+                let svc = SFSafariViewController(url: URL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/ios/tnc.html")!)
                 Hero.shared.defaultAnimation = .push(direction: .left)
                 present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
             }
