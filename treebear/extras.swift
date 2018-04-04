@@ -79,7 +79,13 @@ class Helpers{
     }
     
     public func syncUserDefaultIfNeeded(completionHandler: @escaping ()->Void){
-        if(UserDefaults.standard.object(forKey: "tripsInProgress") == nil){
+        if(UserDefaults.standard.object(forKey: "tripsInProgress") == nil ||
+            UserDefaults.standard.object(forKey: "tripsDetails") == nil ||
+            UserDefaults.standard.object(forKey: "finishedTrips") == nil){
+            let dictionary = UserDefaults.standard.dictionaryRepresentation()
+            dictionary.keys.forEach { key in
+                UserDefaults.standard.removeObject(forKey: key)
+            }
             postRequest(args:["type":"user",
                               "action":"set"]){
                                 (_json) in
