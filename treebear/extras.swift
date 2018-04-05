@@ -180,6 +180,10 @@ struct SearchItem {
 }
 class Card {
     var type: String { return ""}
+    public var trip: Int
+    init(trip: Int = -1) {
+        self.trip = trip
+    }
     func applyCard(baseview: UIView){
         
     }
@@ -187,12 +191,11 @@ class Card {
 class InfoCard : Card {
     override var type: String { return "info"}
     var info: UILabel
-    var trip: Int
     var pic: UIImageView
     init(info: UILabel, trip: Int, pic: UIImageView) {
         self.info = info
-        self.trip = trip
         self.pic = pic
+        super.init(trip: trip)
     }
     override func applyCard(baseview: UIView){
         print("Add subview of InfoCard")
@@ -203,14 +206,13 @@ class InfoCard : Card {
 class QuizCard : Card {
     override var type: String {return "quiz"}
     var question: UILabel
-    var options: [UIButton]
-    var CorrectAns: String
-    var trip: Int
+    public var options: [UIButton]
+    public var CorrectAns: String
     init(question: UILabel, options:[UIButton],CorrectAns: String, trip: Int) {
         self.question = question
         self.options = options
         self.CorrectAns = CorrectAns
-        self.trip = trip
+        super.init(trip: trip)
     }
     override func applyCard(baseview: UIView) {
         print("Add subview of QuizCard")
