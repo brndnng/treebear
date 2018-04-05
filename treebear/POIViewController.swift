@@ -118,6 +118,9 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         print(view.frame)
                                                         view.addSubview(cardImage)
                                                         view.addSubview(cardInfo)
+                                                        if card == cards![0]{
+                                                            self.markPOIComplete(index: 0)
+                                                        }
                                                         print("x:",self.x,"y:",self.y)
                                                     }
                                                     else if card["card_type"].stringValue == "quiz" {
