@@ -76,7 +76,7 @@ class MenuTableViewController: UITableViewController, GIDSignInUIDelegate {
                 present(svc, animated: true, completion: {()->Void in Hero.shared.defaultAnimation = .pull(direction: .right)})
             }
         case 2:
-            let dialogMessage = UIAlertController(title: "Comfirm to Logout", message: "All progress of on-going trips will be lost. Are you sure to log out?", preferredStyle: .alert)
+            let dialogMessage = UIAlertController(title: "Confirm to Logout", message: "All progress of on-going trips will be lost. Are you sure you want to log out?", preferredStyle: .alert)
             
             // Create OK button with action handler
             let ok = UIAlertAction(title: "Logout", style: .default, handler: { (action) -> Void in

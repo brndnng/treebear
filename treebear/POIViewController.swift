@@ -18,6 +18,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
     var bgColor: UIColor = .clear
     var quiz_button_counter = 1
 
+    
     @IBOutlet weak var POIOverView: UIView!
     @IBOutlet weak var POIName: UILabel!
     @IBOutlet weak var POIExcerpt: UILabel!
@@ -33,7 +34,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
     // Parameters
     let max_num_of_cards = 5
     let padding : CGFloat = 10
-    let tripsInProgress: [Int] = UserDefaults.standard.object(forKey: "tripsInProgress") as! [Int]
+    var tripsInProgress: [Int] = UserDefaults.standard.object(forKey: "tripsInProgress") as! [Int]
 
     var x : CGFloat = 0
     var y : CGFloat = 0
@@ -328,12 +329,38 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                 var POIId = String(describing: thisPOIId!)
                 let keyExists = POIS[POIId] != nil //Check if POI in trip
                 if keyExists && POIS[POIId] == false{ //Check if POI already marked
-                    POIS.updateValue(true, forKey: POIId)
-                    temp_trip.updateValue(POIS, forKey: "POIS")
-                    tripsDetails.updateValue(temp_trip, forKey: key)
-                    print(POIS)
-                    print(temp_trip)
-                    print(tripsDetails)
+                    POIS.updateValue(true, forKey: POIId) // Update POI value to true
+                    // Check if all POIS are visited
+                    let allPOISvisited = !POIS.values.contains { (value) -> Bool in value == false}
+                    if allPOISvisited{
+                        tripsDetails.removeValue(forKey: key) // Remove trip from tripsDetails
+                        var finishedTrips: [Int] = UserDefaults.standard.object(forKey: "finishedTrips") as! [Int]
+                        finishedTrips.append(trip_id) // Add trip to finishedTrips
+                        UserDefaults.standard.set(finishedTrips, forKey: "finishedTrips")
+                        // Update tripsInProgess
+                        tripsInProgress[tripsInProgress.index(of: trip_id)!] = -1
+                        UserDefaults.standard.set(tripsInProgress, forKey: "tripsInProgress")
+                        // Send a post request
+                        let helper = Helpers()
+                        helper.postRequest(args: ["action": "set",
+                                                   "type": "tripEnd",
+                                                   "tripId": "\(trip_id)"]){(response) in print(response)}
+                        // Display dialog that user has completed trip
+                        let dialogMessage = UIAlertController(title: "Congratulations!", message: "You have completed this trip!", preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "Yay!", style: .default){ (action) -> Void in
+                            print("OK button tapped")}
+                        dialogMessage.addAction(ok)
+                        // Present dialog message to user
+                        self.present(dialogMessage, animated: true, completion: nil)
+                        }
+                        
+                    else{
+                        temp_trip.updateValue(POIS, forKey: "POIS")
+                        tripsDetails.updateValue(temp_trip, forKey: key)
+                        print(POIS)
+                        print(temp_trip)
+                        print(tripsDetails)
+                    }
                 }
                 break
             }
