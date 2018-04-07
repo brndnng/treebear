@@ -418,7 +418,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             var tripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
             if let indexOfTrip = tripsInProgress.index(of: tripId!){
                 //tell the server
-                helper.postRequest(args: ["type": "tripEnd",
+                helper.postRequest(args: ["type": "tripDel",
                                           "action": "set",
                                           "tripId": "\(self.tripId!)"]){
                                             (_json) in
