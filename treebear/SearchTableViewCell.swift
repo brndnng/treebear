@@ -13,6 +13,7 @@ class SearchTableViewCell: UITableViewCell {
     var id: Int?
     var excerpt: String?
     var coordinates: CLLocationCoordinate2D?
+    var asso_trip: JSON?
     override func awakeFromNib() {
         super.awakeFromNib()
     }

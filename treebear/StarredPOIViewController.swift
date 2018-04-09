@@ -140,7 +140,6 @@ class StarredPOIViewController: UIViewController, UITableViewDelegate, UITableVi
                                             self.serverResponse!["POIS"] = JSON(tempArray)
                                             self.serverResponse!["num_POI"] = JSON(self.serverResponse!["num_POI"].intValue - 1)
                                             DispatchQueue.main.async {
-                                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
                                                 for annotation in self.mapView.annotations {
                                                     if let annotationWithId = annotation as? MKPointAnnotationWithID {
                                                         if (annotationWithId.id == tableView.cellForRow(at: indexPath)!.tag){
@@ -149,6 +148,7 @@ class StarredPOIViewController: UIViewController, UITableViewDelegate, UITableVi
                                                         }
                                                     }
                                                 }
+                                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
                                             }
                                         }
             }
@@ -207,7 +207,7 @@ class StarredPOIViewController: UIViewController, UITableViewDelegate, UITableVi
     func insertDataToView(_json: JSON){
         self.serverResponse = _json
         DispatchQueue.main.async {
-            for i in 0...(_json["num_POI"].int! - 1) {
+            for i in 0..<(_json["num_POI"].int!) {
                 //add point to map
                 let annotation = MKPointAnnotationWithID(id: _json["POIS"][i]["id"].int!, color: self.colors.noTripColor["dark"]!, excerpt: "")
                 annotation.coordinate = CLLocationCoordinate2D(latitude: _json["POIS"][i]["latitude"].double!, longitude: _json["POIS"][i]["longitude"].double!)

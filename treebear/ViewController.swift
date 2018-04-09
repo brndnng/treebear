@@ -164,7 +164,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 lastUpdateLocation = nil
                 tripsInProgress = newTripsInProgress
                 mapView.removeAnnotations(mapView.annotations.filter({ $0 is MKPointAnnotationWithID }))
-                addAnnotationBasedPOST(coordinate: (locationManager.location?.coordinate)!)
+                addAnnotationBasedPOST(coordinate: mapView.centerCoordinate)
             }
         }
     }
@@ -481,7 +481,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
     
     }
-    func addPOI(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+    func addPOI(id: Int, color: UIColor = UIColorFromRGB(rgbValue: 0xA5D6A7), coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
         print("add point ",id)
         let annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
         annotation.coordinate = coordinate
@@ -493,17 +493,28 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addAnnotation(annotation)
     }
     
-    func addPOIandSelect(id: Int, color: UIColor = .green, coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
-        print("add point ",id)
-        let annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
-        annotation.coordinate = coordinate
-        annotation.title = title
-        //annotation.subtitle = subtitle
-        let location = CLLocation(coordinate: coordinate, altitude: altitude)
-        locationNodes.append(LocationAnnotationNode(location: location, image: image))
-        addedPOI.append(annotation)
-        mapView.addAnnotation(annotation)
-        mapView.selectAnnotation(annotation, animated: true)
+    func addPOIandSelect(id: Int, color: UIColor = UIColorFromRGB(rgbValue: 0xA5D6A7), coordinate: CLLocationCoordinate2D, title: String = "Dropped Pin", subtitle: String = "", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+        var annotation: MKPointAnnotationWithID?
+        for addedAnnotation in mapView.annotations{
+            if let maySelectAnnotation = addedAnnotation as? MKPointAnnotationWithID{
+                if(maySelectAnnotation.id == id){
+                    annotation = maySelectAnnotation
+                    break;
+                }
+            }
+        }
+        if(annotation == nil){
+            print("add point ",id)
+            annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
+            annotation?.coordinate = coordinate
+            annotation?.title = title
+            //annotation.subtitle = subtitle
+            let location = CLLocation(coordinate: coordinate, altitude: altitude)
+            locationNodes.append(LocationAnnotationNode(location: location, image: image))
+            addedPOI.append(annotation!)
+            mapView.addAnnotation(annotation!)
+        }
+        mapView.selectAnnotation(annotation!, animated: true)
     }
     
     func addPolyline(polyline: MKPolyline){
@@ -578,11 +589,11 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
             self.SearchedItems.removeAll()
             for trip in trips!{
                 //            print(trip)
-                self.SearchedItems.append(SearchItem(type: "trip", title: trip["title"].stringValue, id: trip["id"].intValue, excerpt: trip["excerpt"].stringValue, coordinates: CLLocationCoordinate2D(latitude: -1, longitude: -1)))
+                self.SearchedItems.append(SearchItem(type: "trip", title: trip["title"].stringValue, id: trip["id"].intValue, excerpt: trip["excerpt"].stringValue, coordinates: CLLocationCoordinate2D(latitude: -1, longitude: -1), asso_trip: JSON.null))
                 //                print("Searched: ",self.SearchedItems)
             }
             for POI in POIS!{
-                self.SearchedItems.append(SearchItem(type: "POI", title: POI["title"].stringValue, id: POI["id"].intValue, excerpt: POI["excerpt"].stringValue,coordinates: CLLocationCoordinate2D(latitude: POI["latitude"].doubleValue,longitude: POI["longitude"].doubleValue)))
+                self.SearchedItems.append(SearchItem(type: "POI", title: POI["title"].stringValue, id: POI["id"].intValue, excerpt: POI["excerpt"].stringValue,coordinates: CLLocationCoordinate2D(latitude: POI["latitude"].doubleValue,longitude: POI["longitude"].doubleValue), asso_trip: POI["asso_trip"]))
             }
             print(self.SearchedItems)
             self.searchTableView.reloadData()
@@ -616,6 +627,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         cell.id = item.id
         cell.excerpt = item.excerpt
         cell.coordinates = item.coordinates
+        cell.asso_trip = item.asso_trip
         return cell
         
     }
@@ -627,7 +639,14 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
                 searchBar.text = ""
                 searchTableView.isHidden = true
                 searchTableView.reloadData()
-                addPOIandSelect(id: cell.id!, coordinate: cell.coordinates!, title: cell.textLabel!.text!,subtitle:cell.excerpt!)
+                var colorOfAnnotation = self.colors.noTripColor["dark"]
+                for trip in (cell.asso_trip?.arrayValue)!{
+                    if let index = self.tripsInProgress.index(of: trip.intValue){
+                        colorOfAnnotation = self.colors.tripColor[index]["dark"]!
+                        break
+                    }
+                }
+                addPOIandSelect(id: cell.id!, color: colorOfAnnotation!, coordinate: cell.coordinates!, title: cell.textLabel!.text!,subtitle:cell.excerpt!)
                 
             }
             else if (cell.detailTextLabel!.text == "trip"){

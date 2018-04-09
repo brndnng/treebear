@@ -43,7 +43,7 @@ class Helpers{
                 postData.append("&\(postKey)=\(postValue)".data(using: String.Encoding.utf8)!)
             }
             
-            let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/json/postTest.php/")! as URL,
+            let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-50-112-76-72.us-west-2.compute.amazonaws.com/project/json/post.php/")! as URL,
                                               cachePolicy: .useProtocolCachePolicy,
                                               timeoutInterval: 10.0)
             request.httpMethod = "POST"
@@ -177,6 +177,7 @@ struct SearchItem {
     let id : Int
     let excerpt : String
     let coordinates: CLLocationCoordinate2D
+    let asso_trip: JSON
 }
 class Card {
     var type: String { return ""}

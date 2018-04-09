@@ -53,7 +53,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         if let index = onGoing.index(of: tripId!){
             bgColor = colors.tripColor[index]["dark"]
             onGoingTrip = true
-            var TripDetails = UserDefaults.standard.dictionary(forKey: "tripsDetails")
+            var TripDetails = UserDefaults.standard.dictionary(forKey: "tripsDetails")!["\(tripId!)"] as? [String: Any]
             POIDetails = TripDetails!["POIS"] as? [String: Bool]
         }
         contentView.backgroundColor = bgColor
@@ -372,7 +372,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     //Right button item tapped
     
     @objc func rightButtonTapped(sender: UIBarButtonItem){
-        if(self.navigationItem.rightBarButtonItem?.title == "Enroll"){
+        if(sender.title == "Enroll"){
             //cehck availible slot and is currently enrolled
             var tripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
             if let indexOfTrip = tripsInProgress.index(of: -1){
@@ -401,7 +401,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
 
                                                     //change the button title
                                                     DispatchQueue.main.async{
-                                                        self.navigationItem.rightBarButtonItem?.title = "Drop"
+                                                        sender.title = "Drop"
                                                         //change bg color
                                                         let bgColor = self.colors.tripColor[indexOfTrip]["dark"]
                                                         self.scrollView.backgroundColor = bgColor
@@ -413,7 +413,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                 }
             }
-        }else if(self.navigationItem.rightBarButtonItem?.title == "Drop"){
+        }else if(sender.title == "Drop"){
             //cehck in enrolled list or not
             var tripsInProgress = UserDefaults.standard.array(forKey: "tripsInProgress") as! [Int]
             if let indexOfTrip = tripsInProgress.index(of: tripId!){
@@ -432,7 +432,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                                                 UserDefaults.standard.set(tripsDetail, forKey: "tripsDetails")
                                                 //change the button title
                                                 DispatchQueue.main.async{
-                                                    self.navigationItem.rightBarButtonItem?.title = "Enroll"
+                                                    sender.title = "Enroll"
                                                     //change bg color
                                                     self.contentView.backgroundColor = self.colors.noTripColor["dark"]
                                                     self.scrollView.backgroundColor = self.colors.noTripColor["dark"]

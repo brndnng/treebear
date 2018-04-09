@@ -71,7 +71,6 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if(section == 0){
             return onGoingTrips!.count
         } else if(section == 1){
@@ -97,6 +96,8 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.id = self.onGoingTrips![indexPath.row]
                 cell.tripName.text = tripInfo["name"] as? String
                 cell.tripExcerpt.text = tripInfo["excerpt"] as? String
+                cell.tripName.textColor = .white
+                cell.tripExcerpt.textColor = .white
                 let trip = UserDefaults.standard.array(forKey: "tripsInProgress") as? [Int]
                 let tripPosition = trip?.index(of: self.onGoingTrips![indexPath.row])
                 cell.backgroundColor = self.colors.tripColor[tripPosition!]["dark"]
@@ -179,6 +180,8 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
         present(alert, animated: true){
             self.helper.postRequest(args: ["action": "get",
                                            "type": "finished"], completionHandler: self.insertDataToLayout)
+            self.onGoingTrips = UserDefaults.standard.array(forKey: "tripsInProgress") as? [Int]
+            self.onGoingTrips = self.onGoingTrips?.filter({ $0 != -1})
         }
     }
     
