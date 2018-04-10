@@ -354,7 +354,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         switch locationNode.typeOfAltitude{
         case .sameAltitudeAsUser:
             locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude)
-            scalingFactor = 10.0
+            scalingFactor = 2.5
         case .snapToGround:
             locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude + groundPosition)
             scalingFactor = 1.0
@@ -534,9 +534,9 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     func getGroundPos() -> Double{
         var level = 0.0
-        for i in 1...3{
-            for j in 1...3{
-                let result = self.hitTest(CGPoint(x:0.25 * Double(i), y:0.25 * Double(j)), types: [.existingPlane, .estimatedHorizontalPlane])
+        for i in 1...9{
+            for j in 1...9{
+                let result = self.hitTest(CGPoint(x:0.1 * Double(i), y:0.1 * Double(j)), types: [.existingPlane, .estimatedHorizontalPlane])
                 for plane in result{
                     if(plane.worldTransform.columns.3.y < 0){
                         level = Double(plane.worldTransform.columns.3.y)
