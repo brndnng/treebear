@@ -199,22 +199,26 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                         var startLocation: CLLocation = CLLocation()
                         var endLocation: CLLocation = CLLocation()
                         
-                        //getting the endpoints of the polyline
-                        for step in route.steps as [MKRouteStep] {
-                            let pointCount = step.polyline.pointCount
-                            
-                            let cArray = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
-                            
-                            step.polyline.getCoordinates(cArray, range: NSMakeRange(0, pointCount))
-                            
-                            startLocation = CLLocation(coordinate: cArray[0], altitude: 0)
-                            endLocation = CLLocation(coordinate: cArray[pointCount-1], altitude: 0)
-                            
-                            cArray.deallocate(capacity: pointCount)
+                        if(!route.isEqual(MKRoute())){
+                            //getting the endpoints of the polyline
+                            for step in route.steps as [MKRouteStep] {
+                                let pointCount = step.polyline.pointCount
+                                
+                                let cArray = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
+                                
+                                step.polyline.getCoordinates(cArray, range: NSMakeRange(0, pointCount))
+                                
+                                startLocation = CLLocation(coordinate: cArray[0], altitude: 0)
+                                endLocation = CLLocation(coordinate: cArray[pointCount-1], altitude: 0)
+                                
+                                cArray.deallocate(capacity: pointCount)
+                            }
                         }
                         
                         //if either endpoints of the polyline is too far from the poi, draw a stright line instead
-                        if(startLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100 || endLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100){
+                        if(route.isEqual(MKRoute()) ||
+                            startLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100 ||
+                            endLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100){
                             let strightLine = [start, end]
                             let strightPolyline = MKPolyline(coordinates: strightLine, count: 2)
                             self.POIMapView.add(strightPolyline)
@@ -302,7 +306,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             } else {
                 annotationView?.annotation = annotation
             }
-            annotationView?.markerTintColor = self.colors.noTripColor["dark"]
+            annotationView?.markerTintColor = annotation.markerTintColor
             annotationView?.tag = annotation.id
         }else{
             return nil
@@ -339,6 +343,7 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         directions.calculate { [unowned self] response, error in
             guard let unwrappedResponse = response else {
                 print("Direction not found")
+                completion(MKRoute())
                 return }
             print("Have direction")
             completion(unwrappedResponse.routes[0])

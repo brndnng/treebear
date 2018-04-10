@@ -111,8 +111,8 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
                         doneCount += 1
                     }
                 }
-                let percentage = Int(doneCount / poiCount)
-                cell.progressPercentage.text = "\(percentage)%"
+                let percentage = Double(doneCount * 100 / poiCount)
+                cell.progressPercentage.text = "\(Int(percentage))%"
                 cell.percentageWidth.constant = cell.progressBar.frame.size.width * CGFloat(percentage / 100)
                 cell.barView.setNeedsLayout()
                 cell.progressPercentage.textColor = cell.barView.backgroundColor
