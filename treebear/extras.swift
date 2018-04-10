@@ -58,6 +58,8 @@ class Helpers{
                     //let httpResponse = response as? HTTPURLResponse
                     do {
                         let json = try JSON(data: data!)
+                        print(args)
+                        print(json)
                         completionHandler(json)
                     } catch {
                         print("JSON parsing error.\n\(response)")

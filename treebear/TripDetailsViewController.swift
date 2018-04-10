@@ -189,36 +189,38 @@ class TripDetailsViewController: UIViewController, UITableViewDelegate, UITableV
             // set map area
             self.POIMapView.showAnnotations(self.POIMapView.annotations, animated: true)
             //draw route
-            for i in 1...(self.poiSequence.count - 1){
-                let start = CLLocationCoordinate2D(latitude: self.poiTable[self.poiSequence[i-1]]!["latitude"].double!, longitude: self.poiTable[self.poiSequence[i-1]]!["longitude"].double!)
-                let end = CLLocationCoordinate2D(latitude: self.poiTable[self.poiSequence[i]]!["latitude"].double!, longitude: self.poiTable[self.poiSequence[i]]!["longitude"].double!)
-                self.getDirections(start: start, end: end){
-                    (route) in
-                    
-                    var startLocation: CLLocation = CLLocation()
-                    var endLocation: CLLocation = CLLocation()
-                    
-                    //getting the endpoints of the polyline
-                    for step in route.steps as [MKRouteStep] {
-                        let pointCount = step.polyline.pointCount
+            if(self.poiSequence.count > 1){
+                for i in 1..<(self.poiSequence.count){
+                    let start = CLLocationCoordinate2D(latitude: self.poiTable[self.poiSequence[i-1]]!["latitude"].double!, longitude: self.poiTable[self.poiSequence[i-1]]!["longitude"].double!)
+                    let end = CLLocationCoordinate2D(latitude: self.poiTable[self.poiSequence[i]]!["latitude"].double!, longitude: self.poiTable[self.poiSequence[i]]!["longitude"].double!)
+                    self.getDirections(start: start, end: end){
+                        (route) in
                         
-                        let cArray = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
+                        var startLocation: CLLocation = CLLocation()
+                        var endLocation: CLLocation = CLLocation()
                         
-                        step.polyline.getCoordinates(cArray, range: NSMakeRange(0, pointCount))
+                        //getting the endpoints of the polyline
+                        for step in route.steps as [MKRouteStep] {
+                            let pointCount = step.polyline.pointCount
+                            
+                            let cArray = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
+                            
+                            step.polyline.getCoordinates(cArray, range: NSMakeRange(0, pointCount))
+                            
+                            startLocation = CLLocation(coordinate: cArray[0], altitude: 0)
+                            endLocation = CLLocation(coordinate: cArray[pointCount-1], altitude: 0)
+                            
+                            cArray.deallocate(capacity: pointCount)
+                        }
                         
-                        startLocation = CLLocation(coordinate: cArray[0], altitude: 0)
-                        endLocation = CLLocation(coordinate: cArray[pointCount-1], altitude: 0)
-                        
-                        cArray.deallocate(capacity: pointCount)
-                    }
-                    
-                    //if either endpoints of the polyline is too far from the poi, draw a stright line instead
-                    if(startLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100 || endLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100){
-                        let strightLine = [start, end]
-                        let strightPolyline = MKPolyline(coordinates: strightLine, count: 2)
-                        self.POIMapView.add(strightPolyline)
-                    }else{
-                        self.POIMapView.add(route.polyline)
+                        //if either endpoints of the polyline is too far from the poi, draw a stright line instead
+                        if(startLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100 || endLocation.distance(from: CLLocation(coordinate: start, altitude: 0)) > 100){
+                            let strightLine = [start, end]
+                            let strightPolyline = MKPolyline(coordinates: strightLine, count: 2)
+                            self.POIMapView.add(strightPolyline)
+                        }else{
+                            self.POIMapView.add(route.polyline)
+                        }
                     }
                 }
             }

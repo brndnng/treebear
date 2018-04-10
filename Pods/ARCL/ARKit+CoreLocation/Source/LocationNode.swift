@@ -95,8 +95,18 @@ open class LocationNode: SCNNode {
             
             let distance = currentLocation.distance(from: nextLocation)
             
-            let box = SCNBox(width: 0.5, height: 0.2, length: CGFloat(distance), chamferRadius: 0)
-            box.firstMaterial?.diffuse.contents = UIColor(hue: 0.589, saturation: 0.98, brightness: 1.0, alpha: 1)
+            let box = SCNBox(width: 0.5, height: 0.2, length: CGFloat(distance), chamferRadius: 0.1)
+            
+            let materialTwoColor = SCNMaterial()
+            materialTwoColor.diffuse.contents = #imageLiteral(resourceName: "materialContent")
+            materialTwoColor.metalness.contents = 0.5
+            
+            let materialOneColor = SCNMaterial()
+            materialOneColor.diffuse.contents = UIColor(red:1.00, green:0.92, blue:0.23, alpha:1.0)
+            materialOneColor.metalness.contents = 0.5
+            
+            box.materials = [materialTwoColor, materialOneColor, materialTwoColor, materialOneColor, materialTwoColor, materialTwoColor]
+            //box.firstMaterial?.diffuse.contents = UIColor(hue: 0.589, saturation: 0.98, brightness: 1.0, alpha: 1)
             
             let bearing = 0 - bearingBetweenLocations(point1: currentLocation, point2: nextLocation)
             
