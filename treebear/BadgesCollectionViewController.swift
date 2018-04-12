@@ -45,7 +45,10 @@ class BadgesCollectionViewController: UIViewController {
                                             slidingBadges.startSlide()
                                             UIView.animate(withDuration: 0.5, animations: {
                                                 slidingBadges.alpha = 1.0
-                                                self.blocker.alpha = 0
+                                                self.blocker.frame = slidingBadges.frame
+                                                self.blocker.backgroundColor = .white
+                                                self.blocker.alpha = 0.5
+                                                self.view.bringSubview(toFront: self.blocker)
                                             })
                                         }
             }

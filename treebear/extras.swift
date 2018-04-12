@@ -241,6 +241,7 @@ extension UIViewController {
         toastLabel.clipsToBounds  =  true
         toastLabel.sizeToFit()
         toastLabel.frame.size = CGSize(width: toastLabel.frame.width + 16, height: toastLabel.frame.height + 16)
+        toastLabel.frame.origin.x = self.view.frame.size.width/2 - toastLabel.frame.width/2
         self.view.addSubview(toastLabel)
         UIView.animate(withDuration: 4.0, delay: 2.0, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
