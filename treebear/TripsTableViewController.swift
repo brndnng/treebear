@@ -93,6 +93,7 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     cell.tripPic.image = img
                     cell.setNeedsLayout()
                 }
+                cell.layoutIfNeeded()
                 cell.id = self.onGoingTrips![indexPath.row]
                 cell.tripName.text = tripInfo["name"] as? String
                 cell.tripExcerpt.text = tripInfo["excerpt"] as? String
@@ -128,11 +129,12 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
                             cell.setNeedsLayout()
                         }
                     }
+                    cell.layoutIfNeeded()
                     cell.id = serverResponse!["trip"][indexPath.row]["id"].int
                     cell.tripName.text = serverResponse!["trip"][indexPath.row]["title"].string
                     cell.tripExcerpt.text = serverResponse!["trip"][indexPath.row]["excerpt"].string
                     cell.progressPercentage.text = "Finished"
-                    cell.percentageWidth.constant = cell.progressBar.frame.size.width
+                    cell.percentageWidth.constant = cell.progressBar.frame.size.width * 1
                     cell.barView.setNeedsLayout()
                     cell.barColor = colors.destColor["dark"]
                     cell.barView.backgroundColor = colors.destColor["dark"]

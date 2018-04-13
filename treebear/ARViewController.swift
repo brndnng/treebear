@@ -275,6 +275,11 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
                                             }
                                         }
                                         if(needToAdd){
+                                            if(self.destination != nil && self.destination?.id == poi["id"].intValue){
+                                                needToAdd = false
+                                            }
+                                        }
+                                        if(needToAdd){
                                             DispatchQueue.main.async {
                                                 //create the obj
                                                 let id = poi["id"].intValue
