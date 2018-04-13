@@ -215,7 +215,6 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     }
     
     func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {
-        
     }
     
     func debugLocations(){

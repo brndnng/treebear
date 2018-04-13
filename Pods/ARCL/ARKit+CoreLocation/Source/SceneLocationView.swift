@@ -358,8 +358,20 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         case .snapToGround:
             locationNode.location = CLLocation(coordinate: locationNode.location.coordinate, altitude: currentLocation.altitude + groundPosition)
             scalingFactor = 1.0
+            
+            if let lightIntensity = self.session.currentFrame?.lightEstimate?.ambientIntensity {
+                let lightIntensity = max(lightIntensity, 100.0)
+                let lightColorTemp = self.session.currentFrame?.lightEstimate?.ambientColorTemperature
+                
+                for node in locationNode.childNodes{
+                    if let light = node.light{
+                        light.intensity = lightIntensity
+                        light.temperature = lightColorTemp ?? 6500
+                        node.light = light
+                    }
+                }
+            }
         default:
-            _ = 1
             scalingFactor = 1.0
         }
         

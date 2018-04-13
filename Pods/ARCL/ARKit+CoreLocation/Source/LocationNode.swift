@@ -71,16 +71,16 @@ open class LocationNode: SCNNode {
         lightNode.castsShadow = false
         lightNode.light!.categoryBitMask = 3
         
-        let lightNode3 = SCNNode()
-        lightNode3.light = SCNLight()
-        lightNode3.light!.type = .omni
-        lightNode3.light!.intensity = 100
-        lightNode3.light!.attenuationStartDistance = 100
-        lightNode3.light!.attenuationEndDistance = 100
-        lightNode3.light!.castsShadow = true
-        lightNode3.position = SCNVector3(x: -10, y: 10, z: -10)
-        lightNode3.castsShadow = false
-        lightNode3.light!.categoryBitMask = 3
+//        let lightNode3 = SCNNode()
+//        lightNode3.light = SCNLight()
+//        lightNode3.light!.type = .omni
+//        lightNode3.light!.intensity = 100
+//        lightNode3.light!.attenuationStartDistance = 100
+//        lightNode3.light!.attenuationEndDistance = 100
+//        lightNode3.light!.castsShadow = true
+//        lightNode3.position = SCNVector3(x: 0, y: 10, z: 0)
+//        lightNode3.castsShadow = false
+//        lightNode3.light!.categoryBitMask = 3
         
         var nodes = [LocationNode]()
         
@@ -115,7 +115,7 @@ open class LocationNode: SCNNode {
             boxNode.eulerAngles.y = Float(bearing).degreesToRadians
             boxNode.categoryBitMask = 3
             boxNode.addChildNode(lightNode)
-            boxNode.addChildNode(lightNode3)
+            //boxNode.addChildNode(lightNode3)
             
             let locationNode = LocationNode(location: currentLocation, altitudeType: altitudeType)
             locationNode.addChildNode(boxNode)
