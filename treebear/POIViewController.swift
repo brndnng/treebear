@@ -24,6 +24,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
     @IBOutlet weak var POIExcerpt: UILabel!
     @IBOutlet weak var ScrollingDetails: UIScrollView!
     @IBOutlet weak var PanDownMap: UIPanGestureRecognizer!
+    @IBOutlet weak var nothingIndicatorLabel: UILabel!
     
     var location_manager: CLLocationManager?
     var location: CLLocation?
@@ -41,6 +42,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        nothingIndicatorLabel.isHidden = true
+        
         ScrollingDetails.delegate = self
         ScrollingDetails.isPagingEnabled = true
         ScrollingDetails.contentInset = UIEdgeInsets.zero
@@ -79,6 +82,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
 //                                        print(_json["cards"])
                                         let cards = _json["cards"].array
                                         let POI_coordinates = CLLocationCoordinate2D(latitude: _json["latitude"].doubleValue, longitude: _json["longitude"].doubleValue)
+                                        var sthAppeared = false
                                         for card in cards!{
                                             let view = UIView()
                                             print("POI_coor:",POI_coordinates)
@@ -87,7 +91,6 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                             print("Distance:",distance)
                                             // Check if trip is in progress or 'always shown', add ||true|| for testing card layout
                                             if (card["trip"].intValue == -1 || (self.tripsInProgress.contains(card["trip"].intValue) && Double(distance!) < 100.0)){
-//                                            if (card["trip"].intValue == 1 || true || self.tripsInProgress.contains(card["trip"].intValue)){
                                                     if card["card_type"].stringValue == "info" {
                                                         var cardInfo = UILabel()
                                                         var cardImage = UIImageView()
@@ -99,7 +102,6 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                             }}
 
                                                         cardInfo.text = card["info"].stringValue
-        //                                                cardInfo.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et purus dignissim, porta diam id, sodales nulla. Mauris pulvinar varius ex, nec fermentum felis sagittis a. Integer eget lacus dui. Donec faucibus convallis commodo. Phasellus lacinia, justo ut convallis ultrices, lorem tellus varius leo, vel semper magna metus vel tortor. Donec at sagittis magna. Nullam egestas libero nec ligula consequat hendrerit. Nullam sit amet risus odio. Donec vitae lacus sollicitudin, porta ex sed, ultricies neque. Nulla mattis lectus vel leo tempus, ac tincidunt odio luctus. Suspendisse vel molestie est, elementum varius tellus. Ut a eros id augue semper commodo eget quis libero. Praesent varius risus in lacus malesuada fringilla. Nunc facilisis dapibus ipsum, a fringilla tortor. Etiam hendrerit ex nec egestas porttitor."
                                                         print("Add infocard")
                                                         cardInfo.textColor = UIColor.black
         //                                                view.addSubview(cardInfo)
@@ -203,26 +205,22 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                     self.y = max(self.y,view.frame.height + self.padding * 2)
     //                                                print("x:",self.x,"y:",self.y)
 
-
+                                                    sthAppeared = true
                                                 }
                                             
                                         }
+                                        if(sthAppeared){
+                                            self.nothingIndicatorLabel.removeFromSuperview()
+                                        }else{
+                                            self.nothingIndicatorLabel.isHidden = false
+                                        }
+                                        
                                         self.quiz_button_counter = 1 //reset quiz button counter to 1
                                         self.ScrollingDetails.contentSize = CGSize(width: self.x, height:self.y)
                                         print(self.ScrollingDetails.contentSize)
-//                                        for card in self.cardsList{
-//                                            card.applyCard(baseview: self.ScrollingDetails)
-//                                            }
                                     }
-//                                    }
                                     
         }
-//        for card in cardsList{
-//            print(card)
-//            card.applyCard(baseview: ScrollingDetails)
-//        }
-//        ScrollingDetails.addSubview(self.cardInfo)
-//        ScrollingDetails.addSubview(self.cardView)
         view.addSubview(ScrollingDetails)
     }
 

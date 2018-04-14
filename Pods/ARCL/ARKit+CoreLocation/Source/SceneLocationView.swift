@@ -360,14 +360,18 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             scalingFactor = 1.0
             
             if let lightIntensity = self.session.currentFrame?.lightEstimate?.ambientIntensity {
-                let lightIntensity = max(lightIntensity, 100.0)
+                let lightIntensity = max(lightIntensity, 300.0)
                 let lightColorTemp = self.session.currentFrame?.lightEstimate?.ambientColorTemperature
+                print(lightIntensity, lightColorTemp)
                 
-                for node in locationNode.childNodes{
-                    if let light = node.light{
-                        light.intensity = lightIntensity
-                        light.temperature = lightColorTemp ?? 6500
-                        node.light = light
+                for boxNode in locationNode.childNodes{
+                    let lightNodes = boxNode.childNodes
+                    for node in lightNodes{
+                        if let light = node.light{
+                            light.intensity = lightIntensity
+                            light.temperature = lightColorTemp ?? 6500
+                            node.light = light
+                        }
                     }
                 }
             }
