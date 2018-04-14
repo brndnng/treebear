@@ -63,7 +63,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     let colors = ExtenedColors()
     let helper = Helpers()
     
-    let alert = UIAlertController(title: nil, message: "Initializing\nAlways stay aware to the surrounding.", preferredStyle: .alert)
+    let alert = UIAlertController(title: nil, message: "Initializing\nBe aware of your surroundings.", preferredStyle: .alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
