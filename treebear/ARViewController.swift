@@ -121,7 +121,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         loadingGIF.stopAnimating()
         var waitingTime = 2
         if(destination != nil) {
-            waitingTime = 5
+            waitingTime = 4
         }
         present(alert, animated: true, completion: nil)
         _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(waitingTime), repeats: false){(timer) in DispatchQueue.main.async {self.alert.dismiss(animated: true, completion: nil)}}
