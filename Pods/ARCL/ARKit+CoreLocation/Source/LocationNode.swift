@@ -91,7 +91,7 @@ open class LocationNode: SCNNode {
             
             let distance = currentLocation.distance(from: nextLocation)
             
-            let box = SCNBox(width: 1.5, height: 0.2, length: CGFloat(distance), chamferRadius: 0.1)
+            let box = SCNBox(width: 1.0, height: 0.2, length: CGFloat(distance), chamferRadius: 0.1)
             
             let materialTwoColor = SCNMaterial()
             materialTwoColor.diffuse.contents = #imageLiteral(resourceName: "materialContent")
