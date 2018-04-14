@@ -477,7 +477,6 @@
                         <outlet property="userEmail" destination="QLc-LZ-eJC" id="WAL-be-bO0"/>
                         <outlet property="userName" destination="bJO-EK-2eL" id="aPg-HO-3Nj"/>
                         <outlet property="userProPic" destination="aJP-p6-AE6" id="eg6-eU-9og"/>
-                        <segue destination="WMa-Lr-Efg" kind="presentation" identifier="LoggedOut" id="ECd-yA-3kl"/>
                         <segue destination="XTU-Mj-gIu" kind="presentation" identifier="Trips" id="Goy-dG-0Se"/>
                         <segue destination="lEA-5b-fZm" kind="presentation" identifier="StarredPOI" id="kZO-Eo-jsW"/>
                     </connections>
@@ -1360,8 +1359,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5ba-wu-7I4"/>
-        <segue reference="7q8-Q2-dG7"/>
+        <segue reference="qjd-s7-X0R"/>
         <segue reference="trR-VH-kNN"/>
-        <segue reference="ECd-yA-3kl"/>
     </inferredMetricsTieBreakers>
 </document>

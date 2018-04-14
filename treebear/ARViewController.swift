@@ -251,12 +251,14 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         POIName.textColor = .white
         POIName.lineBreakMode = .byTruncatingTail
         POIName.sizeToFit()
-        locationLabel.frame.size.width = POIName.frame.size.width + 32
+
         POIExcerpt.text = excerpt
         POIExcerpt.lineBreakMode = .byWordWrapping
         POIExcerpt.numberOfLines = 2
-        POIExcerpt.frame.size.width = POIName.frame.width
         POIExcerpt.textColor = .white
+        POIExcerpt.sizeToFit()
+        
+        locationLabel.frame.size.width = max(POIName.frame.width, POIExcerpt.frame.width, 150) + 32
         return locationLabel.asImage()
     }
     
