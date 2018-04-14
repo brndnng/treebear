@@ -63,9 +63,19 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     let colors = ExtenedColors()
     let helper = Helpers()
     
+    let alert = UIAlertController(title: nil, message: "Initializing\nAlways stay aware to the surrounding.", preferredStyle: .alert)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        alert.view.tintColor = .black
+        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50)) as UIActivityIndicatorView
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        
         loadingGIF.startAnimating()
 
         sceneLocationView.locationDelegate = self
@@ -109,6 +119,12 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         postTimer?.invalidate()
         postTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTooltips), userInfo: nil, repeats: true)
         loadingGIF.stopAnimating()
+        var waitingTime = 2
+        if(destination != nil) {
+            waitingTime = 5
+        }
+        present(alert, animated: true, completion: nil)
+        _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(waitingTime), repeats: false){(timer) in DispatchQueue.main.async {self.alert.dismiss(animated: true, completion: nil)}}
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SCNNodePressed" && self.selectedObject != nil {
@@ -122,7 +138,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        sceneLocationView.pause()
+        //sceneLocationView.pause()
         postTimer?.invalidate()
         postTimer = nil
     }
@@ -238,6 +254,8 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         locationLabel.frame.size.width = POIName.frame.size.width + 32
         POIExcerpt.text = excerpt
         POIExcerpt.lineBreakMode = .byWordWrapping
+        POIExcerpt.numberOfLines = 2
+        POIExcerpt.frame.size.width = POIName.frame.width
         POIExcerpt.textColor = .white
         return locationLabel.asImage()
     }
