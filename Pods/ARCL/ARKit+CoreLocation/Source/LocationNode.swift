@@ -73,14 +73,10 @@ open class LocationNode: SCNNode {
         
         let lightNode3 = SCNNode()
         lightNode3.light = SCNLight()
-        lightNode3.light!.type = .omni
+        lightNode3.light!.type = .ambient
         lightNode3.light!.intensity = 100
-        lightNode3.light!.attenuationStartDistance = 100
-        lightNode3.light!.attenuationEndDistance = 100
         lightNode3.light!.castsShadow = true
-        lightNode3.position = SCNVector3(x: 0, y: 10, z: 0)
         lightNode3.castsShadow = false
-        lightNode3.light!.categoryBitMask = 3
         
         var nodes = [LocationNode]()
         

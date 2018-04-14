@@ -133,13 +133,18 @@ class TripsTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     cell.id = serverResponse!["trip"][indexPath.row]["id"].int
                     cell.tripName.text = serverResponse!["trip"][indexPath.row]["title"].string
                     cell.tripExcerpt.text = serverResponse!["trip"][indexPath.row]["excerpt"].string
+                    cell.tripName.textColor = .black 
+                    cell.tripExcerpt.textColor = .black
                     cell.progressPercentage.text = "Finished"
+                    cell.sizeToFit()
+                    cell.layoutIfNeeded()
                     cell.percentageWidth.constant = cell.progressBar.frame.size.width * 1
                     cell.barView.setNeedsLayout()
                     cell.barColor = colors.destColor["dark"]
                     cell.barView.backgroundColor = colors.destColor["dark"]
                     cell.progressPercentage.textColor = cell.barView.backgroundColor
                     cell.barView.layer.cornerRadius = cell.barView.frame.height / 2
+                    cell.backgroundColor = .clear
             }
         }
         return cell

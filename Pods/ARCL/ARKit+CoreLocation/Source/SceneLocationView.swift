@@ -360,7 +360,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             scalingFactor = 1.0
             
             if let lightIntensity = self.session.currentFrame?.lightEstimate?.ambientIntensity {
-                let lightIntensity = max(lightIntensity, 300.0)
+                let lightIntensity = max(lightIntensity, 100.0)
                 let lightColorTemp = self.session.currentFrame?.lightEstimate?.ambientColorTemperature
                 print(lightIntensity, lightColorTemp)
                 
@@ -561,7 +561,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             }
         }
         if(level >= 0){
-            level = -5.0
+            level = -1.5
         }
         print(level)
         return level
