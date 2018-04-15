@@ -130,7 +130,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         session.run(configuration)
         
         updateEstimatesTimer?.invalidate()
-        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
+        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
     }
     
     public func pause() {
