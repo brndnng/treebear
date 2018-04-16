@@ -77,6 +77,7 @@ open class LocationNode: SCNNode {
         lightNode3.light!.intensity = 100
         lightNode3.light!.castsShadow = true
         lightNode3.castsShadow = false
+        lightNode3.light!.categoryBitMask = 3
         
         var nodes = [LocationNode]()
         
