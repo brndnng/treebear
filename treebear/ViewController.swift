@@ -113,8 +113,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addGestureRecognizer(tap)
         
         // Long press to add POI
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        mapView.addGestureRecognizer(longPress)
+//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+//        mapView.addGestureRecognizer(longPress)
         
         searchBar.searchBarStyle = .minimal
         view.addSubview(searchBar)
@@ -432,39 +432,39 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         view.endEditing(true)
         }
     
-    @objc func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
-        let point = recognizer.location(in: mapView)
-        let coordinate: CLLocationCoordinate2D = mapView.convert(point, toCoordinateFrom: mapView)
-        //print("Long Press")
-        
-        switch recognizer.state {
-        case .possible: break
-        case .began:    coordinatesInPress = [coordinate]
-                        //print(coordinatesInPress)
-        case .changed:  coordinatesInPress.append(coordinate)
-                        //print(coordinatesInPress)
-        case .ended:    flushCoordinates()
-        case .cancelled, .failed: coordinatesInPress = []
-        }
-    }
+//    @objc func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
+//        let point = recognizer.location(in: mapView)
+//        let coordinate: CLLocationCoordinate2D = mapView.convert(point, toCoordinateFrom: mapView)
+//        //print("Long Press")
+//
+//        switch recognizer.state {
+//        case .possible: break
+//        case .began:    coordinatesInPress = [coordinate]
+//                        //print(coordinatesInPress)
+//        case .changed:  coordinatesInPress.append(coordinate)
+//                        //print(coordinatesInPress)
+//        case .ended:    flushCoordinates()
+//        case .cancelled, .failed: coordinatesInPress = []
+//        }
+//    }
     
-    private func flushCoordinates() {
-        print (coordinatesInPress.count)
-        print("ended long press")
-        if(coordinatesInPress.count == 0){
-            print("nothing")
-            return
-        }
-        else if (coordinatesInPress.count < 10){
-            addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
-        }
-        else{
-            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
-            addPolyline(polyline: polyline)
-        }
-
-        
-    }
+//    private func flushCoordinates() {
+//        print (coordinatesInPress.count)
+//        print("ended long press")
+//        if(coordinatesInPress.count == 0){
+//            print("nothing")
+//            return
+//        }
+//        else if (coordinatesInPress.count < 10){
+//            addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
+//        }
+//        else{
+//            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
+//            addPolyline(polyline: polyline)
+//        }
+//
+//        
+//    }
     func getDirections(start: CLLocationCoordinate2D, end: CLLocationCoordinate2D, completion:@escaping (MKRoute) -> Void){
         let request = MKDirectionsRequest()
         request.source = MKMapItem(placemark: MKPlacemark(coordinate: start, addressDictionary: nil))

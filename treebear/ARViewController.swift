@@ -79,7 +79,7 @@ class ARViewController: UIViewController, UIGestureRecognizerDelegate, SceneLoca
         loadingGIF.startAnimating()
 
         sceneLocationView.locationDelegate = self
-        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
+        sceneLocationView.locationEstimateMethod = .mostRelevantEstimate
         //sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: destination!)
         sceneLocationView.run()
 //        debugLocations()

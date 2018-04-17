@@ -539,7 +539,12 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     //    }
     
     public func addPolyline(_ polyline: MKPolyline) {
-        guard let altitude = currentLocation()?.altitude else { print("no altitude found"); return }
+        var altitude = -1.0
+        if (currentLocation()?.altitude) != nil {
+            altitude = (currentLocation()?.altitude)!
+        }else {
+            altitude = (locationManager.currentLocation?.altitude)!
+        }
         print("altitude: ",altitude)
         LocationNode.create(polyline: polyline, altitude: altitude - 5).forEach(addLocationNodeWithConfirmedLocation)
     }
