@@ -113,8 +113,8 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addGestureRecognizer(tap)
         
         // Long press to add POI
-//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-//        mapView.addGestureRecognizer(longPress)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        mapView.addGestureRecognizer(longPress)
         
         searchBar.searchBarStyle = .minimal
         view.addSubview(searchBar)
@@ -451,17 +451,17 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
     private func flushCoordinates() {
         print (coordinatesInPress.count)
         print("ended long press")
-        if(coordinatesInPress.count == 0){
-            print("nothing")
-            return
-        }
-        else if (coordinatesInPress.count < 10){
+//        if(coordinatesInPress.count == 0){
+//            print("nothing")
+//            return
+//        }
+//        else if (coordinatesInPress.count < 10){
             addPOI(id: locationNodes.count + 1, coordinate: coordinatesInPress.first!)
-        }
-        else{
-            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
-            addPolyline(polyline: polyline)
-        }
+//        }
+//        else{
+//            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
+//            addPolyline(polyline: polyline)
+//        }
 
         
     }
@@ -481,7 +481,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         }
     
     }
-    func addPOI(id: Int, color: UIColor = UIColorFromRGB(rgbValue: 0xA5D6A7), coordinate: CLLocationCoordinate2D, title: String = "Airstrip One", subtitle: String = "Big Brother is watching you!!!", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+    func addPOI(id: Int, color: UIColor = UIColorFromRGB(rgbValue: 0xFF0000), coordinate: CLLocationCoordinate2D, title: String = "Airstrip One", subtitle: String = "Big Brother is watching you!!!", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
         print("add point ",id)
         let annotation = MKPointAnnotationWithID(id: id, color: color, excerpt: subtitle)
         annotation.coordinate = coordinate
@@ -493,7 +493,7 @@ class ViewController: UIViewController,MKMapViewDelegate, UIGestureRecognizerDel
         mapView.addAnnotation(annotation)
     }
     
-    func addPOIandSelect(id: Int, color: UIColor = UIColorFromRGB(rgbValue: 0xA5D6A7), coordinate: CLLocationCoordinate2D, title: String = "Airstrip One", subtitle: String = "Big Brother is watching you!!!", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
+    func addPOIandSelect(id: Int, color: UIColor = UIColorFromRGB(rgbValue: 0xFF0000), coordinate: CLLocationCoordinate2D, title: String = "Airstrip One", subtitle: String = "Big Brother is watching you!!!", altitude: Double = 100, image: UIImage = UIImage(named: "pin")!){
         var annotation: MKPointAnnotationWithID?
         for addedAnnotation in mapView.annotations{
             if let maySelectAnnotation = addedAnnotation as? MKPointAnnotationWithID{
