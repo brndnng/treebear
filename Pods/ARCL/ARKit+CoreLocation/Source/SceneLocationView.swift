@@ -524,6 +524,8 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             print("camera did change tracking state: normal")
         case .notAvailable:
             print("camera did change tracking state: not available")
+        case .limited(.relocalizing):
+            print("camera did change tracking state: re-localizing")
         }
     }
     // Extensions
