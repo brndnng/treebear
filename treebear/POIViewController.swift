@@ -164,39 +164,51 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         
                                                         let optionA = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionA.setTitle(card["optionA"].stringValue, for: .normal)
-                                                        optionA.backgroundColor = .blue
+                                                        optionA.backgroundColor = UIColorFromRGB(rgbValue: 0x37474F)
+                                                        optionA.layer.cornerRadius = 5
                                                         optionA.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                         optionA.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
+                                                        optionA.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
+                                                        optionA.frame.origin.x = newSize.width/2 - optionA.frame.width/2
                                                         view.addSubview(optionA)
                                                         options.append(optionA)
                                                         button_y += 100
                                                         
                                                         let optionB = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionB.setTitle(card["optionB"].stringValue, for: .normal)
-                                                        optionB.backgroundColor = .blue
+                                                        optionB.backgroundColor = UIColorFromRGB(rgbValue: 0x37474F)
+                                                        optionB.layer.cornerRadius = 5
                                                         optionB.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                         optionB.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
+                                                        optionB.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
+                                                        optionB.frame.origin.x = newSize.width/2 - optionB.frame.width/2
                                                         view.addSubview(optionB)
                                                         options.append(optionB)
                                                         button_y += 100
                                                         
                                                         let optionC = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionC.setTitle(card["optionC"].stringValue, for: .normal)
-                                                        optionC.backgroundColor = .blue
+                                                        optionC.backgroundColor = UIColorFromRGB(rgbValue: 0x37474F)
+                                                        optionC.layer.cornerRadius = 5
                                                         optionC.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                     optionC.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
+                                                        optionC.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
+                                                        optionC.frame.origin.x = newSize.width/2 - optionC.frame.width/2
                                                         view.addSubview(optionC)
                                                         options.append(optionC)
                                                         button_y += 100
                                                         let optionD = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionD.setTitle(card["optionD"].stringValue, for: .normal)
-                                                        optionD.backgroundColor = .blue
+                                                        optionD.backgroundColor = UIColorFromRGB(rgbValue: 0x37474F)
+                                                        optionD.layer.cornerRadius = 5
                                                         optionD.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                     optionD.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
+                                                        optionD.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
+                                                        optionD.frame.origin.x = newSize.width/2 - optionD.frame.width/2
                                                         view.addSubview(optionD)
                                                         options.append(optionD)
                                                         button_y += 100
@@ -216,9 +228,9 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                             
                                         }
                                         if(sthAppeared){
-                                            self.nothingIndicatorLabel.removeFromSuperview()
+                                            self.nothingIndicatorLabel?.removeFromSuperview()
                                         }else{
-                                            self.nothingIndicatorLabel.isHidden = false
+                                            self.nothingIndicatorLabel?.isHidden = false
                                         }
                                         
                                         self.quiz_button_counter = 1 //reset quiz button counter to 1

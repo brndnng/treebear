@@ -190,7 +190,7 @@ class StarredPOIViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if (mapView.region.span.latitudeDelta * 111 < 1000){
+        if (mapView.region.span.latitudeDelta * 111 < 0.5){
             var region = mapView.region
             region.center = (view.annotation?.coordinate)!
             mapView.setRegion(region, animated: true)
