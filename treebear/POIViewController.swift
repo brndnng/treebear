@@ -52,6 +52,12 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
         location_manager?.requestAlwaysAuthorization()
         location_manager?.startUpdatingLocation()
         //Load JSON
+        //updateContent()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         updateContent()
     }
 
