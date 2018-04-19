@@ -55,8 +55,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
         //updateContent()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         updateContent()
     }
@@ -90,13 +90,13 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                         let POI_coordinates = CLLocationCoordinate2D(latitude: _json["latitude"].doubleValue, longitude: _json["longitude"].doubleValue)
                                         var sthAppeared = false
                                         for card in cards!{
-                                            let view = UIView()
                                             print("POI_coor:",POI_coordinates)
                                             print("My location:",self.location)
                                             let distance = (self.location?.distance(from: CLLocation(coordinate: POI_coordinates, altitude: 0)))
                                             print("Distance:",distance)
                                             // Check if trip is in progress or 'always shown', add ||true|| for testing card layout
-                                            if (card["trip"].intValue == -1 || (self.tripsInProgress.contains(card["trip"].intValue) && Double(distance!) < 100.0)){
+                                            if (card["trip"].intValue == -1 || ((self.tripsInProgress.contains(card["trip"].intValue) && Double(distance!) < 100.0))){
+                                                    let view = UIView()
                                                     if card["card_type"].stringValue == "info" {
                                                         var cardInfo = UILabel()
                                                         var cardImage = UIImageView()
@@ -104,7 +104,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         
                                                         helpers.getImageByURL(url: card["picURL"].stringValue){(_img) in DispatchQueue.main.async{
                                                             cardImage.image = _img
-                                                            
+                                                            cardImage.setNeedsLayout()
                                                             }}
 
                                                         cardInfo.text = card["info"].stringValue
@@ -124,7 +124,6 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         view.layer.cornerRadius = 5
                                                         view.frame = CGRect(x: self.x+self.padding, y: self.padding, width: viewWidth, height:max(cardInfo.frame.height + cardImage.frame.height + self.padding * 4,viewHeight))
                                                         self.cardsList.append(InfoCard(info: cardInfo, trip: card["trip"].intValue, pic: cardImage))
-                                                        print(view.frame)
                                                         view.addSubview(cardImage)
                                                         view.addSubview(cardInfo)
                                                         if card == cards![0]{
@@ -171,10 +170,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionA.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
                                                         optionA.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
-                                                        optionA.center.x = view.frame.width / 2
-                                                        view.addSubview(optionA)
-                                                        options.append(optionA)
-                                                        button_y += 100
+                                                        button_y += (optionA.frame.height + 15)
                                                         
                                                         let optionB = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionB.setTitle(card["optionB"].stringValue, for: .normal)
@@ -184,10 +180,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionB.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
                                                         optionB.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
-                                                        optionB.center.x = view.frame.width / 2
-                                                        view.addSubview(optionB)
-                                                        options.append(optionB)
-                                                        button_y += 100
+                                                        button_y += (optionB.frame.height + 15)
                                                         
                                                         let optionC = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionC.setTitle(card["optionC"].stringValue, for: .normal)
@@ -197,10 +190,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                     optionC.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
                                                         optionC.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
-                                                        optionC.center.x = view.frame.width / 2
-                                                        view.addSubview(optionC)
-                                                        options.append(optionC)
-                                                        button_y += 100
+                                                        button_y += (optionC.frame.height + 15)
+                                                        
                                                         let optionD = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: button_y + self.padding, width:200, height: 75))
                                                         optionD.setTitle(card["optionD"].stringValue, for: .normal)
                                                         optionD.backgroundColor = UIColorFromRGB(rgbValue: 0x37474F)
@@ -209,10 +200,25 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                     optionD.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
                                                         optionD.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
+                                                        button_y += (optionD.frame.height + 15)
+                                                        
+                                                        let uniWidth = max(optionA.frame.width, optionB.frame.width, optionC.frame.width, optionD.frame.width)
+                                                        optionA.frame.size.width = uniWidth
+                                                        optionB.frame.size.width = uniWidth
+                                                        optionC.frame.size.width = uniWidth
+                                                        optionD.frame.size.width = uniWidth
+                                                        optionA.center.x = view.frame.width / 2
+                                                        optionB.center.x = view.frame.width / 2
+                                                        optionC.center.x = view.frame.width / 2
                                                         optionD.center.x = view.frame.width / 2
+                                                        view.addSubview(optionA)
+                                                        options.append(optionA)
+                                                        view.addSubview(optionB)
+                                                        options.append(optionB)
+                                                        view.addSubview(optionC)
+                                                        options.append(optionC)
                                                         view.addSubview(optionD)
                                                         options.append(optionD)
-                                                        button_y += 100
                                                         
                                                         self.cardsList.append(QuizCard(question: question, options: options, CorrectAns: card["CorrectAns"].stringValue, trip: card["trip"].intValue))
 
@@ -297,7 +303,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                     }
                     else{
                         print("Try again!")
-                        sender.superview?.subviews.forEach({$0.backgroundColor = .blue})//Set other buttons to                blue
+                        sender.superview?.subviews.forEach({$0.backgroundColor = UIColorFromRGB(rgbValue: 0x37474F)})//Set other buttons to                blue
                         sender.superview?.subviews[0].backgroundColor = .clear
                         sender.backgroundColor = .red //Set button to red
                         sender.superview?.subviews[correct_ans_int].backgroundColor = .green //Set button with correct answer to green
