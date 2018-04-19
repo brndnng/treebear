@@ -158,6 +158,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         
                                                         
                                                         view.frame = CGRect(x: self.x+self.padding, y: self.padding, width: viewWidth, height:viewHeight)
+                                                        view.layer.cornerRadius = 5
                                                         question.frame = CGRect(x: self.padding, y: self.padding, width: max(newSize.width,viewWidth - 2*self.padding), height: newSize.height)
                                                         view.addSubview(question)
                                                         var button_y = question.frame.height + self.padding * 3
@@ -169,8 +170,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionA.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                         optionA.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
-                                                        optionA.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
-                                                        optionA.frame.origin.x = newSize.width/2 - optionA.frame.width/2
+                                                        optionA.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
+                                                        optionA.center.x = view.frame.width / 2
                                                         view.addSubview(optionA)
                                                         options.append(optionA)
                                                         button_y += 100
@@ -182,8 +183,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionB.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                         optionB.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
-                                                        optionB.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
-                                                        optionB.frame.origin.x = newSize.width/2 - optionB.frame.width/2
+                                                        optionB.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
+                                                        optionB.center.x = view.frame.width / 2
                                                         view.addSubview(optionB)
                                                         options.append(optionB)
                                                         button_y += 100
@@ -195,8 +196,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionC.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                     optionC.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
-                                                        optionC.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
-                                                        optionC.frame.origin.x = newSize.width/2 - optionC.frame.width/2
+                                                        optionC.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
+                                                        optionC.center.x = view.frame.width / 2
                                                         view.addSubview(optionC)
                                                         options.append(optionC)
                                                         button_y += 100
@@ -207,8 +208,8 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionD.tag = Int(card["trip"].stringValue + String(self.quiz_button_counter))!
                                                     optionD.addTarget(self,action:#selector(self.quizButtonClicked),for:.touchUpInside)
                                                         self.quiz_button_counter += 1
-                                                        optionD.sizeThatFits(CGSize(width: newSize.width - 2*self.padding, height: 100))
-                                                        optionD.frame.origin.x = newSize.width/2 - optionD.frame.width/2
+                                                        optionD.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
+                                                        optionD.center.x = view.frame.width / 2
                                                         view.addSubview(optionD)
                                                         options.append(optionD)
                                                         button_y += 100
