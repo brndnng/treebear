@@ -202,7 +202,7 @@ class POIViewController: UIViewController,UIScrollViewDelegate, CLLocationManage
                                                         optionD.sizeThatFits(CGSize(width: view.frame.width - 2*self.padding, height: 100))
                                                         button_y += (optionD.frame.height + 15)
                                                         
-                                                        let uniWidth = max(optionA.frame.width, optionB.frame.width, optionC.frame.width, optionD.frame.width)
+                                                        let uniWidth = view.frame.width - 2*self.padding
                                                         optionA.frame.size.width = uniWidth
                                                         optionB.frame.size.width = uniWidth
                                                         optionC.frame.size.width = uniWidth
