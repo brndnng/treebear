@@ -18,6 +18,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
     @IBOutlet weak var userProPic: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
+    let helper = Helpers()
     
     func segueToNext(identifier: String) {
         switch identifier{
@@ -40,9 +41,12 @@ class MenuViewController: UIViewController, UITableViewDelegate, UICollectionVie
         if (GIDSignIn.sharedInstance().currentUser.profile.hasImage){
             let url = GIDSignIn.sharedInstance().currentUser.profile.imageURL(withDimension: 300)
             if(url != nil){
-                let imageData = try? Data(contentsOf: url!)
-                if(imageData != nil){
-                    userProPic.image = UIImage(data: imageData!)
+                helper.getImageByURL(url: "\(url!)"){
+                    (image) in
+                    DispatchQueue.main.async{
+                        self.userProPic.image = image
+                        self.userProPic.setNeedsLayout()
+                    }
                 }
             }
         }
